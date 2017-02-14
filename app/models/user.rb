@@ -24,23 +24,30 @@ class User < ApplicationRecord
 
 	attr_reader :password
 
-	validates :fname, :lname, :username, :email, :password_digest, :session_token, presence: true
-	validates :username, :email, :session_token, uniqueness: true
+	validates :username, :session_token, presence: true, uniqueness: true
+  validates :password_digest, presence: { message: "Password can't be blank" }
+  validates :fname, presence: { message: "First Name can't be blank" }
+  validates :lname, presence: { message: "Last Name can't be blank" }
+  validates :email, presence: { message: "Email address can't be blank" }, uniqueness: true
 	validates :password, length: {minimum: 6, allow_nil: :true}
 
 	after_initialize :ensure_session_token
 	before_validation :ensure_session_token_uniqueness
 
 
+  def self.find_by_credentials(username, password)
+    user = User.find_by(username: username)
+    return nil unless user
+    user.password_is?(password) ? user : nil
+  end
+
+  def self.generate_session_token
+    SecureRandom.urlsafe_base64(16)
+  end
+
 	def password=(password)
 		self.password_digest = BCrypt::Password.create(password)
 		@password = password
-	end
-
-	def self.find_by_credentials(username, password)
-		user = User.find_by(username: username)
-		return nil unless user
-		user.password_is?(password) ? user : nil
 	end
 
 	def password_is?(password)
@@ -48,25 +55,21 @@ class User < ApplicationRecord
 	end
 
 	def reset_session_token!
-		self.session_token = new_session_token
+		self.session_token = self.class.generate_session_token
 		ensure_session_token_uniqueness
-		self.save
+		self.save!
 		self.session_token
 	end
 
 	private
 
 	def ensure_session_token
-		self.session_token ||= new_session_token
-	end
-
-	def new_session_token
-		SecureRandom.base64
+		self.session_token ||= self.class.generate_session_token
 	end
 
 	def ensure_session_token_uniqueness
 		while User.find_by(session_token: self.session_token)
-			self.session_token = new_session_token
+			self.session_token = self.class.generate_session_token
 		end
 	end
 

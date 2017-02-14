@@ -2,7 +2,17 @@
 {
   auth: {
     loggedIn: false,
-    currentUserId: null
+    currentUserId: null,
+    errors: {
+      signUpFormErrors: {
+        username: [],
+        fname: [],
+        lname: [],
+        email: [],
+        password_digest: []
+      },
+      logInFormErrors: []
+    }
   },
 
   profiles: {
@@ -111,13 +121,5 @@
     popupActive: false
   }
 
-  errors: {
-    signInFormErrors: {
-      username: [],
-      fname: [],
-      lname: [],
-      email: [],
-      password: []
-    }
-  }
+
 }

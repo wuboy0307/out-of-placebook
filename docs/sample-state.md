@@ -111,5 +111,13 @@
     popupActive: false
   }
 
-  errors: []
+  errors: {
+    signInFormErrors: {
+      username: [],
+      fname: [],
+      lname: [],
+      email: [],
+      password: []
+    }
+  }
 }

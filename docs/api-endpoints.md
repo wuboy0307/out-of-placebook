@@ -13,7 +13,7 @@
 
 - `POST /api/users`
   - creates new users
-- `PATCH /api/users`
+- `PATCH /api/users/:id`
   - edits user
 - `GET /api/users`
   - accepts search query and searches users

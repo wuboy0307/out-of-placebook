@@ -4,15 +4,15 @@ export const login = (user) => {
   return $.ajax({
     method: 'POST',
     url: '/api/session',
-    data: user
+    data: {user}
   });
 };
 
 export const signup = (user) => {
   return $.ajax({
     method: 'POST',
-    url: '/api/user',
-    data: user
+    url: '/api/users',
+    data: {user}
   });
 };
 

@@ -1,3 +1,5 @@
 Remove RECEIVE_ERRORS from auth_reducer and actions as not currently being used
 
 remove 'hit thunk' from thunk.js
+
+remove window.store from oopbook.jsx

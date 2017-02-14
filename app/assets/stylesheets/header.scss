@@ -40,9 +40,16 @@
   float: left;
   font-size: 35px;
   font-weight: bold;
-  margin-top: 35px;
+  margin-top: 38px;
 }
 
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+  justify-content: flex-end;
+  margin: 0 5px;
+}
 
 .login-form {
   display: flex;

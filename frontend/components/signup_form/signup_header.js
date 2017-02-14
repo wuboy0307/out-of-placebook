@@ -34,7 +34,7 @@ class SignupHeader extends React.Component {
   handleGuestLogin(e) {
     e.preventDefault();
     const user = {
-      username: "mark@facebook.com",
+      username: "mark",
       password: "password",
     };
     this.props.login(user).then(() => this.props.router.push('/'));
@@ -44,6 +44,7 @@ class SignupHeader extends React.Component {
     return (
       <form onSubmit={ this.handleSubmit } className="login-form">
 
+      <div className="login-form-box">
         <label htmlFor="username">Username</label>
         <input
           id="username"
@@ -52,20 +53,24 @@ class SignupHeader extends React.Component {
           className="header-login-inputs"
           value={this.state.username}
           onChange={this.handleChange("username")}/>
+      </div>
 
-      <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          required
-          type="password"
-          className="header-login-inputs"
-          value={this.state.password}
-          onChange={this.handleChange("password")}/>
-
+      <div className="login-form-box">
+        <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            required
+            type="password"
+            className="header-login-inputs"
+            value={this.state.password}
+            onChange={this.handleChange("password")}/>
+      </div>
+      <div className="login-form-box">
         <button className="login-submit">Log In</button>
-
+      </div>
+      <div className="login-form-box">
         <button onClick={this.handleGuestLogin} className="guest-user-login">Guest</button>
-
+      </div>
       </form>
     );
   }

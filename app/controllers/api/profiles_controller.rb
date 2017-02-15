@@ -1,8 +1,12 @@
 class Api::ProfilesController < ApplicationController
 
   def show
-    @user = User.find(params[:id])
-    # render json: @user
+    @user = User.find_by(id: params[:id])
+    if @user
+      render :show
+    else
+      render json: ['User not found!']
+    end
   end
 
 end

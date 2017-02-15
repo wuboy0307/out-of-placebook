@@ -9,6 +9,7 @@ class ProfileNavBar extends React.Component {
         <CoverPhoto />
         <ProfileLinkBar />
         <div className="profile-picture"></div>
+        <div className="profile-name">Mark Zuckerberg</div>
       </div>
     );
   }

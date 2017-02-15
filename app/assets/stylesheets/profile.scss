@@ -48,3 +48,17 @@
   top: 175px;
   left: 30px;
 }
+
+.profile-name {
+  position: absolute;
+  bottom: 55px;
+  left: 201px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  max-width: 275px;
+  color: #FFF;
+  text-rendering: optimizelegibility;
+  text-shadow: 0 0 3px rgba(0,0,0,.8);
+}

@@ -7,9 +7,11 @@ class CreatePost extends React.Component {
   }
 
   renderForm(){
+    return(
     <form className="create-post-form">
-      <input type="text" placeholder="Whats on your mind?"></input>
+      <textarea type="text" placeholder="Whats on your mind?" cols="40" rows="1"></textarea>
     </form>
+    );
   }
 
   render () {
@@ -20,16 +22,21 @@ class CreatePost extends React.Component {
           <div className="create-post-header-item">Photo</div>
           <div className="create-post-header-item">Video</div>
         </div>
-        <div className="create-post-main">
 
+        <div className="create-post-main">
           <div className="create-post-img-wrapper">
             <img src="" className="user-pic-xs" />
           </div>
 
           <div className="create-post-body">
-            What's on your mind?
+            { this.renderForm()}
           </div>
         </div>
+
+        <div className="create-post-footer">
+          <button type="button" className="create-post-button">Post</button>
+        </div>
+
       </div>
     );
   }

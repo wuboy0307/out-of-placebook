@@ -5,7 +5,6 @@
 #  id              :integer          not null, primary key
 #  fname           :string           not null
 #  lname           :string           not null
-#  username        :string           not null
 #  email           :string           not null
 #  session_token   :string           not null
 #  password_digest :string           not null
@@ -24,7 +23,7 @@ class User < ApplicationRecord
 
 	attr_reader :password
 
-	validates :username, :session_token, presence: true, uniqueness: true
+	validates :session_token, presence: true, uniqueness: true
   validates :password_digest, presence: { message: "Password can't be blank" }
   validates :fname, presence: { message: "First Name can't be blank" }
   validates :lname, presence: { message: "Last Name can't be blank" }
@@ -35,8 +34,8 @@ class User < ApplicationRecord
 	before_validation :ensure_session_token_uniqueness
 
 
-  def self.find_by_credentials(username, password)
-    user = User.find_by(username: username)
+  def self.find_by_credentials(email, password)
+    user = User.find_by(email: email)
     return nil unless user
     user.password_is?(password) ? user : nil
   end

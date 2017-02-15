@@ -7,7 +7,7 @@ class SignupHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,7 +34,7 @@ class SignupHeader extends React.Component {
   handleGuestLogin(e) {
     e.preventDefault();
     const user = {
-      username: "mark",
+      email: "mark@facebook.com",
       password: "password",
     };
     this.props.login(user).then(() => this.props.router.push('/'));
@@ -45,14 +45,14 @@ class SignupHeader extends React.Component {
       <form onSubmit={ this.handleSubmit } className="login-form">
 
       <div className="login-form-box">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
-          id="username"
+          id="email"
           required
-          type="username"
+          type="email"
           className="header-login-inputs"
-          value={this.state.username}
-          onChange={this.handleChange("username")}/>
+          value={this.state.email}
+          onChange={this.handleChange("email")}/>
       </div>
 
       <div className="login-form-box">

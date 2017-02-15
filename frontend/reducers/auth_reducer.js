@@ -10,7 +10,6 @@ const _nullUser = Object.freeze({
   currentUser: null,
   errors: {
     signUpFormErrors: {
-      username: [],
       fname: [],
       lname: [],
       email: [],

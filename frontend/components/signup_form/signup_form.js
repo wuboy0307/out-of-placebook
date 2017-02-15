@@ -16,6 +16,7 @@ class SignupForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.signupForm = this.signupForm.bind(this);
+    this.renderErrors = this.renderErrors.bind(this);
   }
 
 
@@ -34,11 +35,11 @@ class SignupForm extends React.Component {
   }
 
 
+  // let signupErrors;
+  // if (this.props.signupErrors) {
+  //   signupErrors = this.props.signupErrors.map( (error, idx) => (<li className="signup-error" key={idx}>{error}</li>));
+  // }
   signupForm() {
-    let signupErrors;
-    if (this.props.signupErrors) {
-      signupErrors = this.props.signupErrors.map( (error, idx) => (<li className="signup-error" key={idx}>{error}</li>));
-    }
     return (
         <form className="signup-form" onSubmit={ this.handleSubmit }>
           <ul className="signup-list">
@@ -70,6 +71,7 @@ class SignupForm extends React.Component {
                 value={this.state.email}
                 placeholder="Email"
                 onChange={this.handleChange("email")}/>
+              { this.renderErrors('email') }
             </li>
             <li className="signup-password">
               <input
@@ -79,16 +81,34 @@ class SignupForm extends React.Component {
                 value={this.state.password}
                 placeholder="Password"
                 onChange={this.handleChange("password")}/>
+              { this.renderErrors('password') }
             </li>
             <li>
               <button className="signup-button">Sign Up</button>
             </li>
             <li className="group">
-              { signupErrors }
             </li>
           </ul>
         </form >
     );
+  }
+
+  // { signupErrors }
+  renderErrors(key) {
+    const errors = this.props.errors[key];
+    if (errors && errors.length > 0) {
+      return(
+        <ul>
+          {errors.map((error, i) => (
+            <li key={`error-${i}`} className="signup-error">
+              {error}
+            </li>
+          ))}
+        </ul>
+      );
+    } else {
+      return null;
+    }
   }
 
   render () {

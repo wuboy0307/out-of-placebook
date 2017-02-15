@@ -24,14 +24,7 @@
   font-weight: bold;
 }
 
-.signup-list-field {
-  border-radius: 5px;
-  padding: 8px 10px;
-  margin: 3px;
-  border: 1px solid #bcd7d8;
-  font-size: 18px;
-  width: 377px;
-}
+
 
 .signup-list-name {
   border-radius: 5px;
@@ -112,6 +105,15 @@
   color: #aaa;
 }
 
+.signup-list-field {
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin: 3px;
+  border: 1px solid #bcd7d8;
+  font-size: 18px;
+  width: 377px;
+}
+
 .signup-error {
   background-color: #be4b49;
   border: 0;
@@ -119,11 +121,12 @@
   box-shadow: 0 0 0 1px rgba(139, 3, 0, .75), 0 1px 10px rgba(0, 0, 0, .35);
   color: #fff;
   list-style: none;
-  padding: 8px;
-  width: 140px;
+  padding: 8px 10px;
+  margin: 3px;
+  width: 377px;
   font-size: 13px;
   font-weight: bold;
   float: left;
-  margin-top: 15px;
-  margin-right: 10px;
+  // margin-top: 15px;
+  // margin-right: 10px;
 }

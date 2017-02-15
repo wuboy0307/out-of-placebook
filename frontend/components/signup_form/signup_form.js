@@ -34,11 +34,6 @@ class SignupForm extends React.Component {
     });
   }
 
-
-  // let signupErrors;
-  // if (this.props.signupErrors) {
-  //   signupErrors = this.props.signupErrors.map( (error, idx) => (<li className="signup-error" key={idx}>{error}</li>));
-  // }
   signupForm() {
     return (
         <form className="signup-form" onSubmit={ this.handleSubmit }>
@@ -93,7 +88,6 @@ class SignupForm extends React.Component {
     );
   }
 
-  // { signupErrors }
   renderErrors(key) {
     const errors = this.props.errors[key];
     if (errors && errors.length > 0) {

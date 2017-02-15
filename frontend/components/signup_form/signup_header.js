@@ -14,7 +14,7 @@ class SignupHeader extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.loginForm = this.loginForm.bind(this);
     this.handleGuestLogin = this.handleGuestLogin.bind(this);
-    this.renderErrros = this.renderErrors.bind(this);
+    this.renderErrors = this.renderErrors.bind(this);
   }
 
 

@@ -1,10 +1,14 @@
 import React from 'react';
+import CoverPhoto from './cover_photo';
+import ProfileLinkBar from './profile_link_bar';
 
 class ProfileNavBar extends React.Component {
   render() {
     return(
       <div className="profile-nav-bar">
-      navbar loaded
+        <CoverPhoto />
+        <ProfileLinkBar />
+        <div className="profile-picture"></div>
       </div>
     );
   }

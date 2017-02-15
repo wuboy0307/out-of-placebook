@@ -91,7 +91,7 @@ class SignupHeader extends React.Component {
 
     return (
       <header className="header-signup">
-        <nav className="header-nav">
+        <nav className="header-nav-signup">
           <h1 className="header-logo">OOPBook</h1>
           <div className="header-login">
           { this.renderErrors() }

@@ -44,6 +44,7 @@ a {
   padding-top: 12px;
   margin-left: 12px;
   margin-right: 12px;
+  margin-bottom: 10px;
 }
 
 .timeline-description {
@@ -341,4 +342,36 @@ a {
   border-left: 2px solid #dddfe2;
   padding-left: 5px;
   padding-bottom: 10px;
+}
+
+.timeline-photos-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 5px;
+}
+
+.timeline-side-bar-photo {
+  min-width: 101px;
+  min-height: 101px;
+  width: 101px;
+  height: 101px;
+  margin: 3px 0;
+}
+
+.timeline-friends-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 5px;
+}
+
+.timeline-side-bar-friend {
+  min-width: 101px;
+  min-height: 101px;
+  width: 101px;
+  height: 101px;
+  margin: 3px 0;
 }

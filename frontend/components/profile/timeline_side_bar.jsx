@@ -1,4 +1,6 @@
 import React from 'react';
+import PhotosBox from './photos_box';
+import FriendsBox from './friends_box';
 
 class TimelineSideBar extends React.Component {
   render () {
@@ -13,6 +15,8 @@ class TimelineSideBar extends React.Component {
             </div>
           </div>
           <div className="timeline-side-bar-item">more text</div>
+          <PhotosBox />
+          <FriendsBox />
       </div>
     );
   }

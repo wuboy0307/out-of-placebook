@@ -4,6 +4,7 @@ import CreatePost from '../post/create_post';
 import PostItem from '../post/post_item';
 
 class Timeline extends React.Component {
+
   render () {
     return(
       <div className="timeline">

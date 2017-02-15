@@ -154,13 +154,20 @@ a {
   height: 40px;
 }
 
+.post-item-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+
 .post-item {
   padding: 12px 12px 0;
   border: 1px solid;
   border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-  border-radius: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   background-color: #fff;
-  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -235,4 +242,16 @@ a {
   line-height: 14px;
   margin-right: 20px;
   padding: 4px 4px 4px 0;
+}
+.comment-box {
+  background-color: #f6f7f9;
+  border-radius: 0 0 3px 3px;
+  color: #1d2129;
+  overflow: visible;
+  width: auto;
+  height: 80px;
+  border-left: 1px;
+  border-right: 1px;
+  border-bottom: 1px;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
 }

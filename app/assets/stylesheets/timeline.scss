@@ -69,11 +69,36 @@
 .create-post-main {
   min-height: 73px;
   border: 1px solid black;
+  display: flex;
+  flex-direction: row;
 }
 
 .create-post-img-wrapper {
   margin: 12px 0 0 12px;
+  min-height: 1px;
 }
+
+.create-post-body {
+  padding: 18px 34px 13px 12px;
+  transition: font-size 0.2s ease-in-out, letter-spacing 0.2s ease-in-out;
+  min-height: 69px;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  line-height: 28px;
+  background-color: transparent;
+  box-sizing: border-box;
+  font-family: Helvetica, Arial, sans-serif;
+  height: 100%;
+  resize: none;
+  word-wrap: break-word;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+  outline: 0px;
+}
+
 
 .user-pic-xs {
   width: 40px;

@@ -7,7 +7,6 @@ class App extends React.Component {
     return(
       <div>
         <NavBar />
-        <Home />
         {this.props.children}
       </div>
     );

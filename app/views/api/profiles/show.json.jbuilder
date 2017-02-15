@@ -1,4 +1,5 @@
 json.profile do
+  json.id @user.id
   json.fname @user.fname
   json.lname @user.lname
   json.intro @user.intro

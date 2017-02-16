@@ -31,7 +31,7 @@ users = User.all
   Post.create!(wall_id: target_user.id, author_id: current_user.id, body: Faker::ChuckNorris.fact)
 end
 
-posts = Posts.all
+posts = Post.all
 
 100.times do
   post = posts.sample
@@ -39,7 +39,7 @@ posts = Posts.all
   Comment.create!(author_id: current_user.id, post_id: post.id, body: Faker::Hacker.say_something_smart)
 end
 
-comments = Comments.all
+comments = Comment.all
 
 2.times do
   100.times do

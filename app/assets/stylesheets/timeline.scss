@@ -28,6 +28,12 @@ a {
   justify-content: flex-start;
 }
 
+.timeline-side-bar-stick {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .timeline-side-bar-item {
   margin-bottom: 17px;
   max-width: 323px;

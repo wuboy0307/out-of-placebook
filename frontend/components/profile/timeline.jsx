@@ -5,6 +5,7 @@ import PostItem from '../post/post_item';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
+
 const mapStateToProps = (state) => ({
   posts: state.posts,
   profileList: state.profiles.profileList
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => ({
 class Timeline extends React.Component {
 
   render () {
+
     return(
       <div className="timeline">
           <TimelineSideBar />

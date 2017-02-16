@@ -3,6 +3,7 @@ import PhotosBox from './photos_box';
 import FriendsBox from './friends_box';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import stickykit from 'sticky-kit/dist/sticky-kit';
 
 const mapStateToProps = (state) => ({
   profileList: state.profiles.profileList
@@ -12,6 +13,10 @@ class TimelineSideBar extends React.Component {
   constructor(props) {
     super(props);
     this.renderIntro = this.renderIntro.bind(this);
+  }
+
+  componentDidMount() {
+    $('.timeline-side-bar-sticky').stick_in_parent();
   }
 
   renderIntro(currentUser) {
@@ -44,11 +49,13 @@ class TimelineSideBar extends React.Component {
     const currentUserProfile = this.props.profileList[this.props.params.profileId];
     return(
       <div className="timeline-side-bar">
+        <div className="timeline-side-bar-sticky">
+          { this.renderIntro(currentUserProfile) }
 
-        { this.renderIntro(currentUserProfile) }
+          <PhotosBox />
+          <FriendsBox currentUserProfile={currentUserProfile}/>
+        </div>
 
-        <PhotosBox />
-        <FriendsBox currentUserProfile={currentUserProfile}/>
       </div>
     );
   }

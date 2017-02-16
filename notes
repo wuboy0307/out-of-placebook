@@ -3,3 +3,5 @@ Remove RECEIVE_ERRORS from auth_reducer and actions as not currently being used
 remove 'hit thunk' from thunk.js
 
 remove window.store from oopbook.jsx
+
+have two-way dependent => destroy on users so that their friendships are removed if profile is deleted.

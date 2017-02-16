@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215221651) do
+ActiveRecord::Schema.define(version: 20170216145136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,30 @@ ActiveRecord::Schema.define(version: 20170215221651) do
     t.index ["completed"], name: "index_friendships_on_completed", using: :btree
     t.index ["friend_id"], name: "index_friendships_on_friend_id", using: :btree
     t.index ["user_id"], name: "index_friendships_on_user_id", using: :btree
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer  "wall_id",      null: false
+    t.integer  "author_id",    null: false
+    t.integer  "parent_id"
+    t.text     "body"
+    t.string   "content_type"
+    t.integer  "content_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["author_id"], name: "index_posts_on_author_id", using: :btree
+    t.index ["content_type", "content_id"], name: "index_posts_on_content_type_and_content_id", using: :btree
+    t.index ["parent_id"], name: "index_posts_on_parent_id", using: :btree
+    t.index ["wall_id"], name: "index_posts_on_wall_id", using: :btree
+  end
+
+  create_table "urls", force: :cascade do |t|
+    t.string   "url",         null: false
+    t.text     "title"
+    t.text     "description"
+    t.string   "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|

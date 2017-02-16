@@ -381,3 +381,20 @@ a {
   height: 101px;
   margin: 3px 0;
 }
+
+.post-item-url {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-item-url-photo {
+  height: 156px;
+  min-height: 156px;
+  width: 156px;
+  min-width: 156px;
+}
+
+.post-item-url-text {
+  display: flex;
+  flex-direction: column;
+}

@@ -2,6 +2,19 @@ import React from 'react';
 import CommentBox from '../comment/comment_box';
 
 class PostItem extends React.Component {
+  renderUrlContent() {
+    return(
+      <div className="post-item-url">
+        <img className="post-item-url-photo" />
+        <div className="post-item-url-text">
+          <div className="post-item-url-title"></div>
+          <div className="post-item-url-description"></div>
+          <div className="post-item-url-url"></div>
+        </div>
+      </div>
+    );
+  }
+
   render () {
     return(
       <div className="post-item-container">

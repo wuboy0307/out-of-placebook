@@ -35,35 +35,42 @@
     },
   },
 
-  posts: {
-    1: {
-      targetId: 1,
-      type: 'link',
-      timestamp: #{Date in UTC Format},
+  posts: [
+    {
+      id: 1,
+      wallId: 1,
       authorId: 1,
+      createdAt: #{Date in UTC Format},
       body "Check out this website",
-      url: "http://google.com",
-      parentId: null
+      parentId: null,
+      content: {
+        id: 5
+        type: url,
+        title: 'Welcome to Google'.
+        description: 'Superfast search engine',
+        image: 'http://google.com/image.png'
+      },
+      comments: [
+        {
+          id: 6,
+          authorId: 1,
+          postId: 1,
+          authorFullName: 'Bill Gates',
+          body: 'My least favourite site!',
+          comments: [
+            {
+              id: 12,
+              authorId: 2,
+              postId: 1,
+              authorFullName: 'Steve Jobs',
+              body: 'So bad...',
+            }
+          ]
+        }
+      ]
     },
-    2: {
-      targetId: 1,
-      type: 'status',
-      timestamp: #{Date in UTC Format},
-      authorId: 2,
-      url: null,
-      body "Check out this website",
-      parentId: null
-    },
-    3: {
-      targetId: 1,
-      type: 'image',
-      timestamp: #{Date in UTC Format},
-      authorId: 3,
-      url: "http://google.com/image",
-      body: "Check out this image",
-      parentId: null
-    }
-  },
+    { ... }
+  ],
 
   comments: {
     1: {

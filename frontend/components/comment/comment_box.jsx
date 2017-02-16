@@ -7,13 +7,29 @@ const mapStateToProps = (state) => ({
 });
 
 class CommentBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderLikes = this.renderLikes.bind(this);
+  }
+
+  renderLikes() {
+    const numLikes = this.props.numLikes;
+    if (numLikes > 0) {
+      return(
+        <div className="comment-box-activity">
+          {this.props.likeText}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
 
   render() {
     return(
       <div className="comment-box">
-        <div className="comment-box-activity">
-          5 people like this.
-        </div>
+        { this.renderLikes() }
+
         { this.props.comments.map(comment => <CommentItem key={comment.id} parentComment={comment} />)}
 
         <div className="comment-reply">

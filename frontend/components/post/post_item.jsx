@@ -110,7 +110,7 @@ class PostItem extends React.Component {
 
         </div>
 
-        <CommentBox comments={this.props.post.comments} />
+        <CommentBox comments={this.props.post.comments} numLikes={this.props.post.numLikes} likeText={this.props.post.likeText}/>
 
       </div>
     );

@@ -20,6 +20,8 @@ json.posts @posts.each do |post|
   json.parentID post.parent_id
   json.content post.content
   json.contentType post.content.class.name.downcase
+  json.numLikes post.likes.length
+  json.likeText post.like_preview_text(current_user)
   json.comments post.comments do |comment|
     next if comment.parent_id
     json.id comment.id
@@ -29,6 +31,7 @@ json.posts @posts.each do |post|
     json.authorAvatarUrl post.author.avatar_url
     json.body comment.body
     json.createdAt comment.age
+    json.numLikes comment.likes.length
     json.childComments comment.children do |child|
       json.id child.id
       json.authorId child.author_id
@@ -37,6 +40,7 @@ json.posts @posts.each do |post|
       json.postId child.post_id
       json.parentId child.parent_id
       json.createdAt child.age
+      json.numLikes child.likes.length
       json.body child.body
     end
   end

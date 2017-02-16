@@ -462,3 +462,8 @@ color: black;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   word-break: break-word;
 }
+
+// prevents posts with no likes from having double border
+.comment-reply:first-child .comment-reply-body {
+  border-top: 0;
+}

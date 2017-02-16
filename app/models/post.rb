@@ -27,10 +27,36 @@ class Post < ApplicationRecord
 
   has_many :likes, as: :likeable
 
+  has_many :liking_users, through: :likes, source: :liker
+
   include ActionView::Helpers::DateHelper
 
   def age
     time_ago_in_words(self.created_at)
+  end
+
+# TODO: display friend names as well.
+  def like_preview_text(user)
+    users_who_like_post = liking_users
+    num_likers = users_who_like_post.length
+    user_likes = users_who_like_post.include?(user)
+    if user_likes
+      if num_likers > 2
+        return "You and #{num_likers - 1} others like this."
+      elsif num_likers > 1
+        return "You and 1 other like this."
+      else
+        return "You like this."
+      end
+    elsif num_likers > 1
+      return "#{num_likers} people like this."
+    elsif num_likers > 0
+      return "1 person likes this."
+    else
+      # Below line is currently redundant (will use in newsfeed)
+      return "Nobody likes this. Be the first."
+    end
+
   end
 
   def scan_for_url

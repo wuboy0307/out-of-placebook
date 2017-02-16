@@ -34,6 +34,10 @@ class Comment < ApplicationRecord
     class_name: 'Comment',
     foreign_key: :parent_id
 
+  has_many :likes, as: :likeable
+
+  has_many :liking_users, through: :likes, source: :liker
+
   include ActionView::Helpers::DateHelper
 
   def age

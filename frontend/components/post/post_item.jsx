@@ -77,8 +77,19 @@ class PostItem extends React.Component {
   //   }
   // }
 
+
+  // NEED TO ADD APPROPRIATE AJAX CALLS FOR THIS
   toggleLike() {
-    this.setState({ numLikes: this.state.numLikes + 1});
+    if (this.state.currentUserLikes) {
+      this.setState({
+        numLikes: this.state.numLikes - 1,
+        currentUserLikes: !this.state.currentUserLikes
+      });
+    } else {
+      this.setState({ numLikes: this.state.numLikes + 1,
+      currentUserLikes: !this.state.currentUserLikes
+    });
+    }
   }
 
   render () {
@@ -122,7 +133,7 @@ class PostItem extends React.Component {
         <CommentBox comments={this.props.post.comments}
           numLikes={this.state.numLikes}
           currentUserLikes={this.state.currentUserLikes}
-          likeText={this.props.post.likeText}/>
+          likeText={this.props.post.likeText} />
 
       </div>
     );

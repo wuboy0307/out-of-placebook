@@ -7,8 +7,13 @@ class NavBar extends React.Component {
       <nav className="header-nav">
         <div className="nav-container">
           <div className="nav-left-side">
-            <div className="small-logo">OOP</div>
-            <div className="search-form">Form to search</div>
+            <div className="small-logo">O</div>
+            <form className="search-form">
+              <div className="search-form-input">
+                <input type="text" placeholder="search" />
+              </div>
+              <button type="button">Search</button>
+            </form>
           </div>
           <div className="nav-right-side">
             <div className="nav-link-profile">Mark</div>

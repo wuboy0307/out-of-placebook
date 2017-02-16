@@ -10,12 +10,4 @@ class CoverPhoto extends React.Component {
   }
 }
 
-export default CoverPhoto
-
-// import React from 'react';
-//
-// class CoverPhoto extends React.Component {
-//   render () {
-//     return();
-//   }
-// }
+export default CoverPhoto;

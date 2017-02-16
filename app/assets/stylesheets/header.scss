@@ -99,6 +99,19 @@
 
 // HEADER FOR NON-SIGNUP PAGE STARTING HERE
 
+@media (min-width: 850px) {
+  .nav-container {
+    padding: 0;
+    margin: auto;
+    width: 850px;
+  }
+  .header-nav{
+    padding: 0;
+    margin: auto;
+    width: 850px;
+  }
+}
+
 .header-nav {
   background: #4267b2;
   /*background-image: linear-gradient(#4e69a2, #4267b2 50%);*/
@@ -109,18 +122,19 @@
   margin: 0 auto;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 42px;
   border-bottom: 1px solid #29487d;
   align-items: center;
 }
 
 .nav-container {
-  width: 850px;
+  // width: 850px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .nav-left-side, .nav-right-side {
@@ -131,4 +145,73 @@
 .notifications-bar {
   display: flex;
   flex-direction: row;
+}
+
+.small-logo {
+  height: 24px;
+  width: 24px;
+  overflow: hidden;
+  font-size: 24px;
+  margin: auto 0;
+}
+
+.search-form-input {
+  background-color: #fff;
+  border: 1px solid #3b5998;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  box-sizing: border-box;
+  height: 26px;
+  max-width: 448px;
+  overflow: hidden;
+  padding-left: 5px;
+  padding-right: 48px;
+  top: 8px;
+  min-width: 144px;
+  width: 100%;
+  margin: auto 0;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  border-right: 0;
+}
+
+.search-form-input input {
+  color: #1d2129;
+  padding-left: 0;
+  height: 21px;
+  padding-top: 2px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 18px;
+  padding: 3px 0 0;
+  text-shadow: none;
+  border: none;
+  font-size: 14px;
+  background: #fff;
+  box-sizing: border-box;
+  outline: 1px solid rgba(0, 0, 0, 0);
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  border-right: 0;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.search-form button {
+  background: #f6f7f9;
+  border: 1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  cursor: pointer;
+  height: 24px;
+  padding: 0px 16px;
+  text-align: center;
+  margin-top: 1px;
+  border-left: 0;
 }

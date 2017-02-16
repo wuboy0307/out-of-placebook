@@ -5,7 +5,7 @@ class FriendsBox extends React.Component {
     return (
       <div className="timeline-side-bar-item">
         <div className="timeline-side-bar-header">
-          Friends
+          <i className="fa fa-users fa-2x" aria-hidden="true"></i><span>Friends {this.props.currentUserProfile.friendIds.length}</span>
         </div>
         <div className="timeline-friends-container">
           <img className="timeline-side-bar-friend" />

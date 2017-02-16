@@ -21,7 +21,7 @@ class TimelineSideBar extends React.Component {
         return(
           <div className="timeline-side-bar-item">
             <div className="timeline-side-bar-header">
-              Intro
+              <i className="fa fa-globe fa-2x" aria-hidden="true"></i><span>Intro</span>
             </div>
             <div className="timeline-description">You don't have an intro yet? How about writing one?</div>
           </div>
@@ -33,7 +33,7 @@ class TimelineSideBar extends React.Component {
       return(
         <div className="timeline-side-bar-item">
           <div className="timeline-side-bar-header">
-            Intro
+            <i className="fa fa-globe fa-2x" aria-hidden="true"></i><span>Intro</span>
           </div>
         <div className="timeline-description">{ currentUser.intro }</div>
         </div>);
@@ -48,7 +48,7 @@ class TimelineSideBar extends React.Component {
         { this.renderIntro(currentUserProfile) }
 
         <PhotosBox />
-        <FriendsBox />
+        <FriendsBox currentUserProfile={currentUserProfile}/>
       </div>
     );
   }

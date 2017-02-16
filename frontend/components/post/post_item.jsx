@@ -8,7 +8,7 @@ class PostItem extends React.Component {
     this.renderPostUser = this.renderPostUser.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.renderUrlContent = this.renderUrlContent.bind(this);
-    this.renderComments = this.renderComments.bind(this);
+    // this.renderComments = this.renderComments.bind(this);
   }
 
   renderContent() {
@@ -61,14 +61,16 @@ class PostItem extends React.Component {
     }
   }
 
-  renderComments() {
-    const comments = this.props.post.comments;
-    if (comments.length > 0) {
-      return(<CommentBox comments={comments} />);
-    } else {
-      return null;
-    }
-  }
+  // REDUNDANT AS COMMENTS IS ALWAYS AN ARRAY AND IM ALWAYS USING MAP
+  //
+  // renderComments() {
+  //   const comments = this.props.post.comments;
+  //   if (comments.length > 0) {
+  //     return(<CommentBox comments={comments} />);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   render () {
     return(
@@ -108,7 +110,7 @@ class PostItem extends React.Component {
 
         </div>
 
-        { this.renderComments() }
+        <CommentBox comments={this.props.post.comments} />
 
       </div>
     );

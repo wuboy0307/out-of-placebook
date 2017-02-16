@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+const mapStateToProps = (state) => ({
+  currentUser: state.auth.currentUser
+});
 
 class NavBar extends React.Component {
   render() {
+    const currentUser = this.props.currentUser;
     return(
       <nav className="header-nav">
         <div className="nav-container">
@@ -16,7 +21,7 @@ class NavBar extends React.Component {
             </form>
           </div>
           <div className="nav-right-side">
-            <div className="nav-link-profile"><img className="user-pic-header" />Mark</div>
+            <div className="nav-link-profile"><img className="user-pic-header" src={currentUser.avatar_url}/>{currentUser.fname}</div>
             <div className="nav-link-home">Home</div>
             <div className="notifications-bar">
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
@@ -30,4 +35,7 @@ class NavBar extends React.Component {
   }
 }
 
-export default NavBar;
+export default connect(
+  mapStateToProps,
+  null
+)(NavBar);

@@ -3,8 +3,8 @@ import React from 'react';
 class CoverPhoto extends React.Component {
   render () {
     return(
-      <div className="cover-photo">
-        
+      <div>
+        <img className="cover-photo" src="/assets/coverphoto.jpg" />
       </div>
     );
   }

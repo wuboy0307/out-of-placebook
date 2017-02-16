@@ -8,8 +8,8 @@ class ProfileNavBar extends React.Component {
       <div className="profile-nav-bar">
         <CoverPhoto />
         <ProfileLinkBar />
-        <div className="profile-picture"></div>
-        <div className="profile-name">Mark Zuckerberg</div>
+        <div className="profile-picture"><img src="/assets/profilepic.jpg"/></div>
+        <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
       </div>
     );
   }

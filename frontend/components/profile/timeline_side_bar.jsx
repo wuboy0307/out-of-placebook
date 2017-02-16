@@ -1,25 +1,60 @@
 import React from 'react';
 import PhotosBox from './photos_box';
 import FriendsBox from './friends_box';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => ({
+  profileList: state.profiles.profileList
+});
 
 class TimelineSideBar extends React.Component {
-  render () {
-    return(
-      <div className="timeline-side-bar">
+  constructor(props) {
+    super(props);
+    this.renderIntro = this.renderIntro.bind(this);
+  }
+
+  renderIntro(currentUser) {
+
+    if (!currentUser.intro) {
+      if (window.currentUser.id === currentUser.id) {
+        return(
           <div className="timeline-side-bar-item">
             <div className="timeline-side-bar-header">
               Intro
             </div>
-            <div className="timeline-description">
-              Lorem Ipsum sdi;fj sdfgij dfigj dfsijgdfisjgd;sfij gdfs;jg
-            </div>
+            <div className="timeline-description">You don't have an intro yet? How about writing one?</div>
           </div>
-          <div className="timeline-side-bar-item">more text</div>
-          <PhotosBox />
-          <FriendsBox />
+        );
+      } else {
+        return null;
+      }
+    } else {
+      return(
+        <div className="timeline-side-bar-item">
+          <div className="timeline-side-bar-header">
+            Intro
+          </div>
+        <div className="timeline-description">{ currentUser.intro }</div>
+        </div>);
+    }
+  }
+
+  render () {
+    const currentUserProfile = this.props.profileList[this.props.params.profileId];
+    return(
+      <div className="timeline-side-bar">
+
+        { this.renderIntro(currentUserProfile) }
+
+        <PhotosBox />
+        <FriendsBox />
       </div>
     );
   }
 }
 
-export default TimelineSideBar;
+export default connect(
+  mapStateToProps,
+  null
+)(withRouter(TimelineSideBar));

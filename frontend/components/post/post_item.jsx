@@ -1,7 +1,13 @@
 import React from 'react';
 import CommentBox from '../comment/comment_box';
+import { Link } from 'react-router';
 
 class PostItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderPostUser = this.renderPostUser.bind(this);
+  }
+
   renderUrlContent() {
     return(
       <div className="post-item-url">
@@ -15,6 +21,27 @@ class PostItem extends React.Component {
     );
   }
 
+  renderPostUser() {
+    if (this.props.post.wallId === this.props.post.authorId) {
+      return(
+        <div className="post-item-user-data">
+          <Link to={`/profile/${this.props.post.authorId}`}>
+            <span className="post-item-user-1">{this.props.post.authorFullName}</span>
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div className="post-item-user-data">
+          <Link to={`/profile/${this.props.post.authorId}`}>
+            <span className="post-item-user-1">{this.props.post.authorFullName}</span>
+          </Link>
+           > <span className="post-item-user-1">{this.props.post.authorFullName}</span>
+        </div>
+      );
+    }
+  }
+
   render () {
     return(
       <div className="post-item-container">
@@ -26,11 +53,11 @@ class PostItem extends React.Component {
             </div>
 
             <div className="post-item-header-data">
-              <div className="post-item-user-data">
-                <span className="post-item-user-1">Bill Gates</span> > <span className="post-item-user-2">Mark Zuckerberg</span>
-              </div>
+
+                { this.renderPostUser() }
+
               <div className="post-item-time-data">
-                20 hrs
+                { this.props.post.createdAt }
               </div>
             </div>
           </div>

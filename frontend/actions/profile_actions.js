@@ -16,7 +16,7 @@ export const fetchSingleProfileFailure = errors => ({
 
 export const fetchSingleProfileRequest = profileId => dispatch => (
   APIUtil.fetchProfile(profileId)
-    .then(data => dispatch(fetchSingleProfileSuccess(data.profile)),
+    .then(data => dispatch(fetchSingleProfileSuccess(data)),
       err => dispatch(fetchSingleProfileFailure(err.responseJSON)))
 );
 

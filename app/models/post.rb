@@ -25,6 +25,12 @@ class Post < ApplicationRecord
 
   before_save :scan_for_url
 
+  include ActionView::Helpers::DateHelper
+
+  def age
+    time_ago_in_words(self.created_at)
+  end
+
   def scan_for_url
     url = self.body.slice(URI.regexp)
 

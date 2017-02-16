@@ -11,8 +11,9 @@ const profilesReducer = (oldState = _initialState, action) => {
   let newState;
   switch(action.type) {
     case FETCH_SINGLE_PROFILE_SUCCESS:
+      let fetchedProfile = action.profile.profile;
       newState = merge({}, _initialState, oldState);
-      newState.profileList[action.profile.id] = action.profile;
+      newState.profileList[fetchedProfile.id] = fetchedProfile;
       return newState;
     default:
       return oldState;

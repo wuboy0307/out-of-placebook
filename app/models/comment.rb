@@ -33,4 +33,10 @@ class Comment < ApplicationRecord
   has_many :children,
     class_name: 'Comment',
     foreign_key: :parent_id
+
+  include ActionView::Helpers::DateHelper
+
+  def age
+    time_ago_in_words(self.created_at)
+  end
 end

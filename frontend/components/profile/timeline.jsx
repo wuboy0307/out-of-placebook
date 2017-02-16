@@ -5,6 +5,10 @@ import PostItem from '../post/post_item';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
+const mapStateToProps = (state) => ({
+  posts: state.posts
+});
+
 class Timeline extends React.Component {
 
   render () {
@@ -13,12 +17,14 @@ class Timeline extends React.Component {
           <TimelineSideBar />
           <div className="timeline-main">
             <CreatePost />
-            <PostItem />
-            <PostItem />
+            { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
           </div>
       </div>
     );
   }
 }
 
-export default Timeline;
+export default connect(
+  mapStateToProps,
+  null
+)(Timeline);

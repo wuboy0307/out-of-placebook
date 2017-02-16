@@ -5,3 +5,5 @@ remove 'hit thunk' from thunk.js
 remove window.store from oopbook.jsx
 
 have two-way dependent => destroy on users so that their friendships are removed if profile is deleted.
+
+improve profile show jsob jbuilder to make it not have to fetch child comments again (line 28)

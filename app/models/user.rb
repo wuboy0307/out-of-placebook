@@ -55,6 +55,11 @@ class User < ApplicationRecord
     class_name: 'Post',
     foreign_key: :wall_id
 
+  has_many :likes, class_name: 'Like', foreign_key: :liker_id
+
+  has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
+  has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
+
   def friend_ids
     friendships.map(&:id)
   end

@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: likes
+#
+#  id            :integer          not null, primary key
+#  liker_id      :integer          not null
+#  likeable_type :string           not null
+#  likeable_id   :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  liker_id: 1
+  likeable: one
+
+two:
+  liker_id: 1
+  likeable: two

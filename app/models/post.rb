@@ -25,6 +25,8 @@ class Post < ApplicationRecord
 
   before_save :scan_for_url
 
+  has_many :likes, as: :likeable
+
   include ActionView::Helpers::DateHelper
 
   def age

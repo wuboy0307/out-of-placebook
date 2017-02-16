@@ -46,6 +46,9 @@ class User < ApplicationRecord
     foreign_key: :author_id
 
   # COULD POTENTIALLY DO 'HAS MANY COMMENTED-ON-POSTS THROUGH COMMENTS??'
+  has_many :commented_on_posts,
+    through: :comments,
+    source: :post
 
   has_many :posts,
     class_name: 'Post',

@@ -62,14 +62,16 @@ class Post < ApplicationRecord
     likers_excluding_user = liking_users.reject{ |u| u.id == user.id }
     num_likers_excluding_user = likers_excluding_user.length
 
-    if num_likers_excluding_user == 0
+    case num_likers_excluding_user
+    when 0
       return nil
-    elsif num_likers_excluding_user == 1
+    when 1
       return likers_excluding_user.map { |user| "#{user.full_name} "}.join() + "likes this."
-    elsif num_likers_excluding_user == 2
+    when 2
       return likers_excluding_user.map { |user| "#{user.full_name}"}.join(" and ") + " like this."
     else
-      return likers_excluding_user.take(2).map { |user| "#{user.full_name}"}.join(", ") + " and #{num_likers_excluding_user - 2} other like this."
+      return likers_excluding_user.take(2).map { |user| "#{user.full_name}"}
+        .join(", ") + " and #{num_likers_excluding_user - 2} others like this."
     end
   end
 

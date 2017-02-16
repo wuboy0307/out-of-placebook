@@ -16,10 +16,23 @@ class CommentBox extends React.Component {
   renderLikes() {
     const numLikes = this.props.numLikes;
     const userLikes = this.props.currentUserLikes;
+    let computedText;
+
+     if (userLikes && numLikes === 1) {
+      computedText = "You like this.";
+    } else if (userLikes && numLikes === 2) {
+      computedText = `You and ${this.props.likeText.slice(0,-12)} like this.`
+    } else if (userLikes && numLikes > 2) {
+      computedText = `You, ${this.props.likeText}`;
+    } else {
+      computedText = this.props.likeText;
+    }
+
+
     if (numLikes > 0) {
       return(
         <div className="comment-box-activity">
-          {numLikes}
+          {computedText}
         </div>
       );
     } else {

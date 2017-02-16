@@ -6,7 +6,8 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
-  posts: state.posts
+  posts: state.posts,
+  profileList: state.profiles.profileList
 });
 
 class Timeline extends React.Component {
@@ -17,7 +18,7 @@ class Timeline extends React.Component {
           <TimelineSideBar />
           <div className="timeline-main">
             <CreatePost />
-            { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
+            { this.props.posts.map(post => <PostItem key={post.id} post={post} profile={this.props.profileList[this.props.params.profileId]}/>)}
           </div>
       </div>
     );
@@ -27,4 +28,4 @@ class Timeline extends React.Component {
 export default connect(
   mapStateToProps,
   null
-)(Timeline);
+)(withRouter(Timeline));

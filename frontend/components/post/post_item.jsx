@@ -8,6 +8,7 @@ class PostItem extends React.Component {
     this.renderPostUser = this.renderPostUser.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.renderUrlContent = this.renderUrlContent.bind(this);
+    this.renderComments = this.renderComments.bind(this);
   }
 
   renderContent() {
@@ -51,9 +52,21 @@ class PostItem extends React.Component {
           <Link to={`/profile/${this.props.post.authorId}`}>
             <span className="post-item-user-1">{this.props.post.authorFullName}</span>
           </Link>
-           > <span className="post-item-user-1">{this.props.post.authorFullName}</span>
+          <i className="fa fa-chevron-right" aria-hidden="true"></i>
+          <Link to={`/profile/${this.props.profile.id}`}>
+            <span className="post-item-user-1">{`${this.props.profile.fname} ${this.props.profile.lname}`}</span>
+          </Link>
         </div>
       );
+    }
+  }
+
+  renderComments() {
+    const comments = this.props.post.comments;
+    if (comments.length > 0) {
+      return(<CommentBox comments={comments} />);
+    } else {
+      return null;
     }
   }
 
@@ -95,8 +108,7 @@ class PostItem extends React.Component {
 
         </div>
 
-
-        <CommentBox />
+        { this.renderComments() }
 
       </div>
     );

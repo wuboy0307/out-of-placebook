@@ -8,9 +8,9 @@ class CommentInCommentItem extends React.Component {
         <div className="comment-comment-container">
           <img className="user-pic-xxxs" />
           <div className="comment-body">
-            <div className="comment-data"><span className="comment-user-name">Mark Zuckerberg</span>I love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB
-             love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB
-            love FB love FB love FB love FB love FB love FB love FB</div>
+            <div className="comment-data"><span className="comment-user-name">{this.props.childComment.authorFullName}</span>
+              {this.props.childComment.body}
+            </div>
             <div className="comment-actions">
               <div className="comment-action">Like</div>
               <div className="comment-action">Reply</div>
@@ -32,9 +32,9 @@ class CommentItem extends React.Component {
 
           <img className="user-pic-xxs" />
           <div className="comment-body">
-            <div className="comment-data"><span className="comment-user-name">Bill gates</span>I love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB
-             love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB love FB
-            love FB love FB love FB love FB love FB love FB love FB</div>
+            <div className="comment-data"><span className="comment-user-name">{this.props.parentComment.authorFullName}</span>
+              {this.props.parentComment.body}
+            </div>
             <div className="comment-actions">
               <div className="comment-action">Like</div>
               <div className="comment-action">Reply</div>
@@ -42,8 +42,8 @@ class CommentItem extends React.Component {
             </div>
           </div>
         </div>
-        <CommentInCommentItem />
-        <CommentInCommentItem />
+
+        { this.props.parentComment.childComments.map(child => (<CommentInCommentItem key={child.id} childComment={child}/>))}
       </div>
     );
   }

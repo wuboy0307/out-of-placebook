@@ -9,9 +9,7 @@ class CommentBox extends React.Component {
         <div className="comment-box-activity">
           5 people like this.
         </div>
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
+        { this.props.comments.map(comment => <CommentItem key={comment.id} parentComment={comment} />)}
       </div>
     );
   }

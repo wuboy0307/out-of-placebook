@@ -77,7 +77,7 @@ class PostItem extends React.Component {
 
           <div className="post-item-header">
             <div className="post-item-img-wrapper">
-              <img src="" className="user-pic-xs" />
+              <img src={this.props.post.authorAvatarUrl} className="user-pic-xs" />
             </div>
 
             <div className="post-item-header-data">

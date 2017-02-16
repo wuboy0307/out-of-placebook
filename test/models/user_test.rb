@@ -13,10 +13,10 @@
 #  from            :text
 #  intro           :text
 #  description     :text
-#  profile_url     :string
 #  cover_url       :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  avatar_url      :string
 #
 
 require 'test_helper'

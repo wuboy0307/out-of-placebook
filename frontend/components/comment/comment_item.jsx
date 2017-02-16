@@ -6,7 +6,7 @@ class CommentInCommentItem extends React.Component {
     return(
       <div className="comment-in-comment-item">
         <div className="comment-comment-container">
-          <img className="user-pic-xxxs" />
+          <img className="user-pic-xxxs" src={this.props.childComment.authorAvatarUrl}/>
           <div className="comment-body">
             <div className="comment-data"><span className="comment-user-name">{this.props.childComment.authorFullName}</span>
               {this.props.childComment.body}
@@ -30,7 +30,7 @@ class CommentItem extends React.Component {
       <div className="comment-item-border">
         <div className="comment-item">
 
-          <img className="user-pic-xxs" />
+          <img className="user-pic-xxs" src={this.props.parentComment.authorAvatarUrl}/>
           <div className="comment-body">
             <div className="comment-data"><span className="comment-user-name">{this.props.parentComment.authorFullName}</span>
               {this.props.parentComment.body}

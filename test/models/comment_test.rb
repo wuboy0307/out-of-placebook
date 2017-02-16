@@ -6,7 +6,7 @@
 #  author_id    :integer          not null
 #  post_id      :integer          not null
 #  parent_id    :integer
-#  body         :text
+#  body         :text             not null
 #  content_type :string
 #  content_id   :integer
 #  created_at   :datetime         not null

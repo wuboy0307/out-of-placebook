@@ -14,6 +14,7 @@ json.posts @posts.each do |post|
   json.wallId post.wall_id
   json.authorId post.author_id
   json.authorFullName post.author.full_name
+  json.authorAvatarUrl post.author.avatar_url
   json.createdAt post.age
   json.body post.body
   json.parentID post.parent_id
@@ -25,15 +26,17 @@ json.posts @posts.each do |post|
     json.authorId comment.author_id
     json.postId comment.post_id
     json.authorFullName comment.author.full_name
+    json.authorAvatarUrl post.author.avatar_url
     json.body comment.body
     json.createdAt comment.age
     json.childComments comment.children do |child|
       json.id child.id
       json.authorId child.author_id
+      json.authorFullName child.author.full_name
+      json.authorAvatarUrl post.author.avatar_url
       json.postId child.post_id
       json.parentId child.parent_id
       json.createdAt child.age
-      json.authorFullName child.author.full_name
       json.body child.body
     end
   end

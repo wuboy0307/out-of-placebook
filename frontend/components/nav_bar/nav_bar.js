@@ -16,12 +16,12 @@ class NavBar extends React.Component {
             </form>
           </div>
           <div className="nav-right-side">
-            <div className="nav-link-profile">Mark</div>
+            <div className="nav-link-profile"><img className="user-pic-header" />Mark</div>
             <div className="nav-link-home">Home</div>
             <div className="notifications-bar">
-              <div>Friends</div>
-              <div>Messages</div>
-              <div>Notifications</div>
+              <div><i className="fa fa-users" aria-hidden="true"></i></div>
+              <div><i className="fa fa-comments" aria-hidden="true"></i></div>
+              <div><i className="fa fa-globe" aria-hidden="true"></i></div>
             </div>
           </div>
         </div>

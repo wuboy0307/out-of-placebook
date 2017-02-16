@@ -41,8 +41,26 @@ class User < ApplicationRecord
     through: :friendships,
     source: :friend
 
+  has_many :comments,
+    class_name: 'Comment',
+    foreign_key: :author_id
+
+  # COULD POTENTIALLY DO 'HAS MANY COMMENTED-ON-POSTS THROUGH COMMENTS??'
+
+  has_many :posts,
+    class_name: 'Post',
+    foreign_key: :author_id
+
+  has_many :wall_posts,
+    class_name: 'Post',
+    foreign_key: :wall_id
+
   def friend_ids
     friendships.map(&:id)
+  end
+
+  def full_name
+    "#{fname} #{lname}"
   end
 
   def self.find_by_credentials(email, password)

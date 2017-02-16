@@ -40,6 +40,7 @@
       id: 1,
       wallId: 1,
       authorId: 1,
+      authorFullName: 'Mark Zuckerberg',
       createdAt: #{Date in UTC Format},
       body "Check out this website",
       parentId: null,

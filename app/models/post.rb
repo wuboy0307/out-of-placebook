@@ -15,10 +15,13 @@
 
 class Post < ApplicationRecord
   validates :wall_id, :author_id, presence: true
+  validates :body, presence: true
 
   belongs_to :content, polymorphic: true, optional: true
   belongs_to :wall, class_name: 'User', foreign_key: :wall_id
   belongs_to :author, class_name: 'User', foreign_key: :author_id
+
+  has_many :comments
 
   before_save :scan_for_url
 

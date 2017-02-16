@@ -22,6 +22,7 @@ json.posts @posts.each do |post|
   json.contentType post.content.class.name.downcase
   json.numLikes post.likes.length
   json.likeText post.like_preview_text(current_user)
+  json.userLikesPost post.user_likes?(current_user)
   json.comments post.comments do |comment|
     next if comment.parent_id
     json.id comment.id

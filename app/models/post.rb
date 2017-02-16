@@ -56,7 +56,10 @@ class Post < ApplicationRecord
       # Below line is currently redundant (will use in newsfeed)
       return "Nobody likes this. Be the first."
     end
+  end
 
+  def user_likes?(user)
+    liking_users.include?(user)
   end
 
   def scan_for_url

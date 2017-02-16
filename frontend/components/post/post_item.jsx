@@ -8,7 +8,12 @@ class PostItem extends React.Component {
     this.renderPostUser = this.renderPostUser.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.renderUrlContent = this.renderUrlContent.bind(this);
+    this.toggleLike = this.toggleLike.bind(this);
     // this.renderComments = this.renderComments.bind(this);
+    this.state = {
+      numLikes: this.props.post.numLikes,
+      currentUserLikes: this.props.post.userLikesPost
+    };
   }
 
   renderContent() {
@@ -72,6 +77,10 @@ class PostItem extends React.Component {
   //   }
   // }
 
+  toggleLike() {
+    this.setState({ numLikes: this.state.numLikes + 1});
+  }
+
   render () {
     return(
       <div className="post-item-container">
@@ -102,7 +111,7 @@ class PostItem extends React.Component {
 
           <div className="post-item-footer">
             <div className="post-action-container">
-              <div className="post-action">Like</div>
+              <div className="post-action" onClick={this.toggleLike}>Like {this.state.numLikes}</div>
               <div className="post-action">Comment</div>
               <div className="post-action">Share</div>
             </div>
@@ -110,7 +119,10 @@ class PostItem extends React.Component {
 
         </div>
 
-        <CommentBox comments={this.props.post.comments} numLikes={this.props.post.numLikes} likeText={this.props.post.likeText}/>
+        <CommentBox comments={this.props.post.comments}
+          numLikes={this.state.numLikes}
+          currentUserLikes={this.state.currentUserLikes}
+          likeText={this.props.post.likeText}/>
 
       </div>
     );

@@ -387,7 +387,9 @@ a {
   flex-direction: row;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 1px 4px rgba(0, 0, 0, .1);
 }
-
+.post-item-url * {
+color: black;
+}
 .post-item-url-photo {
   height: 156px;
   min-height: 156px;

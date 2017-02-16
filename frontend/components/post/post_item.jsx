@@ -23,14 +23,16 @@ class PostItem extends React.Component {
   renderUrlContent() {
     const content = this.props.post.content;
     return(
+      <a href={content.url}>
       <div className="post-item-url">
-        <img className="post-item-url-photo" src={content.image}/>
-        <div className="post-item-url-text">
-          <div className="post-item-url-title">{content.title}</div>
-          <div className="post-item-url-description">{content.description}</div>
-          <div className="post-item-url-url">{content.url}</div>
-        </div>
+          <img className="post-item-url-photo" src={content.image}/>
+          <div className="post-item-url-text">
+            <div className="post-item-url-title">{content.title}</div>
+            <div className="post-item-url-description">{content.description}</div>
+            <div className="post-item-url-url">{content.url}</div>
+          </div>
       </div>
+    </a>
     );
   }
 

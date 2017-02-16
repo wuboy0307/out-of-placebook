@@ -10,22 +10,16 @@ class CommentBox extends React.Component {
   constructor(props) {
     super(props);
     this.renderLikes = this.renderLikes.bind(this);
-    this.state = {
-      numLikes: this.props.numLikes,
-      currentUserLikes: this.props.currentUserLikes
-    };
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setState({numLikes: newProps.numLikes});
-  }
 
   renderLikes() {
-    const numLikes = this.state.numLikes;
+    const numLikes = this.props.numLikes;
+    const userLikes = this.props.currentUserLikes;
     if (numLikes > 0) {
       return(
         <div className="comment-box-activity">
-          {this.state.numLikes}
+          {numLikes}
         </div>
       );
     } else {

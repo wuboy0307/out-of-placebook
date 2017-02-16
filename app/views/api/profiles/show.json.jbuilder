@@ -18,6 +18,7 @@ json.posts @posts.each do |post|
   json.body post.body
   json.parentID post.parent_id
   json.content post.content
+  json.contentType post.content.class.name.downcase
   json.comments post.comments do |comment|
     next if comment.parent_id
     json.id comment.id

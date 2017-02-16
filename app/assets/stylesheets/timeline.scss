@@ -385,6 +385,7 @@ a {
 .post-item-url {
   display: flex;
   flex-direction: row;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 1px 4px rgba(0, 0, 0, .1);
 }
 
 .post-item-url-photo {
@@ -392,9 +393,35 @@ a {
   min-height: 156px;
   width: 156px;
   min-width: 156px;
+  border: 1px solid rgba(0, 0, 0, .1);
 }
 
 .post-item-url-text {
   display: flex;
   flex-direction: column;
+  padding: 10px;
+}
+
+.post-item-url-title {
+  font-family: Georgia, serif;
+    letter-spacing: normal;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-bottom: 5px;
+    max-height: 110px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.post-item-url-description {
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 16px;
+  max-height: 80px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.post-item-url-url {
+  margin-top: 10px
 }

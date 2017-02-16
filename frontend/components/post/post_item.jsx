@@ -6,16 +6,29 @@ class PostItem extends React.Component {
   constructor(props) {
     super(props);
     this.renderPostUser = this.renderPostUser.bind(this);
+    this.renderContent = this.renderContent.bind(this);
+    this.renderUrlContent = this.renderUrlContent.bind(this);
+  }
+
+  renderContent() {
+    const post = this.props.post;
+    if (!post.content) {
+      return null;
+    }
+    if (post.contentType === 'url') {
+      return this.renderUrlContent();
+    }
   }
 
   renderUrlContent() {
+    const content = this.props.post.content;
     return(
       <div className="post-item-url">
-        <img className="post-item-url-photo" />
+        <img className="post-item-url-photo" src={content.image}/>
         <div className="post-item-url-text">
-          <div className="post-item-url-title"></div>
-          <div className="post-item-url-description"></div>
-          <div className="post-item-url-url"></div>
+          <div className="post-item-url-title">{content.title}</div>
+          <div className="post-item-url-description">{content.description}</div>
+          <div className="post-item-url-url">{content.url}</div>
         </div>
       </div>
     );
@@ -63,11 +76,11 @@ class PostItem extends React.Component {
           </div>
 
           <div className="post-item-body">
-            <p>Yo whaddup dude??</p>
+            <p> { this.props.post.body }</p>
           </div>
 
           <div className="post-item-content">
-
+            { this.renderContent() }
           </div>
 
           <div className="post-item-footer">

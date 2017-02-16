@@ -9,10 +9,12 @@ class PostItem extends React.Component {
     this.renderContent = this.renderContent.bind(this);
     this.renderUrlContent = this.renderUrlContent.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
+    this.selectCommentBox = this.selectCommentBox.bind(this);
     // this.renderComments = this.renderComments.bind(this);
     this.state = {
       numLikes: this.props.post.numLikes,
-      currentUserLikes: this.props.post.userLikesPost
+      currentUserLikes: this.props.post.userLikesPost,
+      selected: false
     };
   }
 
@@ -92,6 +94,10 @@ class PostItem extends React.Component {
     }
   }
 
+  selectCommentBox() {
+    this.setState({selected: !this.state.selected});
+  }
+
   render () {
     return(
       <div className="post-item-container">
@@ -122,8 +128,8 @@ class PostItem extends React.Component {
 
           <div className="post-item-footer">
             <div className="post-action-container">
-              <div className="post-action" onClick={this.toggleLike}>Like {this.state.numLikes}</div>
-              <div className="post-action">Comment</div>
+              <div className={`like-action ${this.state.currentUserLikes}`} onClick={this.toggleLike}>Like</div>
+              <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
               <div className="post-action">Share</div>
             </div>
           </div>
@@ -133,7 +139,8 @@ class PostItem extends React.Component {
         <CommentBox comments={this.props.post.comments}
           numLikes={this.state.numLikes}
           currentUserLikes={this.state.currentUserLikes}
-          likeText={this.props.post.likeText} />
+          likeText={this.props.post.likeText}
+          selected={this.state.selected} />
 
       </div>
     );

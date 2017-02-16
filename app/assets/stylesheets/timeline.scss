@@ -243,22 +243,33 @@ a {
 
 .post-action-container {
   border-top: 1px solid #e5e5e5;
-  margin: 0 12px;
-  padding-top: 4px;
+  margin: 0 10px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
 
-.post-action {
+.post-action, .like-action {
   color: #7f7f7f;
   display: inline-block;
   font-size: 12px;
   font-weight: bold;
   line-height: 14px;
-  margin-right: 20px;
-  padding: 4px 4px 4px 0;
+  padding: 4px 20px;
+  cursor: pointer;
+  margin-top: 5px;
+  // border: 1px solid black;
+  transition: 200ms cubic-bezier(.08,.52,.52,1) filter, 200ms cubic-bezier(.08,.52,.52,1) transform;
+
 }
+
+.like-action.true {
+  // border: 1px solid black;
+  transition: 200ms cubic-bezier(.08,.52,.52,1) filter, 200ms cubic-bezier(.08,.52,.52,1) transform;
+  color: rgb(88, 144, 255);
+}
+
+
 .comment-box {
   background-color: #f6f7f9;
   border-bottom-left-radius: 3px;

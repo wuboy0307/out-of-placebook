@@ -12,6 +12,12 @@ class CommentBox extends React.Component {
     this.renderLikes = this.renderLikes.bind(this);
   }
 
+  componentWillReceiveProps(newProps){
+    if (newProps.selected) {
+      this.nameInput.focus();
+    }
+  }
+
 
   renderLikes() {
     const numLikes = this.props.numLikes;
@@ -21,7 +27,7 @@ class CommentBox extends React.Component {
      if (userLikes && numLikes === 1) {
       computedText = "You like this.";
     } else if (userLikes && numLikes === 2) {
-      computedText = `You and ${this.props.likeText.slice(0,-12)} like this.`
+      computedText = `You and ${this.props.likeText.slice(0,-12)} like this.`;
     } else if (userLikes && numLikes > 2) {
       computedText = `You, ${this.props.likeText}`;
     } else {
@@ -51,7 +57,9 @@ class CommentBox extends React.Component {
           <div className="comment-reply-body">
             <img className="user-pic-xxs" src={this.props.currentUserAvatarUrl} />
             <form className="comment-reply-form">
-              <input type="text" className="comment-reply-input" placeholder="Write a comment..." />
+              <input type="text" className="comment-reply-input"
+                ref={(input) => { this.nameInput = input; }}
+                placeholder="Write a comment..." />
             </form>
           </div>
         </div>

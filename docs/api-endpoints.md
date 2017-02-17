@@ -24,6 +24,11 @@
 - `POST /api/users/:id/block`
   - blocks user
 
+
+### Profiles
+- `GET /api/profiles/:id`
+  - gets profile and posts of :id
+
 ### Session
 
 - `POST /api/session`
@@ -33,10 +38,15 @@
 
 ### Friendships
 
-- `POST /api/friendships/:id/accept`
+- `POST /api/friends`
+  - send friend request
+- `DELETE /api/friends`
+  - reject friend request
+- `PUT /api/friends`
   - accept friend request
-- `POST /api/friendships/:id/deny`
-  - deny friend request
+- `GET /api/friends`
+  - get friend requests
+
 
 ### Newsfeed
 

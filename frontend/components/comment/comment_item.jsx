@@ -114,7 +114,8 @@ class CommentItem extends React.Component {
     e.preventDefault();
     let comment = {
       post_id: this.props.postId,
-      body: this.state.replyToUser
+      body: this.state.replyToUser,
+      parent_id: this.props.parentComment.id
     };
     this.props.createSingleCommentRequest(comment);
   }

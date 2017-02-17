@@ -17,7 +17,8 @@ class CreatePost extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      postBody: ''
+      postBody: '',
+      bodyError: false
     };
   }
 
@@ -27,17 +28,21 @@ class CreatePost extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    if (this.state.postBody.length < 1) {
+      this.setState({bodyError: true});
+      return;
+    }
     const postInfo = {
       wall_id: this.props.profileId,
       body: this.state.postBody
     };
-    this.props.createSinglePostRequest(postInfo).then(() => this.setState({postBody: ''}));
+    this.props.createSinglePostRequest(postInfo).then(() => this.setState({bodyError: false, postBody: ''}));
   }
 
   renderForm(){
     return(
     <form className="create-post-form" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Whats on your mind?" className="create-post-input"
+        <input type="text" placeholder="Whats on your mind?" className={`create-post-input-${this.state.bodyError}`}
           value={this.state.postBody} onChange={this.handleInput} />
     </form>
     );

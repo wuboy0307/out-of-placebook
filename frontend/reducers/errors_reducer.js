@@ -10,7 +10,7 @@ const errorsReducer = (oldState = _initialState, action) => {
       return merge({}, oldState, action.errors);
 
     default:
-      return oldState;
+      return {};
   }
 };
 

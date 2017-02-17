@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 // react router
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
 
 // react components
 import App from './app';
@@ -28,6 +28,7 @@ const Root = ({ store }) => {
     <Provider store={store}>
       <Router history={hashHistory}>
         <Route path="/" component={App} onEnter={_ensureLoggedIn} >
+          <IndexRedirect to="/profile/15" />
           <Route path="/profile/:profileId" component={Home} />
         </Route>
         <Route path="/signup" component={SignUpForm} onEnter={_redirectIfLoggedIn} />

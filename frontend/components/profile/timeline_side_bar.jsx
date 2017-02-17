@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import stickykit from 'sticky-kit/dist/sticky-kit';
 
 const mapStateToProps = (state) => ({
-  profileList: state.profiles.profileList
+  profile: state.profile
 });
 
 class TimelineSideBar extends React.Component {
@@ -46,7 +46,7 @@ class TimelineSideBar extends React.Component {
   }
 
   render () {
-    const currentUserProfile = this.props.profileList[this.props.params.profileId];
+    const currentUserProfile = this.props.profile;
     return(
       <div className="timeline-side-bar">
         <div className="timeline-side-bar-sticky">

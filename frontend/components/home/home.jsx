@@ -5,7 +5,7 @@ import Timeline from '../profile/timeline';
 import { fetchSingleProfileRequest } from '../../actions/profile_actions';
 
 const mapStateToProps = (state) => ({
-  profileList: state.profiles.profileList
+  profile: state.profile
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -28,10 +28,10 @@ class Home extends React.Component {
   }
 
   render() {
-    const currentUserProfile = this.props.profileList[this.props.params.profileId];
-    if (!currentUserProfile) {
+    if (!this.props.profile.id) {
       return null;
     }
+    const currentUserProfile = this.props.profile;
     return(
       <div className="home">
         <ProfileNavBar profile={currentUserProfile} />

@@ -8,7 +8,8 @@ import { selectPosts } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
   posts: selectPosts(state),
-  profileList: state.profiles.profileList
+  profile: state.profile
+  // profileList: state.profiles.profileList
 });
 
 class Timeline extends React.Component {
@@ -20,7 +21,8 @@ class Timeline extends React.Component {
           <TimelineSideBar />
           <div className="timeline-main">
             <CreatePost profileId={this.props.params.profileId}/>
-            { this.props.posts.map(post => <PostItem key={post.id} post={post} profile={this.props.profileList[this.props.params.profileId]}/>)}
+            { this.props.posts.map(post => <PostItem key={post.id} post={post}
+              profile={this.props.profile}/>)}
           </div>
       </div>
     );

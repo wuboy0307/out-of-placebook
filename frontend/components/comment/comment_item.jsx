@@ -93,7 +93,7 @@ class CommentItem extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (this.state.commentReply) {
+    if (this.state.commentReply !== prevState.commentReply) {
       this.nameInput.focus();
     }
   }

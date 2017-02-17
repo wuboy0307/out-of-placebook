@@ -23,8 +23,15 @@ json.posts do
     json.createdAt post.age
     json.body post.body
     json.parentID post.parent_id
-    json.content post.content
+    # json.content post.content
     json.contentType post.content.class.name.downcase
+    if post.content.class.name.downcase === "url"
+      json.content do
+        json.extract! post.content, :url, :title, :description, :domain_name, :image
+      end
+    else
+      json.content {}
+    end
     json.numLikes post.likes.length
     json.likeText post.like_preview_text(user)
     json.userLikesPost post.user_likes?(user)

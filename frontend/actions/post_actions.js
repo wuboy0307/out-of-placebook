@@ -24,7 +24,7 @@ export const createSingleLikeSuccess = likeInfo => ({
   likeInfo
 });
 
-export const createSingleLikeFalure = errors => ({
+export const createSingleLikeFailure = errors => ({
   type: CREATE_SINGLE_LIKE_FAILURE,
   errors
 });
@@ -34,7 +34,7 @@ export const createSinglePostSuccess = post => ({
   post
 });
 
-export const createSinglePostFalure = errors => ({
+export const createSinglePostFailure = errors => ({
   type: CREATE_SINGLE_POST_FAILURE,
   errors
 });
@@ -44,7 +44,7 @@ export const destroySingleLikeSuccess = likeInfo => ({
   likeInfo
 });
 
-export const destroySingleLikeFalure = errors => ({
+export const destroySingleLikeFailure = errors => ({
   type: DESTROY_SINGLE_LIKE_FAILURE,
   errors
 });

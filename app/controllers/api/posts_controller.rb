@@ -7,9 +7,9 @@ class Api::PostsController < ApplicationController
     if @post.save
       render :create
     else
-      render json: @post.errors.full_messages
+      render json: @post.errors, status: 422
     end
-    
+
   end
 
 end

@@ -82,7 +82,7 @@ class CommentBox extends React.Component {
 
         <div className="comment-reply">
           <div className="comment-reply-body">
-            <img className="user-pic-xxs" src={this.props.currentUserAvatarUrl} />
+            <img className="user-pic-xxs" src={this.props.currentUserAvatarUrl || `/assets/avatar.jpg`} />
             <form className="comment-reply-form" onSubmit={this.handleSubmit}>
               <input type="text" className="comment-reply-input"
                 ref={(input) => { this.nameInput = input; }}

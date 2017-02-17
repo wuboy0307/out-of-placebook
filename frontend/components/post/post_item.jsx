@@ -18,6 +18,7 @@ class PostItem extends React.Component {
     this.renderUrlContent = this.renderUrlContent.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
     this.selectCommentBox = this.selectCommentBox.bind(this);
+    this.renderBody = this.renderBody.bind(this);
     // this.renderComments = this.renderComments.bind(this);
     this.state = {
       selected: false
@@ -43,7 +44,7 @@ class PostItem extends React.Component {
           <div className="post-item-url-text">
             <div className="post-item-url-title">{content.title}</div>
             <div className="post-item-url-description">{content.description}</div>
-            <div className="post-item-url-url">{content.url}</div>
+            <div className="post-item-url-url">{content.domain_name}</div>
           </div>
       </div>
     </a>
@@ -99,6 +100,28 @@ class PostItem extends React.Component {
     this.setState({selected: !this.state.selected});
   }
 
+  renderBody() {
+    const body = this.props.post.body;
+    if (this.props.post.contentType !== 'url') {
+      return (
+        <div className="post-item-body">
+          <p>
+            {body}
+          </p>
+        </div>
+      );
+    } else {
+      const content = this.props.post.content;
+      return (
+        <div className="post-item-body">
+          <p>
+            {body.split(content.url)[0]} <a href={content.url}>{content.url}</a> {body.split(content.url)[1]}
+          </p>
+        </div>
+      );
+    }
+  }
+
   render () {
     return(
       <div className="post-item-container">
@@ -106,7 +129,7 @@ class PostItem extends React.Component {
 
           <div className="post-item-header">
             <div className="post-item-img-wrapper">
-              <img src={this.props.post.authorAvatarUrl} className="user-pic-xs" />
+              <img src={this.props.post.authorAvatarUrl || `/assets/avatar.jpg`} className="user-pic-xs" />
             </div>
 
             <div className="post-item-header-data">
@@ -119,9 +142,9 @@ class PostItem extends React.Component {
             </div>
           </div>
 
-          <div className="post-item-body">
-            <p> { this.props.post.body }</p>
-          </div>
+
+            { this.renderBody() }
+
 
           <div className="post-item-content">
             { this.renderContent() }

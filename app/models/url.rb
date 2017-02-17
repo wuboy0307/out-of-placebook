@@ -14,4 +14,8 @@
 class Url < ApplicationRecord
 
   has_many :posts, as: :content
+
+  def domain_name
+    self.url.scan(URI.regexp).first.compact[1]
+  end
 end

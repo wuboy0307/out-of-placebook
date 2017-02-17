@@ -57,7 +57,7 @@ class CommentInCommentItem extends React.Component {
     return(
       <div className="comment-in-comment-item">
         <div className="comment-comment-container">
-          <img className="user-pic-xxxs" src={this.props.childComment.authorAvatarUrl}/>
+          <img className="user-pic-xxxs" src={this.props.childComment.authorAvatarUrl || `/assets/avatar.jpg`} />
           <div className="comment-body">
             <div className="comment-data">
               <Link to={`/profile/${this.props.childComment.authorId}`}>
@@ -154,7 +154,7 @@ class CommentItem extends React.Component {
           <div className="comment-comment-box">
             <div className="comment-reply">
               <div className="comment-comment-reply-body">
-                <img className="user-pic-xxxs" src={this.props.currentUser.avatar_url} />
+                <img className="user-pic-xxxs" src={this.props.currentUser.avatar_url || `/assets/avatar.jpg` } />
                 <form className="comment-reply-form" onSubmit={this.handleSubmit}>
                   <input type="text" className="comment-reply-input"
                     ref={(input) => { this.nameInput = input; }}
@@ -184,7 +184,7 @@ class CommentItem extends React.Component {
       <div className="comment-item-border">
         <div className="comment-item">
 
-          <img className="user-pic-xxs" src={this.props.parentComment.authorAvatarUrl}/>
+          <img className="user-pic-xxs" src={this.props.parentComment.authorAvatarUrl || `/assets/avatar.jpg`}/>
           <div className="comment-body">
             <div className="comment-data">
               <Link to={`/profile/${this.props.parentComment.authorId}`}>

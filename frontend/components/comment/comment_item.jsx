@@ -82,10 +82,11 @@ class CommentItem extends React.Component {
     this.commentReplyListener = this.commentReplyListener.bind(this);
     this.renderCommentComment = this.renderCommentComment.bind(this);
     this.bindUserToListener = this.bindUserToListener.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (this.state.replyToUser) {
+    if (this.state.commentReply) {
       this.nameInput.focus();
     }
   }
@@ -120,6 +121,10 @@ class CommentItem extends React.Component {
     }
   }
 
+  handleInput(e) {
+    this.setState({replyToUser: e.target.value});
+  }
+
   renderCommentComment() {
     if (this.state.commentReply) {
         return(
@@ -131,7 +136,7 @@ class CommentItem extends React.Component {
                 <form className="comment-reply-form">
                   <input type="text" className="comment-reply-input"
                     ref={(input) => { this.nameInput = input; }}
-                    placeholder="Write a comment..." value={this.state.replyToUser}/>
+                    placeholder="Write a comment..." onChange={this.handleInput} value={this.state.replyToUser}/>
                 </form>
               </div>
             </div>
@@ -148,7 +153,7 @@ class CommentItem extends React.Component {
   commentReplyListener(user){
     this.setState({
       commentReply: true,
-      replyToUser: user
+      replyToUser: user ? `${user} ` : ''
     });
   }
 

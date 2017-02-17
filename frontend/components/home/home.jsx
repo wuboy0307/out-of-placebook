@@ -31,11 +31,11 @@ class Home extends React.Component {
     if (!this.props.profile.id) {
       return null;
     }
-    const currentUserProfile = this.props.profile;
+    const profile = this.props.profile;
     return(
       <div className="home">
-        <ProfileNavBar profile={currentUserProfile} />
-        <Timeline profile={currentUserProfile} />
+        <ProfileNavBar profile={profile} />
+        <Timeline profile={profile} />
       </div>
     );
   }

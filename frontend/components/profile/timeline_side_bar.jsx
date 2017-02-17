@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import stickykit from 'sticky-kit/dist/sticky-kit';
 
 const mapStateToProps = (state) => ({
-  profile: state.profile
+  profile: state.profile,
+  currentUser: state.auth.currentUser
 });
 
 class TimelineSideBar extends React.Component {
@@ -19,10 +20,10 @@ class TimelineSideBar extends React.Component {
     $('.timeline-side-bar-sticky').stick_in_parent();
   }
 
-  renderIntro(currentUser) {
+  renderIntro() {
 
-    if (!currentUser.intro) {
-      if (window.currentUser.id === currentUser.id) {
+    if (!this.props.profile.intro) {
+      if (this.props.currentUser.id === this.props.profile.id) {
         return(
           <div className="timeline-side-bar-item">
             <div className="timeline-side-bar-header">
@@ -40,20 +41,20 @@ class TimelineSideBar extends React.Component {
           <div className="timeline-side-bar-header">
             <i className="fa fa-globe fa-2x" aria-hidden="true"></i><span>Intro</span>
           </div>
-        <div className="timeline-description">{ currentUser.intro }</div>
+        <div className="timeline-description">{ this.props.profile.intro }</div>
         </div>);
     }
   }
 
   render () {
-    const currentUserProfile = this.props.profile;
+    const profile = this.props.profile;
     return(
       <div className="timeline-side-bar">
         <div className="timeline-side-bar-sticky">
-          { this.renderIntro(currentUserProfile) }
+          { this.renderIntro() }
 
           <PhotosBox />
-          <FriendsBox currentUserProfile={currentUserProfile}/>
+          <FriendsBox profile={profile}/>
         </div>
 
       </div>

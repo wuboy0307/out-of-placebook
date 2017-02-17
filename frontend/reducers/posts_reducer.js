@@ -34,7 +34,7 @@ const postsReducer = ( oldState = {}, action) => {
           newState[likeInfo.postId].numLikes++;
           break;
         case "comment":
-          if (likeInfo.parent_id) {
+          if (likeInfo.parentId) {
             newState[likeInfo.postId].comments[likeInfo.parentId]
               .childComments[likeInfo.commentId].userLikesComment = true;
             newState[likeInfo.postId].comments[likeInfo.parentId]
@@ -55,12 +55,13 @@ const postsReducer = ( oldState = {}, action) => {
           newState[likeInfo.postId].numLikes--;
           break;
         case "comment":
-          if (likeInfo.parent_id) {
+          if (likeInfo.parentId) {
             newState[likeInfo.postId].comments[likeInfo.parentId]
               .childComments[likeInfo.commentId].userLikesComment = false;
             newState[likeInfo.postId].comments[likeInfo.parentId]
               .childComments[likeInfo.commentId].numLikes--;
           } else {
+
             newState[likeInfo.postId].comments[likeInfo.commentId].userLikesComment = false;
             newState[likeInfo.postId].comments[likeInfo.commentId].numLikes--;
           }

@@ -1,16 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createSingleCommentRequest } from '../../actions/post_actions';
+import { createSingleCommentRequest, createSingleLikeRequest, destroySingleLikeRequest } from '../../actions/post_actions';
 import { selectComments } from '../../reducers/selectors';
 import { Link } from 'react-router';
 
 class CommentInCommentItem extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      userLikesComment: this.props.childComment.userLikesComment,
-      numLikes: this.props.childComment.numLikes
-    };
     this.renderLikes = this.renderLikes.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
     this.bindUserToListener = this.bindUserToListener.bind(this);
@@ -18,17 +14,22 @@ class CommentInCommentItem extends React.Component {
   }
 
   toggleLike(){
-    const userLikes = this.state.userLikesComment;
-    if (userLikes) {
-      this.setState({
-        userLikesComment: !userLikes,
-        numLikes: this.state.numLikes - 1
-      });
+    if (this.props.childComment.userLikesComment) {
+      const likeInfo = {
+        type: 'comment',
+        content_id: this.props.childComment.id
+      };
+
+      this.props.destroySingleLikeRequest(likeInfo);
+
     } else {
-      this.setState({
-        userLikesComment: !userLikes,
-        numLikes: this.state.numLikes + 1
-      });
+
+      const likeInfo = {
+        type: 'comment',
+        content_id: this.props.childComment.id
+      };
+
+      this.props.createSingleLikeRequest(likeInfo);
     }
   }
 
@@ -37,7 +38,7 @@ class CommentInCommentItem extends React.Component {
   }
 
   renderLikes() {
-    const numLikes = this.state.numLikes;
+    const numLikes = this.props.childComment.numLikes;
     if (numLikes > 0) {
       return(
         <div className="comment-action" onClick={this.bindUserToListener(this.props.childComment.authorFullName)}>Reply
@@ -65,7 +66,7 @@ class CommentInCommentItem extends React.Component {
               {this.props.childComment.body}
             </div>
             <div className="comment-actions">
-              <div className="comment-action" onClick={this.toggleLike}>{this.state.userLikesComment ? 'Unlike' : 'Like'}</div>
+              <div className="comment-action" onClick={this.toggleLike}>{this.props.childComment.userLikesComment ? 'Unlike' : 'Like'}</div>
               { this.renderLikes() }
               <div className="comment-timestamp">{this.props.childComment.createdAt}</div>
             </div>
@@ -80,8 +81,6 @@ class CommentItem extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      userLikesComment: this.props.parentComment.userLikesComment,
-      numLikes: this.props.parentComment.numLikes,
       commentReply: false
     };
     this.renderLikes = this.renderLikes.bind(this);
@@ -100,17 +99,22 @@ class CommentItem extends React.Component {
   }
 
   toggleLike(){
-    const userLikes = this.state.userLikesComment;
-    if (userLikes) {
-      this.setState({
-        userLikesComment: !userLikes,
-        numLikes: this.state.numLikes - 1
-      });
+    if (this.props.parentComment.userLikesComment) {
+      const likeInfo = {
+        type: 'comment',
+        content_id: this.props.parentComment.id
+      };
+
+      this.props.destroySingleLikeRequest(likeInfo);
+
     } else {
-      this.setState({
-        userLikesComment: !userLikes,
-        numLikes: this.state.numLikes + 1
-      });
+
+      const likeInfo = {
+        type: 'comment',
+        content_id: this.props.parentComment.id
+      };
+
+      this.props.createSingleLikeRequest(likeInfo);
     }
   }
 
@@ -125,7 +129,7 @@ class CommentItem extends React.Component {
   }
 
   renderLikes() {
-    const numLikes = this.state.numLikes;
+    const numLikes = this.props.parentComment.numLikes;
     if (numLikes > 0) {
       return(
         <div className="comment-action" onClick={this.bindUserToListener('')}>Reply
@@ -189,14 +193,20 @@ class CommentItem extends React.Component {
               {this.props.parentComment.body}
             </div>
             <div className="comment-actions">
-              <div className="comment-action" onClick={this.toggleLike}>{this.state.userLikesComment ? 'Unlike' : 'Like'}</div>
+              <div className="comment-action" onClick={this.toggleLike}>{this.props.parentComment.userLikesComment ? 'Unlike' : 'Like'}</div>
               { this.renderLikes() }
               <div className="comment-timestamp">{this.props.parentComment.createdAt}</div>
             </div>
           </div>
         </div>
 
-        { selectComments(this.props.parentComment.childComments).map(child => (<CommentInCommentItem key={child.id} childComment={child} listener={this.commentReplyListener}/>))}
+        { selectComments(this.props.parentComment.childComments).map(child => (
+          <CommentInCommentItem key={child.id}
+            childComment={child}
+            listener={this.commentReplyListener}
+            destroySingleLikeRequest={this.props.destroySingleLikeRequest}
+            createSingleLikeRequest={this.props.createSingleLikeRequest} />
+        ))}
 
         { this.renderCommentComment() }
       </div>
@@ -210,7 +220,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createSingleCommentRequest: (comment) => dispatch(createSingleCommentRequest(comment))
+  createSingleCommentRequest: (comment) => dispatch(createSingleCommentRequest(comment)),
+  createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
+  destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo))
 });
 
 

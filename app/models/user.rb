@@ -33,12 +33,27 @@ class User < ApplicationRecord
 	after_initialize :ensure_session_token
 	before_validation :ensure_session_token_uniqueness
 
-  has_many :friendships,
+  has_many :friendships, -> { where completed: true },
     class_name: 'Friendship',
-    foreign_key: :user_id
+    foreign_key: :user_id,
+    dependent: :destroy
+
+  has_many :pending_friendships, -> { where completed: false },
+    class_name: 'Friendship',
+    foreign_key: :user_id,
+    dependent: :destroy
+
+  has_many :frienderships,
+    class_name: 'Friendship',
+    foreign_key: :friend_id,
+    dependent: :destroy
 
   has_many :friends,
     through: :friendships,
+    source: :friend
+
+  has_many :pending_friends,
+    through: :pending_friendships,
     source: :friend
 
   has_many :comments,

@@ -38,7 +38,7 @@ class PostItem extends React.Component {
   renderUrlContent() {
     const content = this.props.post.content;
     return(
-      <a href={content.url}>
+      <a href={content.url} target="_blank">
       <div className="post-item-url">
           <img className="post-item-url-photo" src={content.image}/>
           <div className="post-item-url-text">

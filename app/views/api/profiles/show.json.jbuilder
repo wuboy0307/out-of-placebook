@@ -23,7 +23,6 @@ json.posts do
     json.createdAt post.age
     json.body post.body
     json.parentID post.parent_id
-    # json.content post.content
     json.contentType post.content.class.name.downcase
     if post.content.class.name.downcase === "url"
       json.content do

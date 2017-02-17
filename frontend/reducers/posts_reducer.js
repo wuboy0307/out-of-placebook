@@ -1,7 +1,8 @@
 import { FETCH_SINGLE_PROFILE_SUCCESS } from '../actions/profile_actions';
 import { CREATE_SINGLE_COMMENT_SUCCESS,
         CREATE_SINGLE_LIKE_SUCCESS,
-        DESTROY_SINGLE_LIKE_SUCCESS } from '../actions/post_actions';
+        DESTROY_SINGLE_LIKE_SUCCESS,
+        CREATE_SINGLE_POST_SUCCESS } from '../actions/post_actions';
 import merge from 'lodash/merge';
 
 const postsReducer = ( oldState = {}, action) => {
@@ -24,6 +25,10 @@ const postsReducer = ( oldState = {}, action) => {
         childComments[newComment.id] = newComment;
         newState[newComment.postId].comments[newComment.parentId].childComments = childComments;
       }
+      return newState;
+
+    case CREATE_SINGLE_POST_SUCCESS:
+      newState[action.post.id] = action.post;
       return newState;
 
     case CREATE_SINGLE_LIKE_SUCCESS:

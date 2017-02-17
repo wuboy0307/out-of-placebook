@@ -19,7 +19,7 @@ class Timeline extends React.Component {
       <div className="timeline">
           <TimelineSideBar />
           <div className="timeline-main">
-            <CreatePost />
+            <CreatePost profileId={this.props.params.profileId}/>
             { this.props.posts.map(post => <PostItem key={post.id} post={post} profile={this.props.profileList[this.props.params.profileId]}/>)}
           </div>
       </div>

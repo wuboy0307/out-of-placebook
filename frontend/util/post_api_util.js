@@ -14,6 +14,14 @@ export const createLike = (like) => {
   });
 };
 
+export const createPost = (post) => {
+  return $.ajax({
+    method: 'POST',
+    url: '/api/posts/',
+    data: { post }
+  });
+};
+
 export const destroyLike = (like) => {
   return $.ajax({
     method: 'DELETE',

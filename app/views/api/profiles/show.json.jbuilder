@@ -44,22 +44,22 @@ json.posts do
           json.childComments do
               comment.children.each do |child|
                 json.set! child.id do
-            json.id child.id
-            json.authorId child.author_id
-            json.authorFullName child.author.full_name
-            json.authorAvatarUrl post.author.avatar_url
-            json.userLikesComment child.user_likes?(user)
-            json.postId child.post_id
-            json.parentId child.parent_id
-            json.createdAt child.age
-            json.numLikes child.likes.length
-            json.body child.body
+                  json.id child.id
+                  json.authorId child.author_id
+                  json.authorFullName child.author.full_name
+                  json.authorAvatarUrl post.author.avatar_url
+                  json.userLikesComment child.user_likes?(user)
+                  json.postId child.post_id
+                  json.parentId child.parent_id
+                  json.createdAt child.age
+                  json.numLikes child.likes.length
+                  json.body child.body
+                end
+              end
+            end
           end
         end
       end
-    end
-      end
-    end
     end
   end
 end

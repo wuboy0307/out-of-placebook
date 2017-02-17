@@ -1,6 +1,7 @@
 import React from 'react';
 import CommentBox from '../comment/comment_box';
 import { Link } from 'react-router';
+import { selectComments } from '../../reducers/selectors';
 
 class PostItem extends React.Component {
   constructor(props) {
@@ -68,8 +69,6 @@ class PostItem extends React.Component {
     }
   }
 
-
-
   // NEED TO ADD APPROPRIATE AJAX CALLS FOR THIS
   toggleLike() {
     if (this.state.currentUserLikes) {
@@ -126,7 +125,7 @@ class PostItem extends React.Component {
 
         </div>
 
-        <CommentBox comments={this.props.post.comments}
+        <CommentBox comments={selectComments(this.props.post.comments)}
           numLikes={this.state.numLikes}
           currentUserLikes={this.state.currentUserLikes}
           likeText={this.props.post.likeText}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSingleCommentRequest } from '../../actions/post_actions';
-
+import { selectComments } from '../../reducers/selectors';
 
 class CommentInCommentItem extends React.Component {
   constructor(props){
@@ -189,7 +189,7 @@ class CommentItem extends React.Component {
           </div>
         </div>
 
-        { this.props.parentComment.childComments.map(child => (<CommentInCommentItem key={child.id} childComment={child} listener={this.commentReplyListener}/>))}
+        { selectComments(this.props.parentComment.childComments).map(child => (<CommentInCommentItem key={child.id} childComment={child} listener={this.commentReplyListener}/>))}
 
         { this.renderCommentComment() }
       </div>

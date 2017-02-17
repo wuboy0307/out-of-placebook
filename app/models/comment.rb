@@ -32,7 +32,8 @@ class Comment < ApplicationRecord
 
   has_many :children,
     class_name: 'Comment',
-    foreign_key: :parent_id
+    foreign_key: :parent_id,
+    dependent: :destroy
 
   has_many :likes, as: :likeable
 

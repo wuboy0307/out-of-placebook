@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class CommentInCommentItem extends React.Component {
   constructor(props){
@@ -132,7 +133,7 @@ class CommentItem extends React.Component {
           <div className="comment-comment-box">
             <div className="comment-reply">
               <div className="comment-comment-reply-body">
-                <img className="user-pic-xxxs" src={this.props.currentUserAvatarUrl} />
+                <img className="user-pic-xxxs" src={this.props.currentUser.avatar_url} />
                 <form className="comment-reply-form">
                   <input type="text" className="comment-reply-input"
                     ref={(input) => { this.nameInput = input; }}
@@ -184,4 +185,12 @@ class CommentItem extends React.Component {
 }
 
 
-export default CommentItem;
+const mapStateToProps = (state) => ({
+  currentUser: state.auth.currentUser
+});
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(CommentItem);

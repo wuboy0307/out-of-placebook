@@ -47,6 +47,9 @@ class Post < ApplicationRecord
       return likers_excluding_user.map { |user| "#{user.full_name} "}.join() + "likes this."
     when 2
       return likers_excluding_user.map { |user| "#{user.full_name}"}.join(" and ") + " like this."
+    when 3
+      return likers_excluding_user.take(2).map { |user| "#{user.full_name}"}
+        .join(", ") + " and #{num_likers_excluding_user - 2} other like this."
     else
       return likers_excluding_user.take(2).map { |user| "#{user.full_name}"}
         .join(", ") + " and #{num_likers_excluding_user - 2} others like this."

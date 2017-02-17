@@ -62,7 +62,11 @@ class CommentBox extends React.Component {
       post_id: this.props.postId,
       body: this.state.commentText
     };
-    this.props.createSingleCommentRequest(comment);
+    this.props.createSingleCommentRequest(comment)
+      .then(() => {
+        this.setState({commentText: ''});
+        this.nameInput.select();
+      });
   }
 
   handleChange(e){

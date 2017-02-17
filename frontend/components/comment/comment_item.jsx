@@ -117,7 +117,7 @@ class CommentItem extends React.Component {
       body: this.state.replyToUser,
       parent_id: this.props.parentComment.id
     };
-    this.props.createSingleCommentRequest(comment);
+    this.props.createSingleCommentRequest(comment).then(() => this.setState({replyToUser: ''}));
   }
 
   renderLikes() {

@@ -30,6 +30,7 @@ json.posts @posts.each do |post|
     json.postId comment.post_id
     json.authorFullName comment.author.full_name
     json.authorAvatarUrl post.author.avatar_url
+    json.userLikesComment comment.user_likes?(current_user)
     json.body comment.body
     json.createdAt comment.age
     json.numLikes comment.likes.length
@@ -38,6 +39,7 @@ json.posts @posts.each do |post|
       json.authorId child.author_id
       json.authorFullName child.author.full_name
       json.authorAvatarUrl post.author.avatar_url
+      json.userLikesComment child.user_likes?(current_user)
       json.postId child.post_id
       json.parentId child.parent_id
       json.createdAt child.age

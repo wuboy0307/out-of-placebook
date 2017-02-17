@@ -10,6 +10,7 @@ class CommentBox extends React.Component {
   constructor(props) {
     super(props);
     this.renderLikes = this.renderLikes.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -44,6 +45,10 @@ class CommentBox extends React.Component {
     } else {
       return null;
     }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
   }
 
   render() {

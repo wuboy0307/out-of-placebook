@@ -348,6 +348,10 @@ a {
 .comment-action {
   color: #365899;
   margin-right: 5px;
+  cursor: pointer;
+  * {
+    margin-left: 5px;
+  }
 }
 
 .comment-timestamp {
@@ -367,7 +371,7 @@ a {
   flex-direction: row;
   border-left: 2px solid #dddfe2;
   padding-left: 5px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .timeline-photos-container {

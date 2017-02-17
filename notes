@@ -7,3 +7,7 @@ remove window.store from oopbook.jsx
 have two-way dependent => destroy on users so that their friendships are removed if profile is deleted.
 
 improve profile show jsob jbuilder to make it not have to fetch child comments again (line 28)
+
+make likes not hit database a load of times. (maybe due to like preview text?)
+
+how to get includes of children as well?

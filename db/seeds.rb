@@ -53,8 +53,8 @@ users = User.all
 posts = Post.all
 comments = Comment.all
 
-300.times do
-  activity = posts.sample
+700.times do
+  activity = comments.sample
   user = users.sample
   Like.create!(liker_id: user.id, likeable: activity)
 end

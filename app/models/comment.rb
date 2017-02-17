@@ -43,4 +43,8 @@ class Comment < ApplicationRecord
   def age
     time_ago_in_words(self.created_at)
   end
+
+  def user_likes?(user)
+    liking_users.include?(user)
+  end
 end

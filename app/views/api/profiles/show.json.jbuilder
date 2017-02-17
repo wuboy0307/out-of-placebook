@@ -9,6 +9,16 @@ json.profile do
   json.work @user.work
   json.description @user.description
   json.friendIds @user.friend_ids
+  if user == @user
+    json.friendStatus 'self'
+  elsif @user.pending_friends.include?(user)
+    json.friendStatus 'requested'
+  elsif @user.friends.include?(user)
+    json.friendStatus 'friends'
+  else
+    json.friendStatus 'add'
+  end
+
 end
 
 

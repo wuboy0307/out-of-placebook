@@ -75,23 +75,18 @@ class PostItem extends React.Component {
     }
   }
 
-  // NEED TO ADD APPROPRIATE AJAX CALLS FOR THIS
   toggleLike() {
     if (this.props.post.userLikesPost) {
       const likeInfo = {
         type: 'post',
         content_id: this.props.post.id
       };
-
       this.props.destroySingleLikeRequest(likeInfo);
-
     } else {
-
       const likeInfo = {
         type: 'post',
         content_id: this.props.post.id
       };
-
       this.props.createSingleLikeRequest(likeInfo);
     }
   }
@@ -115,7 +110,7 @@ class PostItem extends React.Component {
       return (
         <div className="post-item-body">
           <p>
-            {body.split(content.url)[0]} <a href={content.url}>{content.url}</a> {body.split(content.url)[1]}
+            {body.split(content.url)[0]} <a href={content.url} target="_blank">{content.url}</a> {body.split(content.url)[1]}
           </p>
         </div>
       );

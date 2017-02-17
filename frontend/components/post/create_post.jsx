@@ -6,6 +6,10 @@ const mapDispatchToProps = dispatch => ({
   createSinglePostRequest: (postInfo) => dispatch(createSinglePostRequest(postInfo))
 });
 
+const mapStateToProps = (state) => ({
+  currentUserAvatarUrl: state.auth.currentUser.avatar_url
+});
+
 class CreatePost extends React.Component {
   constructor(props) {
     super(props);
@@ -33,8 +37,8 @@ class CreatePost extends React.Component {
   renderForm(){
     return(
     <form className="create-post-form" onSubmit={this.handleSubmit}>
-      <textarea type="text" placeholder="Whats on your mind?" cols="40"
-        rows="1" value={this.state.postBody} onChange={this.handleInput}></textarea>
+        <input type="text" placeholder="Whats on your mind?" className="create-post-input"
+          value={this.state.postBody} onChange={this.handleInput} />
     </form>
     );
   }
@@ -50,7 +54,7 @@ class CreatePost extends React.Component {
 
         <div className="create-post-main">
           <div className="create-post-img-wrapper">
-            <img src="" className="user-pic-xs" />
+            <img src={this.props.currentUserAvatarUrl || `/assets/avatar.jpg`} className="user-pic-xs" />
           </div>
 
           <div className="create-post-body">
@@ -68,6 +72,6 @@ class CreatePost extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreatePost);

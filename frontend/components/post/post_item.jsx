@@ -68,16 +68,6 @@ class PostItem extends React.Component {
     }
   }
 
-  // REDUNDANT AS COMMENTS IS ALWAYS AN ARRAY AND IM ALWAYS USING MAP
-  //
-  // renderComments() {
-  //   const comments = this.props.post.comments;
-  //   if (comments.length > 0) {
-  //     return(<CommentBox comments={comments} />);
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
 
   // NEED TO ADD APPROPRIATE AJAX CALLS FOR THIS
@@ -140,7 +130,8 @@ class PostItem extends React.Component {
           numLikes={this.state.numLikes}
           currentUserLikes={this.state.currentUserLikes}
           likeText={this.props.post.likeText}
-          selected={this.state.selected} />
+          selected={this.state.selected}
+          postId={this.props.post.id} />
 
       </div>
     );

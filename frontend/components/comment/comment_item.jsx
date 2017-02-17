@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createSingleCommentRequest } from '../../actions/post_actions';
+
 
 class CommentInCommentItem extends React.Component {
   constructor(props){
@@ -43,7 +45,7 @@ class CommentInCommentItem extends React.Component {
         );
     } else {
       return(
-        <div className="comment-action" onClick={this.props.listener}>Reply</div>
+        <div className="comment-action" onClick={this.bindUserToListener(this.props.childComment.authorFullName)}>Reply</div>
       );
     }
   }
@@ -84,6 +86,7 @@ class CommentItem extends React.Component {
     this.renderCommentComment = this.renderCommentComment.bind(this);
     this.bindUserToListener = this.bindUserToListener.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -107,6 +110,15 @@ class CommentItem extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    let comment = {
+      post_id: this.props.postId,
+      body: this.state.replyToUser
+    };
+    this.props.createSingleCommentRequest(comment);
+  }
+
   renderLikes() {
     const numLikes = this.state.numLikes;
     if (numLikes > 0) {
@@ -117,7 +129,7 @@ class CommentItem extends React.Component {
         );
     } else {
       return(
-        <div className="comment-action">Reply</div>
+        <div className="comment-action" onClick={this.bindUserToListener('')}>Reply</div>
       );
     }
   }
@@ -134,7 +146,7 @@ class CommentItem extends React.Component {
             <div className="comment-reply">
               <div className="comment-comment-reply-body">
                 <img className="user-pic-xxxs" src={this.props.currentUser.avatar_url} />
-                <form className="comment-reply-form">
+                <form className="comment-reply-form" onSubmit={this.handleSubmit}>
                   <input type="text" className="comment-reply-input"
                     ref={(input) => { this.nameInput = input; }}
                     placeholder="Write a comment..." onChange={this.handleInput} value={this.state.replyToUser}/>
@@ -189,8 +201,12 @@ const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  createSingleCommentRequest: (comment) => dispatch(createSingleCommentRequest(comment))
+});
+
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CommentItem);

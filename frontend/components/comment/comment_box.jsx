@@ -1,16 +1,25 @@
 import React from 'react';
 import CommentItem from './comment_item';
 import { connect } from 'react-redux';
+import { createSingleCommentRequest } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
   currentUserAvatarUrl: state.auth.currentUser.avatar_url
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  createSingleCommentRequest: (comment) => dispatch(createSingleCommentRequest(comment))
+});
+
 class CommentBox extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      commentText: ''
+    };
     this.renderLikes = this.renderLikes.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -49,7 +58,15 @@ class CommentBox extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // Todo: write code to submit comment
+    let comment = {
+      post_id: this.props.postId,
+      body: this.state.commentText
+    };
+    this.props.createSingleCommentRequest(comment);
+  }
+
+  handleChange(e){
+    this.setState({commentText: e.target.value});
   }
 
   render() {
@@ -57,15 +74,15 @@ class CommentBox extends React.Component {
       <div className="comment-box">
         { this.renderLikes() }
 
-        { this.props.comments.map(comment => <CommentItem key={comment.id} parentComment={comment} />)}
+        { this.props.comments.map(comment => <CommentItem key={comment.id} parentComment={comment} postId={this.props.postId}/>)}
 
         <div className="comment-reply">
           <div className="comment-reply-body">
             <img className="user-pic-xxs" src={this.props.currentUserAvatarUrl} />
-            <form className="comment-reply-form">
+            <form className="comment-reply-form" onSubmit={this.handleSubmit}>
               <input type="text" className="comment-reply-input"
                 ref={(input) => { this.nameInput = input; }}
-                placeholder="Write a comment..." />
+                placeholder="Write a comment..." onChange={this.handleChange} value={this.state.commentText}/>
             </form>
           </div>
         </div>
@@ -76,5 +93,5 @@ class CommentBox extends React.Component {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CommentBox);

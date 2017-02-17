@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSingleCommentRequest } from '../../actions/post_actions';
 import { selectComments } from '../../reducers/selectors';
+import { Link } from 'react-router';
 
 class CommentInCommentItem extends React.Component {
   constructor(props){
@@ -57,7 +58,10 @@ class CommentInCommentItem extends React.Component {
         <div className="comment-comment-container">
           <img className="user-pic-xxxs" src={this.props.childComment.authorAvatarUrl}/>
           <div className="comment-body">
-            <div className="comment-data"><span className="comment-user-name">{this.props.childComment.authorFullName}</span>
+            <div className="comment-data">
+              <Link to={`/profile/${this.props.childComment.authorId}`}>
+                <span className="comment-user-name">{this.props.childComment.authorFullName}</span>
+              </Link>
               {this.props.childComment.body}
             </div>
             <div className="comment-actions">
@@ -178,7 +182,10 @@ class CommentItem extends React.Component {
 
           <img className="user-pic-xxs" src={this.props.parentComment.authorAvatarUrl}/>
           <div className="comment-body">
-            <div className="comment-data"><span className="comment-user-name">{this.props.parentComment.authorFullName}</span>
+            <div className="comment-data">
+              <Link to={`/profile/${this.props.parentComment.authorId}`}>
+                <span className="comment-user-name">{this.props.parentComment.authorFullName}</span>
+              </Link>
               {this.props.parentComment.body}
             </div>
             <div className="comment-actions">

@@ -49,6 +49,7 @@ class CommentBox extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    // Todo: write code to submit comment
   }
 
   render() {

@@ -1,3 +1,5 @@
+user = current_user
+
 json.profile do
   json.id @user.id
   json.fname @user.fname
@@ -21,8 +23,8 @@ json.posts @posts.each do |post|
   json.content post.content
   json.contentType post.content.class.name.downcase
   json.numLikes post.likes.length
-  json.likeText post.like_preview_text(current_user)
-  json.userLikesPost post.user_likes?(current_user)
+  json.likeText post.like_preview_text(user)
+  json.userLikesPost post.user_likes?(user)
   json.comments post.comments do |comment|
     next if comment.parent_id
     json.id comment.id
@@ -30,7 +32,7 @@ json.posts @posts.each do |post|
     json.postId comment.post_id
     json.authorFullName comment.author.full_name
     json.authorAvatarUrl post.author.avatar_url
-    json.userLikesComment comment.user_likes?(current_user)
+    json.userLikesComment comment.user_likes?(user)
     json.body comment.body
     json.createdAt comment.age
     json.numLikes comment.likes.length
@@ -39,7 +41,7 @@ json.posts @posts.each do |post|
       json.authorId child.author_id
       json.authorFullName child.author.full_name
       json.authorAvatarUrl post.author.avatar_url
-      json.userLikesComment child.user_likes?(current_user)
+      json.userLikesComment child.user_likes?(user)
       json.postId child.post_id
       json.parentId child.parent_id
       json.createdAt child.age

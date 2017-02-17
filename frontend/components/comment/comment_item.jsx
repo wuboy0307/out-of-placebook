@@ -9,6 +9,8 @@ class CommentInCommentItem extends React.Component {
     };
     this.renderLikes = this.renderLikes.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
+    this.bindUserToListener = this.bindUserToListener.bind(this);
+
   }
 
   toggleLike(){
@@ -26,17 +28,21 @@ class CommentInCommentItem extends React.Component {
     }
   }
 
+  bindUserToListener(username) {
+    return () => this.props.listener(username);
+  }
+
   renderLikes() {
     const numLikes = this.state.numLikes;
     if (numLikes > 0) {
       return(
-        <div className="comment-action">Reply
+        <div className="comment-action" onClick={this.bindUserToListener(this.props.childComment.authorFullName)}>Reply
           <i className="fa fa-thumbs-up" aria-hidden="true"></i> {numLikes}
         </div>
         );
     } else {
       return(
-        <div className="comment-action">Reply</div>
+        <div className="comment-action" onClick={this.props.listener}>Reply</div>
       );
     }
   }
@@ -68,10 +74,14 @@ class CommentItem extends React.Component {
     super(props);
     this.state = {
       userLikesComment: this.props.parentComment.userLikesComment,
-      numLikes: this.props.parentComment.numLikes
+      numLikes: this.props.parentComment.numLikes,
+      commentReply: false
     };
     this.renderLikes = this.renderLikes.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
+    this.commentReplyListener = this.commentReplyListener.bind(this);
+    this.renderCommentComment = this.renderCommentComment.bind(this);
+    this.bindUserToListener = this.bindUserToListener.bind(this);
   }
 
   toggleLike(){
@@ -93,7 +103,7 @@ class CommentItem extends React.Component {
     const numLikes = this.state.numLikes;
     if (numLikes > 0) {
       return(
-        <div className="comment-action">Reply
+        <div className="comment-action" onClick={this.bindUserToListener(this.props.parentComment.authorFullName)}>Reply
           <i className="fa fa-thumbs-up" aria-hidden="true"></i> {numLikes}
         </div>
         );
@@ -102,6 +112,38 @@ class CommentItem extends React.Component {
         <div className="comment-action">Reply</div>
       );
     }
+  }
+
+  renderCommentComment() {
+    if (this.state.commentReply) {
+        return(
+          <div className="comment-in-comment-item">
+          <div className="comment-comment-box">
+            <div className="comment-reply">
+              <div className="comment-comment-reply-body">
+                <img className="user-pic-xxxs" src={this.props.currentUserAvatarUrl} />
+                <form className="comment-reply-form">
+                  <input type="text" className="comment-reply-input"
+                    ref={(input) => { this.nameInput = input; }}
+                    placeholder="Write a comment..." value={this.state.replyToUser}/>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  bindUserToListener(username) {
+    return () => this.commentReplyListener(username);
+  }
+
+  commentReplyListener(user){
+    this.setState({
+      commentReply: true,
+      replyToUser: user
+    });
   }
 
   render() {
@@ -122,7 +164,9 @@ class CommentItem extends React.Component {
           </div>
         </div>
 
-        { this.props.parentComment.childComments.map(child => (<CommentInCommentItem key={child.id} childComment={child}/>))}
+        { this.props.parentComment.childComments.map(child => (<CommentInCommentItem key={child.id} childComment={child} listener={this.commentReplyListener}/>))}
+
+        { this.renderCommentComment() }
       </div>
     );
   }

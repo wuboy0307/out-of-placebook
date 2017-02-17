@@ -2,6 +2,12 @@ import React from 'react';
 import CommentBox from '../comment/comment_box';
 import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
+import { connect } from 'react-redux';
+import { createSingleLikeRequest } from '../../actions/post_actions';
+
+const mapDispatchToProps = dispatch => ({
+  createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo))
+});
 
 class PostItem extends React.Component {
   constructor(props) {
@@ -13,8 +19,6 @@ class PostItem extends React.Component {
     this.selectCommentBox = this.selectCommentBox.bind(this);
     // this.renderComments = this.renderComments.bind(this);
     this.state = {
-      numLikes: this.props.post.numLikes,
-      currentUserLikes: this.props.post.userLikesPost,
       selected: false
     };
   }
@@ -71,15 +75,16 @@ class PostItem extends React.Component {
 
   // NEED TO ADD APPROPRIATE AJAX CALLS FOR THIS
   toggleLike() {
-    if (this.state.currentUserLikes) {
-      this.setState({
-        numLikes: this.state.numLikes - 1,
-        currentUserLikes: !this.state.currentUserLikes
-      });
+    if (this.props.post.userLikesPost) {
+
     } else {
-      this.setState({ numLikes: this.state.numLikes + 1,
-      currentUserLikes: !this.state.currentUserLikes
-    });
+
+      const likeInfo = {
+        type: 'post',
+        content_id: this.props.post.id
+      };
+
+      this.props.createSingleLikeRequest(likeInfo);
     }
   }
 
@@ -117,7 +122,7 @@ class PostItem extends React.Component {
 
           <div className="post-item-footer">
             <div className="post-action-container">
-              <div className={`like-action ${this.state.currentUserLikes}`} onClick={this.toggleLike}>Like</div>
+              <div className={`like-action ${this.props.post.userLikesPost}`} onClick={this.toggleLike}>Like</div>
               <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
               <div className="post-action">Share</div>
             </div>
@@ -126,8 +131,8 @@ class PostItem extends React.Component {
         </div>
 
         <CommentBox comments={selectComments(this.props.post.comments)}
-          numLikes={this.state.numLikes}
-          currentUserLikes={this.state.currentUserLikes}
+          numLikes={this.props.post.numLikes}
+          currentUserLikes={this.props.post.userLikesPost}
           likeText={this.props.post.likeText}
           selected={this.state.selected}
           postId={this.props.post.id} />
@@ -137,4 +142,7 @@ class PostItem extends React.Component {
   }
 }
 
-export default PostItem;
+export default connect(
+  null,
+  mapDispatchToProps
+)(PostItem);

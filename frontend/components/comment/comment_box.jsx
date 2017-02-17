@@ -15,7 +15,7 @@ class CommentBox extends React.Component {
 
   componentWillReceiveProps(newProps){
     if (newProps.selected) {
-      this.nameInput.focus();
+      this.nameInput.select();
     }
   }
 

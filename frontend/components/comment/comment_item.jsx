@@ -84,6 +84,12 @@ class CommentItem extends React.Component {
     this.bindUserToListener = this.bindUserToListener.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.replyToUser) {
+      this.nameInput.focus();
+    }
+  }
+
   toggleLike(){
     const userLikes = this.state.userLikesComment;
     if (userLikes) {
@@ -103,7 +109,7 @@ class CommentItem extends React.Component {
     const numLikes = this.state.numLikes;
     if (numLikes > 0) {
       return(
-        <div className="comment-action" onClick={this.bindUserToListener(this.props.parentComment.authorFullName)}>Reply
+        <div className="comment-action" onClick={this.bindUserToListener('')}>Reply
           <i className="fa fa-thumbs-up" aria-hidden="true"></i> {numLikes}
         </div>
         );

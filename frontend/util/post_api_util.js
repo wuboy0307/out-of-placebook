@@ -13,3 +13,11 @@ export const createLike = (like) => {
     data: { like }
   });
 };
+
+export const destroyLike = (like) => {
+  return $.ajax({
+    method: 'DELETE',
+    url: '/api/likes/',
+    data: { like }
+  });
+};

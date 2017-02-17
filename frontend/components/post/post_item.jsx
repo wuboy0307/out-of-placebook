@@ -3,10 +3,11 @@ import CommentBox from '../comment/comment_box';
 import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
-import { createSingleLikeRequest } from '../../actions/post_actions';
+import { createSingleLikeRequest, destroySingleLikeRequest } from '../../actions/post_actions';
 
 const mapDispatchToProps = dispatch => ({
-  createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo))
+  createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
+  destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo))
 });
 
 class PostItem extends React.Component {
@@ -76,6 +77,12 @@ class PostItem extends React.Component {
   // NEED TO ADD APPROPRIATE AJAX CALLS FOR THIS
   toggleLike() {
     if (this.props.post.userLikesPost) {
+      const likeInfo = {
+        type: 'post',
+        content_id: this.props.post.id
+      };
+
+      this.props.destroySingleLikeRequest(likeInfo);
 
     } else {
 

@@ -10,6 +10,7 @@ class ProfileNavBar extends React.Component {
         <ProfileLinkBar />
         <div className="profile-picture"><img src={ this.props.profile.profile_url || `/assets/avatar.jpg`}/></div>
         <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
+        <button className="profile-friend-button">Requested</button>
       </div>
     );
   }

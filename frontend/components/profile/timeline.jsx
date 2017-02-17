@@ -4,10 +4,10 @@ import CreatePost from '../post/create_post';
 import PostItem from '../post/post_item';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-
+import { selectPosts } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
-  posts: state.posts,
+  posts: selectPosts(state),
   profileList: state.profiles.profileList
 });
 

@@ -11,7 +11,10 @@ json.profile do
   json.friendIds @user.friend_ids
 end
 
-json.posts @posts.each do |post|
+
+json.posts do
+  @posts.each do |post|
+  json.set! post.id do
   json.id post.id
   json.wallId post.wall_id
   json.authorId post.author_id
@@ -48,5 +51,7 @@ json.posts @posts.each do |post|
       json.numLikes child.likes.length
       json.body child.body
     end
+  end
+end
   end
 end

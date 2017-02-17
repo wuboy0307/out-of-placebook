@@ -11,3 +11,7 @@ improve profile show jsob jbuilder to make it not have to fetch child comments a
 make likes not hit database a load of times. (maybe due to like preview text?)
 
 how to get includes of children as well?
+
+-- TODO FRIDAY:
+  - Change comments from array to hash and write appropriate reducer
+  - Same for child comments (OR: APPEND?? - actually nvm won't help for edit)

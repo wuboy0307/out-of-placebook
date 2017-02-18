@@ -25,4 +25,6 @@ class Friendship < ApplicationRecord
   belongs_to :friend,
     class_name: 'User',
     foreign_key: :friend_id
+
+  has_many :incoming, class_name: 'Friendship', primary_key: :user_id, foreign_key: :friend_id, dependent: :delete_all
 end

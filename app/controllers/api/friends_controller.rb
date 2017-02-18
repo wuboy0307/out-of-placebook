@@ -27,7 +27,7 @@ class Api::FriendsController < ApplicationController
       # Friendship.create!(user_id: target_user.id, friend_id: user.id)
 
 
-      # render jbuilder showing current requests and current friends
+      render :index
     else
       render json: @friendship.errors.full_messages
     end
@@ -38,28 +38,25 @@ class Api::FriendsController < ApplicationController
   # THAT user is in the user_id col.
   def update
     user = current_user
-    @friendship = Friendship.find_by(id: params[:friend][:request_id])
-    unless user.all_friendships.include?(@friendship)
+    @friendship = Friendship.find_by(user_id: params[:friend][:target_id], friend_id: user.id)
+    unless user.incoming_friendships.include?(@friendship)
       render json: ["You don't have any pending requests with that id!"]
       return
     end
 
     case params[:friend][:type]
-    when 'friend'
-      opposite_friendship = Friendship.find_by(friend_id: @friendship.user_id, user_id: @friendship.friend_id)
+    when 'accept'
       @friendship.completed = true
-      opposite_friendship.completed = true
       @friendship.save!
-      opposite_friendship.save!
-    when 'unfriend'
-      opposite_friendship = Friendship.find_by(friend_id: @friendship.user_id, user_id: @friendship.friend_id)
+      Friendship.create!(user_id: user.id, friend_id: params[:friend][:target_id])
+    when 'reject'
       @friendship.destroy
-      opposite_friendship.destroy
     else
       render json: ['Invalid request type!']
       return
     end
-    # render jbuilder showing current requests and current friends
+
+    render :index
 
   end
 

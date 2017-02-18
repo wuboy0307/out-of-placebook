@@ -10,8 +10,11 @@ class Api::FriendsController < ApplicationController
     elsif user.friends.include?(target_user)
       render json: ['Already friends!']
       return
-    elsif user.pending_friends.include?(target_user)
+    elsif user.outgoing_friends.include?(target_user)
       render json: ['Already requested!']
+      return
+    elsif user.incoming_friends.include?(target_user)
+      render json: ['This person has already requested to be your friend. Maybe you meant to accept?']
       return
     elsif target_user.nil?
       render json: ['Target user does not exist!']
@@ -23,7 +26,7 @@ class Api::FriendsController < ApplicationController
       # DO NOT USE BELOW LINE (DELETE WHEN DONE)
       # Friendship.create!(user_id: target_user.id, friend_id: user.id)
 
-      
+
       # render jbuilder showing current requests and current friends
     else
       render json: @friendship.errors.full_messages

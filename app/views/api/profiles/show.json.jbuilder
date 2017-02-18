@@ -39,7 +39,7 @@ json.posts do
         json.extract! post.content, :url, :title, :description, :domain_name, :image
       end
     else
-      json.content {}
+      json.set! "content", {}
     end
     json.numLikes post.likes.length
     json.likeText post.like_preview_text(user)

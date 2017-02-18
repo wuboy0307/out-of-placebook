@@ -10,3 +10,5 @@ AUTH for posting comments/posts (cant comment on other people's shit)
 fix underlining of first comment on page (seems to only happen when commit submitted)
 
 add uniqueness constraints to friendships table on db level
+
+see if way to clean up all code in friendscontroller#create

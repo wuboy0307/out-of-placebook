@@ -11,8 +11,10 @@ json.profile do
   json.friendIds @user.friend_ids
   if user == @user
     json.friendStatus 'self'
-  elsif @user.pending_friends.include?(user)
-    json.friendStatus 'requested'
+  elsif @user.outgoing_friends.include?(user)
+    json.friendStatus 'outgoing'
+  elsif @user.incoming_friends.include?(user)
+    json.friendStatus 'incoming'
   elsif @user.friends.include?(user)
     json.friendStatus 'friends'
   else

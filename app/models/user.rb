@@ -70,7 +70,8 @@ class User < ApplicationRecord
 
   has_many :comments,
     class_name: 'Comment',
-    foreign_key: :author_id
+    foreign_key: :author_id,
+    dependent: :destroy
 
   # COULD POTENTIALLY DO 'HAS MANY COMMENTED-ON-POSTS THROUGH COMMENTS??'
   has_many :commented_on_posts,
@@ -79,13 +80,14 @@ class User < ApplicationRecord
 
   has_many :posts,
     class_name: 'Post',
-    foreign_key: :author_id
+    foreign_key: :author_id,
+    dependent: :destroy
 
   has_many :wall_posts,
     class_name: 'Post',
     foreign_key: :wall_id
 
-  has_many :likes, class_name: 'Like', foreign_key: :liker_id
+  has_many :likes, class_name: 'Like', foreign_key: :liker_id, dependent: :destroy
 
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'

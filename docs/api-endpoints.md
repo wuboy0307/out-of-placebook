@@ -41,9 +41,9 @@
 - `POST /api/friends`
   - send friend request
 - `DELETE /api/friends`
-  - reject friend request
+  - remove friend
 - `PUT /api/friends`
-  - accept friend request
+  - accept/reject friend request
 - `GET /api/friends`
   - get friend requests
 

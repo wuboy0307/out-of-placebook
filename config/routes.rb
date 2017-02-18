@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:create]
     delete 'likes' => 'likes#destroy'
 
-    resources :friends, only: [:create]
+    resources :friends, only: [:create, :index]
     delete 'friends' => 'friends#destroy'
     put 'friends' => 'friends#update'
 

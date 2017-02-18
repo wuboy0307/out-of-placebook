@@ -35,10 +35,18 @@ class User < ApplicationRecord
 
   has_many :friendships, -> { where completed: true },
     class_name: 'Friendship',
-    foreign_key: :user_id,
-    dependent: :destroy
+    foreign_key: :user_id
 
-  has_many :pending_friendships, -> { where completed: false },
+  has_many :outgoing_friendships, -> { where completed: false },
+    class_name: 'Friendship',
+    foreign_key: :user_id
+
+  has_many :incoming_friendships, -> { where completed: false },
+    class_name: 'Friendship',
+    foreign_key: :friend_id
+
+  # Used to ensure both rows are deleted when user is deleted.
+  has_many :all_friendships,
     class_name: 'Friendship',
     foreign_key: :user_id,
     dependent: :destroy
@@ -52,9 +60,13 @@ class User < ApplicationRecord
     through: :friendships,
     source: :friend
 
-  has_many :pending_friends,
-    through: :pending_friendships,
+  has_many :outgoing_friends,
+    through: :outgoing_friendships,
     source: :friend
+
+  has_many :incoming_friends,
+    through: :incoming_friendships,
+    source: :user
 
   has_many :comments,
     class_name: 'Comment',

@@ -1,0 +1,1 @@
+json.friendIds current_user.friend_ids

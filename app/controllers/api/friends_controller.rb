@@ -5,19 +5,19 @@ class Api::FriendsController < ApplicationController
     target_user = User.find_by(id: params[:friend][:target_id])
 
     if user == target_user
-      render json: ['Cannot friend yourself!']
+      render json: ['Cannot friend yourself!'], status: 422
       return
     elsif user.friends.include?(target_user)
-      render json: ['Already friends!']
+      render json: ['Already friends!'], status: 422
       return
     elsif user.outgoing_friends.include?(target_user)
-      render json: ['Already requested!']
+      render json: ['Already requested!'], status: 422
       return
     elsif user.incoming_friends.include?(target_user)
       render json: ['This person has already requested to be your friend. Maybe you meant to accept?']
       return
     elsif target_user.nil?
-      render json: ['Target user does not exist!']
+      render json: ['Target user does not exist!'], status: 422
       return
     end
 
@@ -25,11 +25,9 @@ class Api::FriendsController < ApplicationController
     if @friendship.save
       # DO NOT USE BELOW LINE (DELETE WHEN DONE)
       # Friendship.create!(user_id: target_user.id, friend_id: user.id)
-
-
       render :index
     else
-      render json: @friendship.errors.full_messages
+      render json: @friendship.errors.full_messages, status: 422
     end
 
   end
@@ -52,11 +50,27 @@ class Api::FriendsController < ApplicationController
     when 'reject'
       @friendship.destroy
     else
-      render json: ['Invalid request type!']
+      render json: ['Invalid request type!'], status: 422
       return
     end
 
     render :index
+  end
+
+  def destroy
+    user = current_user
+
+    unless user.friends.include?(User.find_by(id: params[:friend][:target_id]))
+      render json: ['You are not friends with that user!'], status: 422
+      return
+    end
+
+    @friendship = Friendship.find(friend_id: user.id, user_id: params[:friend][:target_id])
+    if @friendship.destroy
+      render :index
+    else
+      render @friendship.errors.full_messages, status: 422
+    end
 
   end
 

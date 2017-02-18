@@ -7,7 +7,7 @@ remove window.store from oopbook.jsx
 
 AUTH for posting comments/posts (cant comment on other people's shit)
 
-fix underlining of first comment on page (seems to only happen when commit submitted)
+fix underlining of first comment on page (seems to only happen when commit submitted) (its because it's not strictly 2nd/3rd child due to if likes show)
 
 add uniqueness constraints to friendships table on db level
 

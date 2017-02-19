@@ -83,9 +83,7 @@ class User < ApplicationRecord
     foreign_key: :author_id,
     dependent: :destroy
 
-	has_many :likes_on_own_posts,
-		through: :posts,
-		source: :likes
+	has_many :activities, dependent: :destroy
 
   has_many :wall_posts,
     class_name: 'Post',
@@ -97,7 +95,7 @@ class User < ApplicationRecord
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
 	def users_liking_own_posts(time)
-		
+
 	end
 
 	def subscribed_posts

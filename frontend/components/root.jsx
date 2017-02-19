@@ -1,7 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 // react router
-import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
+import { Router, Route, IndexRoute,
+  hashHistory, IndexRedirect } from 'react-router';
 
 // react components
 import App from './app';
@@ -22,16 +23,21 @@ const Root = ({ store }) => {
     if (currentUser) {
       replace('/');
     }
-  }
+  };
 
   return (
     <Provider store={store}>
-      <Router history={hashHistory}>
+      <Router history={hashHistory}
+        onUpdate={ () => window.scrollTo(0,0)}>
+
         <Route path="/" component={App} onEnter={_ensureLoggedIn} >
           <IndexRedirect to="/profile/15" />
           <Route path="/profile/:profileId" component={Home} />
         </Route>
-        <Route path="/signup" component={SignUpForm} onEnter={_redirectIfLoggedIn} />
+        
+        <Route path="/signup" component={SignUpForm}
+          onEnter={_redirectIfLoggedIn} />
+
       </Router>
     </Provider>
   );

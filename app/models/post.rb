@@ -23,11 +23,16 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
+  has_many :likes, as: :likeable
+  has_many :liking_users, through: :likes, source: :liker
+
   before_save :scan_for_url
 
-  has_many :likes, as: :likeable
+  after_create :create_activity
 
-  has_many :liking_users, through: :likes, source: :liker
+  def create_activity
+    Activity.create!(user_id: self.author_id, activity_source: self, activity_parent: self.wall)
+  end
 
   include ActionView::Helpers::DateHelper
 

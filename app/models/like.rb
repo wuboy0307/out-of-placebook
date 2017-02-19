@@ -16,4 +16,11 @@ class Like < ApplicationRecord
 
   # below line can mess with seed file as it prevents multiple likes
   validates :liker_id, uniqueness: { scope: [:likeable_type, :likeable_id], message: 'Already Liked!'}
+
+  after_create :create_activity
+
+  def create_activity
+    Activity.create!(user_id: self.liker_id, activity_source: self, activity_parent: self.likeable)
+  end
+
 end

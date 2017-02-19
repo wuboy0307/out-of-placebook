@@ -39,6 +39,17 @@ class Comment < ApplicationRecord
 
   has_many :liking_users, through: :likes, source: :liker
 
+  after_create :create_activity
+
+  def create_activity
+    if self.parent_id.nil?
+      activity_parent = self.post
+    else
+      activity_parent = self.parent
+    end
+    Activity.create!(user_id: self.author_id, activity_source: self, activity_parent: activity_parent)
+  end
+
   include ActionView::Helpers::DateHelper
 
   def age

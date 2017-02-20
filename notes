@@ -12,3 +12,6 @@ fix underlining of first comment on page (seems to only happen when commit submi
 add uniqueness constraints to friendships table on db level
 
 see if way to clean up all code in friendscontroller#create
+
+
+add better index to acitvities

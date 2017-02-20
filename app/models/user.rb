@@ -98,56 +98,56 @@ class User < ApplicationRecord
   # Add index on [source type, parent type, parent id, created at] AND [user_id, created_at]
   def likes_on_posts(last_search_time)
     output = []
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Like', activity_parent_type: 'Post', activity_parent_id: self.posts)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('like_on_your_post')}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Like', activity_parent_type: 'Post', activity_parent_id: self.wall_posts)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('like_on_your_wall_post')}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Like', activity_parent_type: 'Comment', activity_parent_id: self.comments)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('like_on_your_comment')}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: self.posts)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_post')}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: self.wall_posts)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_wall_post')}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Comment', activity_parent_type: 'Comment', activity_parent_id: self.comments)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_comment')}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: self.commented_on_posts)
       .order(created_at: :desc)
       .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id)
+      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :id, :user_id)
       .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_commented_post')}
 
-
+    output.select!{|el| el[4] != self.id}
     output.sort{ |x,y| y[3] <=> x[3]}
   end
 

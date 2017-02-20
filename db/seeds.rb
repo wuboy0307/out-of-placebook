@@ -14,8 +14,8 @@
 #   User.create!(fname: Faker::Name.first_name , lname: Faker::Name.last_name , email: Faker::Internet.email, password: "password")
 # end
 #
-
-
+#
+#
 # users = User.all
 #
 # 100.times do
@@ -41,16 +41,16 @@
 #     Comment.create!(author_id: user.id, post_id: comment.post_id, parent_id: comment.id, body: Faker::Hacker.say_something_smart)
 #   end
 # end
-
+#
 users = User.all
 posts = Post.all
 comments = Comment.all
 
-500.times do
-  activity = posts.sample
-  user = users.sample
-  Like.create!(liker_id: user.id, likeable: activity)
-end
+# 500.times do
+#   activity = posts.sample
+#   user = users.sample
+#   Like.create!(liker_id: user.id, likeable: activity)
+# end
 
 700.times do
   activity = comments.sample

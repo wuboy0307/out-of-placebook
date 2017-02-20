@@ -20,7 +20,10 @@ SELECT activity_source_id FROM activities
 WHERE activity_source_type = "Like" and activity_source_type = "Post"
 
 # BELOW WORKS for above:
-Activity.where(activity_source_type: "Like").select(:activity_parent_id).order(created_at: :desc).pluck(:activity_parent_id).uniq
+Activity.where(activity_source_type: "Like", activity_parent_id: User.first.wall_posts).select(:activity_parent_id, :created_at).order(created_at: :desc).pluck(:activity_parent_id, :created_at).uniq
+
+# editing so can stick in hash:
+Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id).order(created_at: :desc).pluck(:activity_source_type, :activity_parent_type, :activity_parent_id).uniq
 
 
 likes on my wall posts
@@ -53,3 +56,18 @@ Activity.where(activity_source_type: "Comment", activity_parent_type: "Comment",
 
 Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
   activity_parent_id: User.first.posts.map(&:id)).group_by
+
+
+#
+
+Activity.where(activity_source_type: "Like").select('activity_parent_id', 'MAX(activities.created_at)').group(:activity_parent_id)
+
+Activity.where(activity_source_type: "Like", activity_parent_id: User.first.wall_posts).select(:activity_parent_id, :created_at).order(created_at: :desc).pluck(:activity_parent_id, :created_at).uniq
+
+# Works I think
+Activity.where(activity_source_type: "Like").select('activity_parent_id', 'MAX(id)').group('activity_parent_id').order('MAX(id)')
+# max(id) not strictly required in select
+
+### BEST ONE YET
+
+Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :created_at).order(created_at: :desc).pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :created_at).uniq{|el| el[0..2]}

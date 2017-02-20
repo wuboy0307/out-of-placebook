@@ -3,10 +3,12 @@ FROM activities tt
 INNER JOIN
     (SELECT activity_source_type, activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
     FROM activities
+    WHERE activities.user_id != 1
     GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedtt
 ON tt.activity_source_type = groupedtt.activity_source_type
 AND tt.activity_parent_type = groupedtt.activity_parent_type
 AND tt.activity_parent_id = groupedtt.activity_parent_id
-AND tt.created_at = groupedtt.maxcreated"
+AND tt.created_at = groupedtt.maxcreated
+ORDER BY tt.created_at DESC"
 
 Activity.find_by_sql(sql)

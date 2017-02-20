@@ -32,7 +32,6 @@ class User < ApplicationRecord
 	validates :password, length: {minimum: 6, allow_nil: :true}
 
 	after_initialize :ensure_session_token
-	before_validation :ensure_session_token_uniqueness
 
   has_many :friendships, -> { where completed: true },
     class_name: 'Friendship',
@@ -276,12 +275,6 @@ class User < ApplicationRecord
 
 	def ensure_session_token
 		self.session_token ||= self.class.generate_session_token
-	end
-
-	def ensure_session_token_uniqueness
-		while User.find_by(session_token: self.session_token)
-			self.session_token = self.class.generate_session_token
-		end
 	end
 
   def join_sql

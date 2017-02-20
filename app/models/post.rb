@@ -48,7 +48,7 @@ class Post < ApplicationRecord
 
 # TODO: display friend names as well.
   def like_preview_text(user)
-    likers_excluding_user = liking_users.reject{ |u| u.id == user.id }
+    likers_excluding_user = liking_users.where.not(id: author.id)
     num_likers_excluding_user = likers_excluding_user.length
 
     case num_likers_excluding_user

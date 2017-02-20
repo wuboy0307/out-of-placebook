@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
-  currentUser: state.auth.currentUser
+  currentUser: state.auth.currentUser,
+  notifications: state.notifications
 });
 
 class NavBar extends React.Component {
@@ -26,7 +27,7 @@ class NavBar extends React.Component {
             <div className="notifications-bar">
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
               <div><i className="fa fa-comments" aria-hidden="true"></i></div>
-              <div className="small-notification-count">10</div>
+              <div className="small-notification-count">{this.props.notifications.count}</div>
 
               <div className="flyout">
                 <div className="flyout-header">

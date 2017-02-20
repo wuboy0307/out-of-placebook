@@ -15,6 +15,6 @@ export const fetchNotificationCountFailure = errors => ({
 
 export const fetchNotificationCountRequest = () => dispatch => (
   APIUtil.fetchNotificationCount()
-    .then(data => dispatch(fetchSingleProfileSuccess(data)),
-      err => dispatch(fetchSingleProfileFailure(err.responseJSON)))
+    .then(data => dispatch(fetchNotificationCountSuccess(data)),
+      err => dispatch(fetchNotificationCountFailure(err.responseJSON)))
 );

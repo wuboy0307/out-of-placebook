@@ -13,44 +13,25 @@ Activity.where(activity_source_type: "Post", activity_parent_type: "User",
 
 
 likes on my posts
-Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
-  activity_parent_id: post in my posts)
-
-SELECT activity_source_id FROM activities
-WHERE activity_source_type = "Like" and activity_source_type = "Post"
-
-# BELOW WORKS for above:
-Activity.where(activity_source_type: "Like", activity_parent_id: User.first.wall_posts).select(:activity_parent_id, :created_at).order(created_at: :desc).pluck(:activity_parent_id, :created_at).uniq
-
-# editing so can stick in hash:
-Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id).order(created_at: :desc).pluck(:activity_source_type, :activity_parent_type, :activity_parent_id).uniq
 
 
 likes on my wall posts
-Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
-  activity_parent_id: post in my wall_posts)
 
 likes on my comments
-Activity.where(activity_source_type: "Like", activity_parent_type: "Comment",
-  activity_parent_id: comment in my comments)
+
 # likes on my commented on posts
 
 # comments on liked posts
 comments on my posts
-Activity.where(activity_source_type: "Comment", activity_parent_type: "Post",
-  activity_parent_id: post in my posts)
+
 
 comments on my wall posts
-Activity.where(activity_source_type: "Comment", activity_parent_type: "Post",
-  activity_parent_id: post in my wall_posts)
+
 
 comments on my parent comments
-Activity.where(activity_source_type: "Comment", activity_parent_type: "Comment",
-  activity_parent_id: comment in my comments)
+
 
 comments on my commented on posts
-Activity.where(activity_source_type: "Comment", activity_parent_type: "Comment",
-  activity_parent_id: comment in my commented posts)
 
 # TODO: comment siblings to my comment replies
 
@@ -71,3 +52,6 @@ Activity.where(activity_source_type: "Like").select('activity_parent_id', 'MAX(i
 ### BEST ONE YET
 
 Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :created_at).order(created_at: :desc).pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :created_at).uniq{|el| el[0..2]}
+####
+
+Activity.select('activities.*, "likes_on_own_posts" AS type').where(activity_source_type: 'Like', activity_parent_type: 'Post', activity_parent_id: User.first.posts).order(created_at: :desc)

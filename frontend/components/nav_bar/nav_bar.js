@@ -42,7 +42,10 @@ class NavBar extends React.Component {
                   </li>
                   <li className="flyout-list-item">
                     <img className="user-pic-flyout" />
-                    <div className="flyout-item-text">Item 2</div>
+                    <div className="flyout-item-body">
+                      <div className="flyout-item-text">Item 1</div>
+                      <div className="flyout-item-timestamp">Item 1</div>
+                    </div>
                   </li>
                 </div>
               </div>

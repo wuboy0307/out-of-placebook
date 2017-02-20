@@ -31,10 +31,10 @@ const Root = ({ store }) => {
         onUpdate={ () => window.scrollTo(0,0)}>
 
         <Route path="/" component={App} onEnter={_ensureLoggedIn} >
-          <IndexRedirect to="/profile/15" />
+          <IndexRedirect to="/profile/1" />
           <Route path="/profile/:profileId" component={Home} />
         </Route>
-        
+
         <Route path="/signup" component={SignUpForm}
           onEnter={_redirectIfLoggedIn} />
 

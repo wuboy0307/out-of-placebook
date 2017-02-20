@@ -166,7 +166,15 @@ class User < ApplicationRecord
         end
 
       when "comment_on_your_post"
-        parsed << ["#{note.activity_source.author.full_name} commented on your post.", note.age]
+        num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
+        case num_comments_minus_self
+        when 1
+          parsed << ["#{note.activity_source.author.full_name} commented on your post.", note.age]
+        when 2
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on your post.", note.age]
+        else
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others commented on your post.", note.age]
+        end
 
       when "like_on_your_wall_post"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
@@ -180,7 +188,15 @@ class User < ApplicationRecord
         end
 
       when "comment_on_your_wall_post"
-        parsed << ["#{note.activity_source.author.full_name} commented on a post on your wall.", note.age]
+        num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
+        case num_comments_minus_self
+        when 1
+          parsed << ["#{note.activity_source.author.full_name} commented on a post on your wall.", note.age]
+        when 2
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on a post on your wall.", note.age]
+        else
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others commented on a post on your wall.", note.age]
+        end
 
       when "like_on_your_comment"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length

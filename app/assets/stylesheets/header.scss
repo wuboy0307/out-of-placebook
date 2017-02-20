@@ -267,7 +267,7 @@ box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
 color: #1d2129;
 overflow: visible;
 position: absolute;
-top: 38px;
+top: 30px;
 width: 430px;
 // z-index: -1;
 z-index: 5;
@@ -275,6 +275,7 @@ border-radius: 0 0 2px 2px;
 right: 1px;
 display: flex;
 flex-direction: column;
+font-size: 12px;
 }
 
 .flyout-header {
@@ -313,4 +314,13 @@ flex-direction: column;
 .flyout-item-body {
   display: flex;
   flex-direction: column;
+  align-items: space-between;
+}
+
+.flyout-item-text {
+  margin: 5px 0;
+}
+
+.flyout-item-timestamp {
+  color: #999;
 }

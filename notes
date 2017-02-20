@@ -15,3 +15,4 @@ see if way to clean up all code in friendscontroller#create
 
 
 add better index to acitvities
+cache the notification count until next fetch time? or at least last searches??

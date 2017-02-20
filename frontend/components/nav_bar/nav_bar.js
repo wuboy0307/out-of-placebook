@@ -27,6 +27,26 @@ class NavBar extends React.Component {
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
               <div><i className="fa fa-comments" aria-hidden="true"></i></div>
               <div className="small-notification-count">10</div>
+
+              <div className="flyout">
+                <div className="flyout-header">
+                  Notifications
+                </div>
+                <div className="flyout-list">
+                  <li className="flyout-list-item">
+                    <img className="user-pic-flyout" />
+                    <div className="flyout-item-body">
+                      <div className="flyout-item-text">Item 1</div>
+                      <div className="flyout-item-timestamp">Item 1</div>
+                    </div>
+                  </li>
+                  <li className="flyout-list-item">
+                    <img className="user-pic-flyout" />
+                    <div className="flyout-item-text">Item 2</div>
+                  </li>
+                </div>
+              </div>
+
               <div><i className="fa fa-globe" aria-hidden="true"></i></div>
             </div>
           </div>

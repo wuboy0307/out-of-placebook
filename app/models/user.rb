@@ -98,25 +98,25 @@ class User < ApplicationRecord
   # Add index on [source type, parent type, parent id, created at] AND [user_id, created_at]
   def generate_notifications(last_search_time)
     output = []
-    base_notification_query(last_search_time, 'Like', 'Post', self.posts)
+    base_notification_query(last_search_time, 'Like', 'Post', self.posts).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_post']}
 
-      base_notification_query(last_search_time, 'Comment', 'Post', self.posts)
+      base_notification_query(last_search_time, 'Comment', 'Post', self.posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
       .map{|act| output << [act, 'comment_on_your_post']}
 
-    base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts)
+    base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_wall_post']}
 
-      base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts)
+      base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
       .map{|act| output << [act, 'comment_on_your_wall_post']}
 
-    base_notification_query(last_search_time, 'Like', 'Comment', self.comments)
+    base_notification_query(last_search_time, 'Like', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_comment']}
 
-      base_notification_query(last_search_time, 'Comment', 'Comment', self.comments)
+      base_notification_query(last_search_time, 'Comment', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:author])
       .map{|act| output << [act, 'comment_on_your_comment']}
 
-    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts)
+    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
       .map{|act| output << [act, 'comment_on_your_commented_post']}
 
     output.uniq!{|el| el[0].id }
@@ -137,7 +137,7 @@ class User < ApplicationRecord
       .where(activity_parent_id: self.comments)
       .order(created_at: :desc)
 
-    first.or(second).order(created_at: :desc)[0..n].last.created_at
+    first.or(second).order(created_at: :desc).limit(n)[0..n].last.created_at
   end
 
   def generate_n_notifications(n)
@@ -158,53 +158,53 @@ class User < ApplicationRecord
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self
         when 1
-          parsed << "#{note.activity_source.liker.full_name} likes your post."
+          parsed << ["#{note.activity_source.liker.full_name} likes your post.", note.age]
         when 2
-          parsed << "#{note.activity_source.liker.full_name} and 1 other like your post."
+          parsed << ["#{note.activity_source.liker.full_name} and 1 other like your post.", note.age]
         else
-          parsed << "#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your post."
+          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your post.", note.age]
         end
 
       when "comment_on_your_post"
-        parsed << "#{note.activity_source.author.full_name} commented on your post."
+        parsed << ["#{note.activity_source.author.full_name} commented on your post.", note.age]
 
       when "like_on_your_wall_post"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self
         when 1
-          parsed << "#{note.activity_source.liker.full_name} likes a post on your wall."
+          parsed << ["#{note.activity_source.liker.full_name} likes a post on your wall.", note.age]
         when 2
-          parsed << "#{note.activity_source.liker.full_name} and 1 other like a post on your wall."
+          parsed << ["#{note.activity_source.liker.full_name} and 1 other like a post on your wall.", note.age]
         else
-          parsed << "#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like a post on your wall."
+          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like a post on your wall.", note.age]
         end
 
       when "comment_on_your_wall_post"
-        parsed << "#{note.activity_source.author.full_name} commented on a post on your wall."
+        parsed << ["#{note.activity_source.author.full_name} commented on a post on your wall.", note.age]
 
       when "like_on_your_comment"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self
         when 1
-          parsed << "#{note.activity_source.liker.full_name} likes your comment"
+          parsed << ["#{note.activity_source.liker.full_name} likes your comment", note.age]
         when 2
-          parsed << "#{note.activity_source.liker.full_name} and 1 other like your comment"
+          parsed << ["#{note.activity_source.liker.full_name} and 1 other like your comment", note.age]
         else
-          parsed << "#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your comment"
+          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your comment", note.age]
         end
 
       when "comment_on_your_comment"
-        parsed << "#{note.activity_source.author.full_name} replied to your comment."
+        parsed << ["#{note.activity_source.author.full_name} replied to your comment.", note.age]
 
       when "comment_on_your_commented_post"
         num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
         case num_comments_minus_self
         when 1
-          parsed << "#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post."
+          parsed << ["#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post.", note.age]
         when 2
-          parsed << "#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post."
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post.", note.age]
         else
-          parsed << "#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post."
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post.", note.age]
         end
 
       end
@@ -221,9 +221,6 @@ class User < ApplicationRecord
       .order(created_at: :desc)
   end
 
-	def subscribed_posts
-		posts << wall_posts << liked_posts << commented_on_posts
-	end
 
   def friend_ids
     friendships.map(&:id)

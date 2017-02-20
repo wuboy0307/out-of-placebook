@@ -16,4 +16,10 @@ class Activity < ApplicationRecord
   belongs_to :activity_source, polymorphic: true
   belongs_to :activity_parent, polymorphic: true
   belongs_to :user
+
+  include ActionView::Helpers::DateHelper
+
+  def age
+    time_ago_in_words(self.created_at) + ' ago'
+  end
 end

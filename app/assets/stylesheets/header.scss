@@ -259,3 +259,58 @@ background-clip: padding-box;
     top: -8px;
     right: -11px;
 }
+
+.flyout {
+  background: #fff;
+border: 1px solid rgba(100, 100, 100, .4);
+box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+color: #1d2129;
+overflow: visible;
+position: absolute;
+top: 38px;
+width: 430px;
+// z-index: -1;
+z-index: 5;
+border-radius: 0 0 2px 2px;
+right: 1px;
+display: flex;
+flex-direction: column;
+}
+
+.flyout-header {
+  background-clip: padding-box;
+    background-color: #fff;
+    border-bottom: solid 1px #dddfe2;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    position: relative;
+    z-index: 100;
+    padding: 8px 12px 6px;
+}
+
+.flyout-list {
+  list-style-type: none;
+      margin: 0;
+      padding: 0;
+}
+
+.flyout-list-item {
+  background-color: #edf2fa;
+  display: flex;
+  flex-direction: row;
+  padding: 6px 30px 5px 12px;
+}
+
+
+.user-pic-flyout {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  margin-right: 12px;
+}
+
+.flyout-item-body {
+  display: flex;
+  flex-direction: column;
+}

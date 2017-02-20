@@ -116,8 +116,8 @@ class User < ApplicationRecord
       base_notification_query(last_search_time, 'Comment', 'Comment', self.comments)
       .map{|act| output << [act, 'comment_on_your_comment']}
 
-    # base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts)
-    #   .map{|act| output << [act, 'comment_on_your_commented_post']}
+    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts)
+      .map{|act| output << [act, 'comment_on_your_commented_post']}
 
     output.uniq!{|el| el[0].id }
     output.sort!{|x, y| y[0].id <=> x[0].id }
@@ -138,7 +138,12 @@ class User < ApplicationRecord
       .order(created_at: :desc)
 
     first.or(second).order(created_at: :desc)[0..n].last.created_at
-    end
+  end
+
+  def generate_n_notifications(n)
+    last_activity_time = created_time_for_n_notifications(n)
+    generate_notifications(last_activity_time)
+  end
 
   def notification_count
     generate_notifications(self.last_fetch_time).length - generate_notifications(Time.now).length
@@ -150,7 +155,7 @@ class User < ApplicationRecord
 
   def base_notification_query(last_search_time, source_type, parent_type, parent_id)
     Activity.joins(join_sql)
-      .where('created_at > ?', last_search_time)
+      .where('created_at >= ?', last_search_time)
       .where(activity_source_type: source_type)
       .where(activity_parent_type: parent_type)
       .where(activity_parent_id: parent_id)

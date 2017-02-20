@@ -150,7 +150,7 @@ class User < ApplicationRecord
   end
 
   def parse_notifications
-    unparsed_notifications = generate_n_notifications(25)
+    unparsed_notifications = generate_n_notifications(10)
     parsed = []
     unparsed_notifications.each do |note, message|
       case message

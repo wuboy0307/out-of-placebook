@@ -6,35 +6,62 @@ const mapStateToProps = (state) => ({
   notifications: state.notifications
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest())
+});
+
 class NavBar extends React.Component {
   constructor(props){
     super(props);
     this.renderNotifications = this.renderNotifications.bind(this);
+    this.clickNotificationButton = this.clickNotificationButton.bind(this);
+    this.state = {
+      flyoutVisible: false
+    };
   }
 
-  // componentWillReceiveProps(newProps) {
-  //   if (this.props.params.profileId !== newProps.params.profileId) {
-  //     this.props.fetchSingleProfileRequest(newProps.params.profileId)
-  //       .then(() => this.props.fetchNotificationCountRequest())
-  //       .then(() => this.props.fetchNotificationsRequest());
-  //   }
-  // }
+  componentWillReceiveProps() {
+    this.setState({flyoutVisible: false});
+  }
+
+  clickNotificationButton() {
+    if (this.props.notifications.count > 0) {
+      if (!this.state.flyoutVisible) {
+        this.props.fetchNotificationsRequest().then(() => {
+          this.setState({flyoutVisible: !this.state.flyoutVisible});
+          // debugger
+        });
+      } else {
+        this.setState({flyoutVisible: !this.state.flyoutVisible});
+      }
+    } else {
+      this.setState({flyoutVisible: !this.state.flyoutVisible});
+    }
+  }
 
   renderNotifications() {
-    if (!this.props.notifications.list) {
+    if (!this.state.flyoutVisible) {
       return null;
     }
-    return this.props.notifications.list.map((el, idx) => {
-      return(
-        <li className="flyout-list-item" key={idx}>
-          <img className="user-pic-flyout" src={el[2]}/>
-          <div className="flyout-item-body">
-            <div className="flyout-item-text">{el[0]}</div>
-            <div className="flyout-item-timestamp">{el[1]}</div>
-          </div>
-        </li>
-      );
-    });
+    return (<div className="flyout">
+      <div className="flyout-header">
+        Notifications
+      </div>
+      <div className="flyout-list">
+       {this.props.notifications.list.map((el, idx) => {
+        return(
+          <li className="flyout-list-item" key={idx}>
+            <img className="user-pic-flyout" src={el[2]}/>
+            <div className="flyout-item-body">
+              <div className="flyout-item-text">{el[0]}</div>
+              <div className="flyout-item-timestamp">{el[1]}</div>
+            </div>
+          </li>
+        );
+      })}
+    </div>
+  </div>
+  );
   }
 
   render() {
@@ -59,18 +86,13 @@ class NavBar extends React.Component {
               <div><i className="fa fa-comments" aria-hidden="true"></i></div>
               <div className="small-notification-count">{this.props.notifications.count}</div>
 
-              <div className="flyout">
-                <div className="flyout-header">
-                  Notifications
-                </div>
-                <div className="flyout-list">
+
 
                   { this.renderNotifications() }
 
-                </div>
-              </div>
 
-              <div><i className="fa fa-globe" aria-hidden="true"></i></div>
+
+              <div><i className="fa fa-globe" aria-hidden="true" onClick={this.clickNotificationButton}></i></div>
             </div>
           </div>
         </div>
@@ -81,5 +103,5 @@ class NavBar extends React.Component {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(NavBar);

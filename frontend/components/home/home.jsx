@@ -23,15 +23,15 @@ class Home extends React.Component {
   componentWillReceiveProps(newProps) {
     if (this.props.params.profileId !== newProps.params.profileId) {
       this.props.fetchSingleProfileRequest(newProps.params.profileId)
-        .then(() => this.props.fetchNotificationCountRequest())
-        .then(() => this.props.fetchNotificationsRequest());
+        .then(() => this.props.fetchNotificationCountRequest());
+        // .then(() => this.props.fetchNotificationsRequest());
     }
   }
 
   componentDidMount() {
     this.props.fetchSingleProfileRequest(this.props.params.profileId)
-      .then(() =>  this.props.fetchNotificationCountRequest())
-      .then(() => this.props.fetchNotificationsRequest());
+      .then(() =>  this.props.fetchNotificationCountRequest());
+      // .then(() => this.props.fetchNotificationsRequest());
   }
 
   render() {

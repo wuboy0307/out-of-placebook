@@ -14,6 +14,9 @@ class Like < ApplicationRecord
   belongs_to :likeable, polymorphic: true
   belongs_to :liker, class_name: 'User', foreign_key: :liker_id
 
+  # tracks and deletes like activities
+  has_many :activities, as: :activity_source, dependent: :destroy
+
   # below line can mess with seed file as it prevents multiple likes
   validates :liker_id, uniqueness: { scope: [:likeable_type, :likeable_id], message: 'Already Liked!'}
 

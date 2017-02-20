@@ -94,9 +94,7 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
-	def users_liking_own_posts(time)
 
-	end
 
 	def subscribed_posts
 		posts << wall_posts << liked_posts << commented_on_posts

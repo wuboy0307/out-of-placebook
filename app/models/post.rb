@@ -26,6 +26,12 @@ class Post < ApplicationRecord
   has_many :likes, as: :likeable
   has_many :liking_users, through: :likes, source: :liker
 
+  # tracks posts on a wall
+  has_many :post_activities, class_name: 'Activity', as: :activity_source, dependent: :destroy
+
+  # tracks activities on a post
+  has_many :activities_on_post, class_name: 'Activity', as: :activity_parent, dependent: :destroy
+
   before_save :scan_for_url
 
   after_create :create_activity

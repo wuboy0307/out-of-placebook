@@ -7,14 +7,42 @@ content_type
 timestamps
 
 posts on my wall
+Activity.where(activity_source_type: "Post", activity_parent_type: "User",
+  activity_parent_id: userid)
+
+
 
 likes on my posts
+Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
+  activity_parent_id: post in my posts)
+
 likes on my wall posts
+Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
+  activity_parent_id: post in my wall_posts)
+
 likes on my comments
+Activity.where(activity_source_type: "Like", activity_parent_type: "Comment",
+  activity_parent_id: comment in my comments)
 # likes on my commented on posts
 
 # comments on liked posts
 comments on my posts
+Activity.where(activity_source_type: "Comment", activity_parent_type: "Post",
+  activity_parent_id: post in my posts)
+
 comments on my wall posts
-comments on my comments
+Activity.where(activity_source_type: "Comment", activity_parent_type: "Post",
+  activity_parent_id: post in my wall_posts)
+
+comments on my parent comments
+Activity.where(activity_source_type: "Comment", activity_parent_type: "Comment",
+  activity_parent_id: comment in my comments)
+
 comments on my commented on posts
+Activity.where(activity_source_type: "Comment", activity_parent_type: "Comment",
+  activity_parent_id: comment in my commented posts)
+
+# TODO: comment siblings to my comment replies
+
+Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
+  activity_parent_id: User.first.posts.map(&:id)).group_by

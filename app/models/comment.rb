@@ -39,6 +39,13 @@ class Comment < ApplicationRecord
 
   has_many :liking_users, through: :likes, source: :liker
 
+  # tracks comments on a post
+  has_many :comment_activities, class_name: 'Activity', as: :activity_source, dependent: :destroy
+
+  # tracks activities on a comment
+  has_many :activities_on_comment, class_name: 'Activity', as: :activity_parent, dependent: :destroy
+
+
   after_create :create_activity
 
   def create_activity

@@ -95,80 +95,61 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
-
   # Add index on [source type, parent type, parent id, created at] AND [user_id, created_at]
-  def subscription_activity(last_search_time)
+  def generate_notifications(last_search_time)
     output = []
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Like', activity_parent_type: 'Post', activity_parent_id: self.posts)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .uniq{|el| el[0..2]}.map{|el| el.push('like_on_your_post')}
+    base_notification_query(last_search_time, 'Like', 'Post', self.posts)
+      .map{|act| output << [act, 'like_on_your_post']}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Like', activity_parent_type: 'Post', activity_parent_id: self.wall_posts)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .uniq{|el| el[0..2]}.map{|el| el.push('like_on_your_wall_post')}
+    base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts)
+      .map{|act| output << [act, 'like_on_your_wall_post']}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Like', activity_parent_type: 'Comment', activity_parent_id: self.comments)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .uniq{|el| el[0..2]}.map{|el| el.push('like_on_your_comment')}
+    base_notification_query(last_search_time, 'Like', 'Comment', self.comments)
+      .map{|act| output << [act, 'like_on_your_comment']}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: self.posts)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_post')}
+    base_notification_query(last_search_time, 'Comment', 'Post', self.posts)
+      .map{|act| output << [act, 'comment_on_your_post']}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: self.wall_posts)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_wall_post')}
+    base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts)
+      .map{|act| output << [act, 'comment_on_your_wall_post']}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Comment', activity_parent_type: 'Comment', activity_parent_id: self.comments)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_comment')}
+    base_notification_query(last_search_time, 'Comment', 'Comment', self.comments)
+      .map{|act| output << [act, 'comment_on_your_comment']}
 
-    output += Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id)
-      .where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: self.commented_on_posts)
-      .where.not(user_id: self.id)
-      .order(created_at: :desc)
-      .where('created_at > ?', last_search_time)
-      .pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_idre)
-      .uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_commented_post')}
+    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts)
+      .map{|act| output << [act, 'comment_on_your_commented_post']}
 
-    # dont show own activity
-    # output.select!{|el| el[4] != self.id}
-    # order by recent
-    output.sort{ |x,y| y[3] <=> x[3]}
+    output.sort!{|x, y| y[0].id <=> x[0].id }
+    output.uniq!{|el| el[0].id }
+    output
   end
 
   def notification_count
-    subscription_activity(self.last_fetch_time).length - subscription_activity(Time.now).length
+    generate_notifications(self.last_fetch_time).length - generate_notifications(Time.now).length
   end
 
   def parse_notifications
     unparsed_notifcations = subscription_activity()
   end
 
+  def base_notification_query(last_search_time, source_type, parent_type, parent_id)
+    join_sql = "INNER JOIN
+        (SELECT activity_source_type, activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
+        FROM activities
+        WHERE activities.user_id != #{self.id}
+        GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedact
+    ON activities.activity_source_type = groupedact.activity_source_type
+    AND activities.activity_parent_type = groupedact.activity_parent_type
+    AND activities.activity_parent_id = groupedact.activity_parent_id
+    AND activities.created_at = groupedact.maxcreated"
+
+    Activity.joins(join_sql)
+      .where('created_at > ?', last_search_time)
+      .where(activity_source_type: source_type)
+      .where(activity_parent_type: parent_type)
+      .where(activity_parent_id: parent_id)
+      .order(created_at: :desc)
+  end
 
 	def subscribed_posts
 		posts << wall_posts << liked_posts << commented_on_posts

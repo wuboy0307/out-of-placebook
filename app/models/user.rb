@@ -101,48 +101,54 @@ class User < ApplicationRecord
     base_notification_query(last_search_time, 'Like', 'Post', self.posts)
       .map{|act| output << [act, 'like_on_your_post']}
 
+      base_notification_query(last_search_time, 'Comment', 'Post', self.posts)
+      .map{|act| output << [act, 'comment_on_your_post']}
+
     base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts)
       .map{|act| output << [act, 'like_on_your_wall_post']}
+
+      base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts)
+      .map{|act| output << [act, 'comment_on_your_wall_post']}
 
     base_notification_query(last_search_time, 'Like', 'Comment', self.comments)
       .map{|act| output << [act, 'like_on_your_comment']}
 
-    base_notification_query(last_search_time, 'Comment', 'Post', self.posts)
-      .map{|act| output << [act, 'comment_on_your_post']}
-
-    base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts)
-      .map{|act| output << [act, 'comment_on_your_wall_post']}
-
-    base_notification_query(last_search_time, 'Comment', 'Comment', self.comments)
+      base_notification_query(last_search_time, 'Comment', 'Comment', self.comments)
       .map{|act| output << [act, 'comment_on_your_comment']}
 
-    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts)
-      .map{|act| output << [act, 'comment_on_your_commented_post']}
+    # base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts)
+    #   .map{|act| output << [act, 'comment_on_your_commented_post']}
 
-    output.sort!{|x, y| y[0].id <=> x[0].id }
     output.uniq!{|el| el[0].id }
+    output.sort!{|x, y| y[0].id <=> x[0].id }
     output
   end
+
+  def created_time_for_n_notifications(n)
+    first = Activity.joins(join_sql)
+      .where(activity_source_type: ['Comment','Like'])
+      .where(activity_parent_type: ['Post'])
+      .where(activity_parent_id: self.wall_posts + self.posts)
+      .order(created_at: :desc)
+
+    second = Activity.joins(join_sql)
+      .where(activity_source_type: ['Comment','Like'])
+      .where(activity_parent_type: ['Comment'])
+      .where(activity_parent_id: self.comments)
+      .order(created_at: :desc)
+
+    first.or(second).order(created_at: :desc)[0..n].last.created_at
+    end
 
   def notification_count
     generate_notifications(self.last_fetch_time).length - generate_notifications(Time.now).length
   end
 
   def parse_notifications
-    unparsed_notifcations = subscription_activity()
+    unparsed_notifcations = generate_notifications(Time.now)
   end
 
   def base_notification_query(last_search_time, source_type, parent_type, parent_id)
-    join_sql = "INNER JOIN
-        (SELECT activity_source_type, activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
-        FROM activities
-        WHERE activities.user_id != #{self.id}
-        GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedact
-    ON activities.activity_source_type = groupedact.activity_source_type
-    AND activities.activity_parent_type = groupedact.activity_parent_type
-    AND activities.activity_parent_id = groupedact.activity_parent_id
-    AND activities.created_at = groupedact.maxcreated"
-
     Activity.joins(join_sql)
       .where('created_at > ?', last_search_time)
       .where(activity_source_type: source_type)
@@ -200,5 +206,18 @@ class User < ApplicationRecord
 			self.session_token = self.class.generate_session_token
 		end
 	end
+
+  def join_sql
+    sql = "INNER JOIN
+        (SELECT activity_source_type, activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
+        FROM activities
+        WHERE activities.user_id != #{self.id}
+        GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedact
+    ON activities.activity_source_type = groupedact.activity_source_type
+    AND activities.activity_parent_type = groupedact.activity_parent_type
+    AND activities.activity_parent_id = groupedact.activity_parent_id
+    AND activities.created_at = groupedact.maxcreated"
+    sql
+  end
 
 end

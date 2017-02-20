@@ -24,3 +24,5 @@ AND activities.activity_parent_id = groupedtt.activity_parent_id
 AND activities.created_at = groupedtt.maxcreated"
 
 Activity.joins(join_sql).order(created_at: :desc)
+
+Activity.select(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id).where(activity_source_type: 'Comment', activity_parent_type: 'Post', activity_parent_id: User.first.wall_posts).where.not(user_id: 1).order(created_at: :desc).where('created_at > ?', last_search_time).pluck(:activity_source_type, :activity_parent_type, :activity_parent_id, :user_id).uniq{|el| el[0..2]}.map{|el| el.push('comment_on_your_wall_post')}

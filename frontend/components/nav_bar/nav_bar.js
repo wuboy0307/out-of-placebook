@@ -26,6 +26,7 @@ class NavBar extends React.Component {
             <div className="notifications-bar">
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
               <div><i className="fa fa-comments" aria-hidden="true"></i></div>
+              <div className="small-notification-count">10</div>
               <div><i className="fa fa-globe" aria-hidden="true"></i></div>
             </div>
           </div>

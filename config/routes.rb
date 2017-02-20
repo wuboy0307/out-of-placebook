@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     delete 'friends' => 'friends#destroy'
     put 'friends' => 'friends#update'
 
+    resources :notifications, only: [:index]
+
     resource :session, only: [:create, :destroy]
 
     resources :profiles, only: [:show]

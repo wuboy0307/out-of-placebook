@@ -237,7 +237,25 @@
 
 .notifications-bar {
   margin: 0 10px;
+  position: relative;
 }
 .notifications-bar > * {
   margin: 0 5px;
+}
+
+.small-notification-count {
+  background-color: #fa3e3e;
+border-radius: 2px;
+color: #fff;
+padding: 1px 3px;
+background-clip: padding-box;
+    display: inline-block;
+    font-family: 'helvetica neue', Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: subpixel-antialiased;
+    line-height: 1.3;
+    min-height: 13px;
+    position: absolute;
+    top: -8px;
+    right: -11px;
 }

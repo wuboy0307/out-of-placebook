@@ -17,8 +17,8 @@ const notificationsReducer = (oldState = _initialState, action) => {
 
     case FETCH_NOTIFICATIONS_SUCCESS:
       newState = merge({},oldState);
-      newState.count = 0;
-      newState.list = action.notifications;
+      newState.count = action.notifications.notification_count;
+      newState.list = action.notifications.list;
       return newState;
 
     default:

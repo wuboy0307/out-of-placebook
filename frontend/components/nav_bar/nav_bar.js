@@ -25,7 +25,7 @@ class NavBar extends React.Component {
   }
 
   clickNotificationButton() {
-    if (this.props.notifications.count > 0) {
+    if (this.props.notifications.count > 0 || this.props.notifications.list.length < 1) {
       if (!this.state.flyoutVisible) {
         this.props.fetchNotificationsRequest().then(() => {
           this.setState({flyoutVisible: !this.state.flyoutVisible});

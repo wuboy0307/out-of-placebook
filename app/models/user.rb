@@ -146,7 +146,7 @@ class User < ApplicationRecord
   end
 
   def notification_count
-    generate_notifications(self.last_fetch_time).length - generate_notifications(Time.now).length
+    generate_notifications(self.last_fetch_time).length
   end
 
   def parse_notifications

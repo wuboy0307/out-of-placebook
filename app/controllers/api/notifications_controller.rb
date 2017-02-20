@@ -8,4 +8,13 @@ class Api::NotificationsController < ApplicationController
       render json: { notification_count: @user.notification_count }
     end
   end
+
+  def create
+    @user = current_user
+    if params[:notifications][:fetch]
+      render json: @user.parse_notifications
+    else
+      render json: ['Error no fetch parameter'], status: 422
+    end
+  end
 end

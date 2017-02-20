@@ -7,6 +7,36 @@ const mapStateToProps = (state) => ({
 });
 
 class NavBar extends React.Component {
+  constructor(props){
+    super(props);
+    this.renderNotifications = this.renderNotifications.bind(this);
+  }
+
+  // componentWillReceiveProps(newProps) {
+  //   if (this.props.params.profileId !== newProps.params.profileId) {
+  //     this.props.fetchSingleProfileRequest(newProps.params.profileId)
+  //       .then(() => this.props.fetchNotificationCountRequest())
+  //       .then(() => this.props.fetchNotificationsRequest());
+  //   }
+  // }
+
+  renderNotifications() {
+    if (!this.props.notifications.list) {
+      return null;
+    }
+    return this.props.notifications.list.map((el, idx) => {
+      return(
+        <li className="flyout-list-item" key={idx}>
+          <img className="user-pic-flyout" src={el[2]}/>
+          <div className="flyout-item-body">
+            <div className="flyout-item-text">{el[0]}</div>
+            <div className="flyout-item-timestamp">{el[1]}</div>
+          </div>
+        </li>
+      );
+    });
+  }
+
   render() {
     const currentUser = this.props.currentUser;
     return(
@@ -34,20 +64,9 @@ class NavBar extends React.Component {
                   Notifications
                 </div>
                 <div className="flyout-list">
-                  <li className="flyout-list-item">
-                    <img className="user-pic-flyout" />
-                    <div className="flyout-item-body">
-                      <div className="flyout-item-text">Item 1</div>
-                      <div className="flyout-item-timestamp">Item 1</div>
-                    </div>
-                  </li>
-                  <li className="flyout-list-item">
-                    <img className="user-pic-flyout" />
-                    <div className="flyout-item-body">
-                      <div className="flyout-item-text">Item 1</div>
-                      <div className="flyout-item-timestamp">Item 1</div>
-                    </div>
-                  </li>
+
+                  { this.renderNotifications() }
+
                 </div>
               </div>
 

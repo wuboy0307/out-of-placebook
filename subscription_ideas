@@ -16,6 +16,13 @@ likes on my posts
 Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
   activity_parent_id: post in my posts)
 
+SELECT activity_source_id FROM activities
+WHERE activity_source_type = "Like" and activity_source_type = "Post"
+
+# BELOW WORKS for above:
+Activity.where(activity_source_type: "Like").select(:activity_parent_id).order(created_at: :desc).pluck(:activity_parent_id).uniq
+
+
 likes on my wall posts
 Activity.where(activity_source_type: "Like", activity_parent_type: "Post",
   activity_parent_id: post in my wall_posts)

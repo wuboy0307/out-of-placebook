@@ -150,7 +150,66 @@ class User < ApplicationRecord
   end
 
   def parse_notifications
-    unparsed_notifcations = generate_notifications(Time.now)
+    unparsed_notifications = generate_n_notifications(25)
+    parsed = []
+    unparsed_notifications.each do |note, message|
+      case message
+      when "like_on_your_post"
+        num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
+        case num_likes_minus_self
+        when 1
+          parsed << "#{note.activity_source.liker.full_name} likes your post."
+        when 2
+          parsed << "#{note.activity_source.liker.full_name} and 1 other like your post."
+        else
+          parsed << "#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your post."
+        end
+
+      when "comment_on_your_post"
+        parsed << "#{note.activity_source.author.full_name} commented on your post."
+
+      when "like_on_your_wall_post"
+        num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
+        case num_likes_minus_self
+        when 1
+          parsed << "#{note.activity_source.liker.full_name} likes a post on your wall."
+        when 2
+          parsed << "#{note.activity_source.liker.full_name} and 1 other like a post on your wall."
+        else
+          parsed << "#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like a post on your wall."
+        end
+
+      when "comment_on_your_wall_post"
+        parsed << "#{note.activity_source.author.full_name} commented on a post on your wall."
+
+      when "like_on_your_comment"
+        num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
+        case num_likes_minus_self
+        when 1
+          parsed << "#{note.activity_source.liker.full_name} likes your comment"
+        when 2
+          parsed << "#{note.activity_source.liker.full_name} and 1 other like your comment"
+        else
+          parsed << "#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your comment"
+        end
+
+      when "comment_on_your_comment"
+        parsed << "#{note.activity_source.author.full_name} replied to your comment."
+
+      when "comment_on_your_commented_post"
+        num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
+        case num_comments_minus_self
+        when 1
+          parsed << "#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post."
+        when 2
+          parsed << "#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post."
+        else
+          parsed << "#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post."
+        end
+
+      end
+    end
+    parsed
   end
 
   def base_notification_query(last_search_time, source_type, parent_type, parent_id)

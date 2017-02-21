@@ -123,6 +123,7 @@ class PostItem extends React.Component {
         <div className="post-item">
 
           <div className="post-item-header">
+            <div className="post-item-dropdown"><i className="fa fa-arrow-down" aria-hidden="true"></i></div>
             <div className="post-item-img-wrapper">
               <img src={this.props.post.authorAvatarUrl || `/assets/avatar.jpg`} className="user-pic-xs" />
             </div>

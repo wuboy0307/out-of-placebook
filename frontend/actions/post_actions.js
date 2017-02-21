@@ -51,11 +51,21 @@ export const fetchSinglePostFailure = errors => ({
   errors
 });
 
+export const destroySingleLikeSuccess = likeInfo => ({
+  type: DESTROY_SINGLE_LIKE_SUCCESS,
+  likeInfo
+});
+
+export const destroySingleLikeFailure = errors => ({
+  type: DESTROY_SINGLE_LIKE_FAILURE,
+  errors
+});
+
 
 export const destroySingleLikeRequest = likeInfo => dispatch => (
   APIUtil.destroyLike(likeInfo)
     .then(data => dispatch(destroySingleLikeSuccess(data)),
-          err => dispatch(destroySingleLikeFailure(err.responseJSON)))
+          err => console.log(err.responseJSON))
 );
 
 

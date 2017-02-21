@@ -8,6 +8,7 @@ import { Router, Route, IndexRoute,
 import App from './app';
 import Home from './home/home';
 import SinglePost from './post/single_post';
+import NewsFeed from './newsfeed/newsfeed';
 import SignUpForm from './signup_form/signup_form';
 
 const Root = ({ store }) => {
@@ -35,6 +36,7 @@ const Root = ({ store }) => {
           <IndexRedirect to="/profile/1" />
           <Route path="/profile/:profileId" component={Home} />
           <Route path="/post/:postId" component={SinglePost} />
+          <Route path="/newsfeed" component={NewsFeed} />
         </Route>
 
         <Route path="/signup" component={SignUpForm}

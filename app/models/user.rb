@@ -255,6 +255,7 @@ class User < ApplicationRecord
   def parse_newsfeed
     # can add .limit to limit here
     # also add created_at constraint
+    output = []
     activity_types = []
     activity_types << newsfeed_activity.where(activity_source_type: "Post")
                         .includes(:activity_parent, activity_source: [:liking_users, :content, :author, :likes,
@@ -267,7 +268,6 @@ class User < ApplicationRecord
     activity_types << newsfeed_activity.where(activity_parent_type: "Comment")
                         .includes(:activity_source, activity_parent: [post: [:liking_users, :content, :author, :likes, comments: [:author, :likes, :liking_users,
                         children: [:author, :likes, :liking_users]]]])
-    output = []
     activity_types.each do |activity|
       activity.each do |act|
         case [act.activity_source_type, act.activity_parent_type]

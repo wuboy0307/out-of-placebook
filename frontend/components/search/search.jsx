@@ -40,18 +40,27 @@ class Search extends React.Component {
       return(
         <div className="search-dropdown">
             <div className="search-result">
-              No results
+                <div className="search-no-results">No results</div>
             </div>
 
         </div>
       );
     }
-
     return(
       <div className="search-dropdown">
         {this.props.search.map((user) => (
           <div className="search-result" key={user.id}>
-            {user.fullName}
+            <div className="search-result-pic">
+              <img className="user-pic-xs" src={user.avatarUrl} />
+            </div>
+            <div className="search-result-body">
+              <div className="search-result-name">
+                {user.fullName}
+              </div>
+              <div className="search-result-friends">
+                { user.mutualFriends }
+              </div>
+            </div>
           </div>
         ))}
 

@@ -7,7 +7,7 @@ else
         json.id user.id
         json.fullName user.full_name
         json.avatarUrl user.avatar_url
-        json.friendIds user.friend_ids
+        json.mutualFriends (current_user.friend_ids & user.friend_ids).length
       end
     end
   end

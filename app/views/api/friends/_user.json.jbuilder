@@ -1,5 +1,5 @@
 user = current_user
-friends = user.friends
+friends = user.friends.includes(:friends)
 
 if friends.empty?
   json.set! "friends", {}
@@ -9,7 +9,7 @@ else
       json.set! friend.id do
         json.fullName friend.full_name
         json.avatar friend.avatar_url
-        json.friendIds friend.friend_ids
+        json.friendIds friend.friends.map(&:id)
       end
     end
   end
@@ -25,7 +25,7 @@ else
       json.set! friend.id do
         json.fullName friend.full_name
         json.avatar friend.avatar_url
-        json.friendIds friend.friend_ids
+        json.friendIds friend.friends.map(&:id)
       end
     end
   end
@@ -41,7 +41,7 @@ else
       json.set! friend.id do
         json.fullName friend.full_name
         json.avatar friend.avatar_url
-        json.friendIds friend.friend_ids
+        json.friendIds friend.friends.map(&:id)
       end
     end
   end

@@ -113,20 +113,20 @@ class User < ApplicationRecord
     base_notification_query(last_search_time, 'Like', 'Post', self.posts).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_post']}
 
-      base_notification_query(last_search_time, 'Comment', 'Post', self.posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
-      .map{|act| output << [act, 'comment_on_your_post']}
+    base_notification_query(last_search_time, 'Comment', 'Post', self.posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
+    .map{|act| output << [act, 'comment_on_your_post']}
 
     base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_wall_post']}
 
-      base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
-      .map{|act| output << [act, 'comment_on_your_wall_post']}
+    base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
+    .map{|act| output << [act, 'comment_on_your_wall_post']}
 
     base_notification_query(last_search_time, 'Like', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_comment']}
 
-      base_notification_query(last_search_time, 'Comment', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:author])
-      .map{|act| output << [act, 'comment_on_your_comment']}
+    base_notification_query(last_search_time, 'Comment', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:author])
+    .map{|act| output << [act, 'comment_on_your_comment']}
 
     base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
       .map{|act| output << [act, 'comment_on_your_commented_post']}
@@ -259,6 +259,7 @@ class User < ApplicationRecord
       .where(user_id: self.friends)
       .where.not('activities.activity_source_type = ? AND activities.activity_parent_type = ?', 'Like', 'Comment')
       .where.not(activity_source_type: 'Friendship')
+      .limit(10)
       .order(created_at: :desc)
   end
 

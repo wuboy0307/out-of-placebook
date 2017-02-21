@@ -10,6 +10,8 @@ export const CREATE_SINGLE_POST_SUCCESS = "CREATE_SINGLE_POST_SUCCESS";
 export const CREATE_SINGLE_POST_FAILURE = "CREATE_SINGLE_POST_FAILURE";
 export const DESTROY_SINGLE_POST_SUCCESS = "DESTROY_SINGLE_POST_SUCCESS";
 export const DESTROY_SINGLE_POST_FAILURE = "DESTROY_SINGLE_POST_FAILURE";
+export const EDIT_SINGLE_POST_SUCCESS = "EDIT_SINGLE_POST_SUCCESS";
+export const EDIT_SINGLE_POST_FAILURE = "EDIT_SINGLE_POST_FAILURE";
 import { FETCH_SINGLE_PROFILE_SUCCESS } from './profile_actions';
 export const FETCH_SINGLE_POST_FAILURE = "FETCH_SINGLE_POST_FAILURE";
 
@@ -40,6 +42,16 @@ export const createSinglePostSuccess = post => ({
 
 export const createSinglePostFailure = errors => ({
   type: CREATE_SINGLE_POST_FAILURE,
+  errors
+});
+
+export const editSinglePostSuccess = post => ({
+  type: EDIT_SINGLE_POST_SUCCESS,
+  post
+});
+
+export const editSinglePostFailure = errors => ({
+  type: EDIT_SINGLE_POST_FAILURE,
   errors
 });
 
@@ -91,6 +103,12 @@ export const createSinglePostRequest = postInfo => dispatch => (
   APIUtil.createPost(postInfo)
     .then(data => dispatch(createSinglePostSuccess(data)),
           err => dispatch(createSinglePostFailure(err.responseJSON)))
+);
+
+export const editSinglePostRequest = postInfo => dispatch => (
+  APIUtil.editPost(postInfo)
+    .then(data => dispatch(editSinglePostSuccess(data)),
+          err => dispatch(editSinglePostFailure(err.responseJSON)))
 );
 
 export const destroySinglePostRequest = postId => dispatch => (

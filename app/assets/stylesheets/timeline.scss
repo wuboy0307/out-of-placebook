@@ -134,6 +134,19 @@ a {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
+.edit-post-input {
+  padding: 6px 12px;
+  font-size: 16px;
+  line-height: 2;
+  color: #4b4f56;
+  background-color: #ffffff;
+  border: 1px solid #d4dbe0;
+  width: 96%;
+  resize: none;
+  // border: none;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
 .create-post-input-true {
   padding: 6px 12px;
   font-size: 20px;
@@ -234,6 +247,7 @@ a {
     font-weight: normal;
     line-height: 22px;
     padding: 0 12px;
+    cursor: pointer;
 }
 
 .post-item-dropdown {

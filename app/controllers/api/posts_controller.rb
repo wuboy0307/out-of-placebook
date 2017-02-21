@@ -7,7 +7,7 @@ class Api::PostsController < ApplicationController
     if @post.save
       render :create
     else
-      render json: @post.errors, status: 422
+      render json: @post.errors.full_messages, status: 422
     end
   end
 
@@ -26,10 +26,24 @@ class Api::PostsController < ApplicationController
       if @post.destroy
         render json: {postId: @post.id}
       else
-        render json: ['Error deleting post!'], status: 422
+        render @post.errors.full_messages, status: 422
       end
     else
       render json: ['You do not have permission to delete that!'], status: 422
+    end
+  end
+
+  def update
+    @post = Post.find_by(id: params[:id])
+    if current_user.posts.include?(@post)
+      @post.body = params[:post][:body]
+      if @post.save
+        render :update
+      else
+        render json: @post.errors.full_messages, status: 422
+      end
+    else
+      render json: ['You do not have permission to update that!'], status: 422
     end
   end
 

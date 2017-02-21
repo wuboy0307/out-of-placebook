@@ -43,3 +43,11 @@ export const destroyPost = (postId) => {
     url: `/api/posts/${postId}`
   });
 };
+
+export const editPost = (post) => {
+  return $.ajax({
+    method: 'PUT',
+    url: `/api/posts/${post.id}`,
+    data: {post}
+  });
+};

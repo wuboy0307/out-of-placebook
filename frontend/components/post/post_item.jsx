@@ -3,7 +3,7 @@ import CommentBox from '../comment/comment_box';
 import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
-import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest } from '../../actions/post_actions';
+import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest, editSinglePostRequest } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser
@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
   destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo)),
-  destroySinglePostRequest: (postId) => dispatch(destroySinglePostRequest(postId))
+  destroySinglePostRequest: (postId) => dispatch(destroySinglePostRequest(postId)),
+  editSinglePostRequest: (postInfo) => dispatch(editSinglePostRequest(postInfo))
 });
 
 class PostItem extends React.Component {
@@ -27,10 +28,14 @@ class PostItem extends React.Component {
     this.renderDropdown = this.renderDropdown.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.renderEditForm = this.renderEditForm.bind(this);
+    this.editFormSubmit = this.editFormSubmit.bind(this);
 
     this.state = {
       selected: false,
-      dropdownVisible: false
+      dropdownVisible: false,
+      editPost: false,
+      postBody: this.props.post.body
     };
   }
 
@@ -104,7 +109,23 @@ class PostItem extends React.Component {
     this.setState({selected: !this.state.selected});
   }
 
+  editFormSubmit(e) {
+    e.preventDefault();
+    const updatedPost = { id: this.props.post.id, body: this.state.postBody };
+    this.props.editSinglePostRequest(updatedPost).then(() => this.setState({postBody: this.props.post.body, editPost: false}));
+  }
+
+  renderEditForm() {
+    return(
+      <form className="create-post-form" onSubmit={this.editFormSubmit}>
+          <input autoFocus type="text" placeholder="Whats on your mind?" className='edit-post-input'
+             value={this.state.postBody} onChange={(e) => this.setState({postBody: e.target.value})}/>
+      </form>
+    );
+  }
+
   renderBody() {
+    if (this.state.editPost) return this.renderEditForm();
     const body = this.props.post.body;
     if (this.props.post.contentType !== 'url') {
       return (
@@ -145,7 +166,7 @@ class PostItem extends React.Component {
             <i className="fa fa-arrow-down" aria-hidden="true"></i>
           </div>
             <div className="post-item-dropdown">
-              <div className="post-item-dropdown-item">Edit Post</div>
+              <div className="post-item-dropdown-item" onClick={() => this.setState({editPost: true, dropdownVisible: false})}>Edit Post</div>
               <div className="post-item-dropdown-item" onClick={this.deletePost}>Delete Post</div>
             </div>
         </div>

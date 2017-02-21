@@ -3,7 +3,8 @@ import { CREATE_SINGLE_COMMENT_SUCCESS,
         CREATE_SINGLE_LIKE_SUCCESS,
         DESTROY_SINGLE_LIKE_SUCCESS,
         CREATE_SINGLE_POST_SUCCESS,
-        DESTROY_SINGLE_POST_SUCCESS } from '../actions/post_actions';
+        DESTROY_SINGLE_POST_SUCCESS,
+        EDIT_SINGLE_POST_SUCCESS } from '../actions/post_actions';
 import merge from 'lodash/merge';
 
 const postsReducer = ( oldState = {}, action) => {
@@ -67,7 +68,6 @@ const postsReducer = ( oldState = {}, action) => {
             newState[likeInfo.postId].comments[likeInfo.parentId]
               .childComments[likeInfo.commentId].numLikes--;
           } else {
-
             newState[likeInfo.postId].comments[likeInfo.commentId].userLikesComment = false;
             newState[likeInfo.postId].comments[likeInfo.commentId].numLikes--;
           }
@@ -77,6 +77,11 @@ const postsReducer = ( oldState = {}, action) => {
 
     case DESTROY_SINGLE_POST_SUCCESS:
       delete newState[action.post.postId];
+      return newState;
+
+    case EDIT_SINGLE_POST_SUCCESS:
+      const post_id = Object.keys(action.post);
+      newState[post_id] = action.post[post_id];
       return newState;
 
     default:

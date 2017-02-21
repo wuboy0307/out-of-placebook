@@ -5,6 +5,13 @@ export const selectPosts = ({ posts }) => {
     return [];
   }
 };
+export const selectSearchResults = ({ search }) => {
+  if (search) {
+    return Object.keys(search).map(key => search[key]);
+  } else {
+    return [];
+  }
+};
 
 // export const selectNewsfeedPosts = ({ newsfeed }) => {
 //   if (!newsfeed) return [];

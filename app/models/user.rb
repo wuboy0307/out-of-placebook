@@ -229,10 +229,10 @@ class User < ApplicationRecord
 
   def base_notification_query(last_search_time, source_type, parent_type, parent_id)
     Activity.joins(join_sql)
-      .where('created_at >= ?', last_search_time)
       .where(activity_source_type: source_type)
       .where(activity_parent_type: parent_type)
       .where(activity_parent_id: parent_id)
+      .where('created_at >= ?', last_search_time)
       .order(created_at: :desc)
   end
 

@@ -14,6 +14,9 @@ class Like < ApplicationRecord
   belongs_to :likeable, polymorphic: true
   belongs_to :liker, class_name: 'User', foreign_key: :liker_id
 
+  # helps DRY up code in activities.
+  belongs_to :author, class_name: 'User', foreign_key: :liker_id
+
   # tracks and deletes like activities
   has_many :activities, as: :activity_source, dependent: :destroy
 

@@ -242,12 +242,34 @@ class User < ApplicationRecord
       .order(created_at: :desc)
   end
 
+  # TODO: Add in friendship activity to newsfeed later on
+  # Can filter parents further if considering privacy (parent post.author in self.friends)
   def newsfeed_activity
     Activity.joins(join_sql_friends_activity)
       .where(user_id: self.friends)
       .where.not('activities.activity_source_type = ? AND activities.activity_parent_type = ?', 'Like', 'Comment')
       .where.not(activity_source_type: 'Friendship')
       .order(created_at: :desc)
+  end
+
+  def parse_newsfeed
+    # can add .limit to limit here
+    # also add created_at constraint
+    activity = newsfeed_activity.includes(:activity_parent, activity_source: [:author])
+    output = []
+    activity.each do |act|
+      case [act.activity_source_type, act.activity_parent_type]
+      when ["Post", "User"]
+        output << [act.activity_source, ""]
+      when ["Like", "Post"]
+        output << [act.activity_parent, "#{act.activity_source.author.full_name} likes a post."]
+      when ["Comment", "Post"]
+        output << [act.activity_parent, "#{act.activity_source.author.full_name} commented on a post."]
+      when ["Comment", "Comment"]
+        output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on a post."]
+      end
+    end
+    output
   end
 
 

@@ -28,10 +28,15 @@ class Friendship < ApplicationRecord
 
   has_many :incoming, class_name: 'Friendship', primary_key: :user_id, foreign_key: :friend_id, dependent: :delete_all
 
-  after_save :create_activity
 
-  def create_activity
-    return unless self.completed
-    Activity.create!(user_id: self.user_id, activity_source: self, activity_parent: self.friend)
-  end
+  # TODO: Add activities for friendships
+  # # tracks friendships
+  # has_many :comment_activities, class_name: 'Activity', as: :activity_source, dependent: :destroy
+  #
+  # after_save :create_activity
+  #
+  # def create_activity
+  #   return unless self.completed
+  #   Activity.create!(user_id: self.user_id, activity_source: self, activity_parent: self.friend)
+  # end
 end

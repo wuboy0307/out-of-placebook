@@ -30,29 +30,6 @@ class ProfileNavBar extends React.Component {
     }
   }
 
-  // renderFriendButton() {
-  //   const friends = this.props.friends;
-  //   switch (friendStatus) {
-  //     case "self":
-  //       return null;
-  //
-  //     case "outgoing":
-  //       return(<button className="profile-friend-button">Cancel Request</button>);
-  //
-  //     case "incoming":
-  //       return(<button className="profile-friend-button">Accept Request</button>);
-  //
-  //     case "friends":
-  //       return(<button className="profile-friend-button">Remove Friend</button>);
-  //
-  //     case "add":
-  //       return(<button className="profile-friend-button">Add Friend</button>);
-  //
-  //     default:
-  //       return null;
-  //   }
-  // }
-
   renderFriendButton() {
     const friends = this.props.friends;
     const profileId = this.props.profile.id;

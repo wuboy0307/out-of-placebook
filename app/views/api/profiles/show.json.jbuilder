@@ -9,17 +9,6 @@ json.profile do
   json.work @user.work
   json.description @user.description
   json.friendIds @user.friend_ids
-  if user == @user
-    json.friendStatus 'self'
-  elsif user.outgoing_friends.include?(@user)
-    json.friendStatus 'outgoing'
-  elsif user.incoming_friends.include?(@user)
-    json.friendStatus 'incoming'
-  elsif user.friends.include?(@user)
-    json.friendStatus 'friends'
-  else
-    json.friendStatus 'add'
-  end
 
 end
 

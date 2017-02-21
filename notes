@@ -20,3 +20,5 @@ cache the notification count until next fetch time? or at least last searches??
 how to update timestamps on notifications without refetching? consider calculating on frontend
 
 convert everything to jbuilder
+
+delete posts on your own wall

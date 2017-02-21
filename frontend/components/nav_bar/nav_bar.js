@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
@@ -50,13 +51,15 @@ class NavBar extends React.Component {
       <div className="flyout-list">
        {this.props.notifications.list.map((el, idx) => {
         return(
-          <li className="flyout-list-item" key={idx}>
+          <Link to={`/post/${el[3]}`} key={idx}>
+          <li className="flyout-list-item">
             <img className="user-pic-flyout" src={el[2]}/>
             <div className="flyout-item-body">
               <div className="flyout-item-text">{el[0]}</div>
               <div className="flyout-item-timestamp">{el[1]}</div>
             </div>
           </li>
+        </Link>
         );
       })}
     </div>

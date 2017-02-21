@@ -6,7 +6,8 @@ import { fetchSingleProfileRequest } from '../../actions/profile_actions';
 import { fetchNotificationCountRequest, fetchNotificationsRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
-  profile: state.profile
+  profile: state.profile,
+  currentUser: state.auth.currentUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

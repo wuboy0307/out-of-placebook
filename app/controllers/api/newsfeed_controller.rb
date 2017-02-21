@@ -1,8 +1,8 @@
 class Api::NewsfeedController < ApplicationController
 
   def index
-    # user = current_user
-    user = User.first
+    user = current_user
+    # user = User.first
     if user.nil?
       render json: ['Not logged in!'], status: 422
       return

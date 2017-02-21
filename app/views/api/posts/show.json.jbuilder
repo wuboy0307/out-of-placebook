@@ -1,28 +1,5 @@
 user = current_user
 
-json.profile do
-  json.id user.id
-  json.fname user.fname
-  json.lname user.lname
-  json.intro user.intro
-  json.home user.home
-  json.work user.work
-  json.description user.description
-  json.friendIds user.friend_ids
-  if user == user
-    json.friendStatus 'self'
-  elsif user.outgoing_friends.include?(user)
-    json.friendStatus 'outgoing'
-  elsif user.incoming_friends.include?(user)
-    json.friendStatus 'incoming'
-  elsif user.friends.include?(user)
-    json.friendStatus 'friends'
-  else
-    json.friendStatus 'add'
-  end
-
-end
-
 json.posts do
   @post.each do |post|
     json.set! post.id do

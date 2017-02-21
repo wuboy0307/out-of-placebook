@@ -2,10 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Search from '../search/search';
+import { fetchNotificationsRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
   notifications: state.notifications
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest())
 });
 
 
@@ -104,5 +109,5 @@ class NavBar extends React.Component {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(NavBar);

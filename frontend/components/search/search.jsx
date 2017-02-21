@@ -33,6 +33,16 @@ class Search extends React.Component {
     }, 300);
   }
 
+  renderMutualFriends(num) {
+    if (num < 1) {
+      return null;
+    } else if (num < 2) {
+      return `${num} mutual friend`;
+    } else {
+      return `${num} mutual friends`;
+    }
+  }
+
   renderResults() {
     if (this.state.search.length < 1) return null;
 
@@ -58,7 +68,7 @@ class Search extends React.Component {
                 {user.fullName}
               </div>
               <div className="search-result-friends">
-                { user.mutualFriends }
+                { this.renderMutualFriends(user.mutualFriends) }
               </div>
             </div>
           </div>

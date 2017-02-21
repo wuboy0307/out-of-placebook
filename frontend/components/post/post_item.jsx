@@ -24,6 +24,7 @@ class PostItem extends React.Component {
     this.selectCommentBox = this.selectCommentBox.bind(this);
     this.renderBody = this.renderBody.bind(this);
     this.renderDropdown = this.renderDropdown.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
 
     this.state = {
       selected: false,
@@ -132,18 +133,25 @@ class PostItem extends React.Component {
       return null;
     } else if (this.state.dropdownVisible) {
       return(
-        <div className="post-item-dropdown-button"
-          onClick={this.toggleDropdown}>
-          <i className="fa fa-arrow-down" aria-hidden="true"></i>
-          <div className="post-item-dropdown">
-            <div className="post-item-dropdown-item">Edit Post</div>
-            <div className="post-item-dropdown-item">Delete Post</div>
+        <div className="post-item-dropdown-wrapper">
+          <div className="post-item-dropdown-button"
+            onClick={this.toggleDropdown}>
+            <i className="fa fa-arrow-down" aria-hidden="true"></i>
           </div>
+            <div className="post-item-dropdown">
+              <div className="post-item-dropdown-item">Edit Post</div>
+              <div className="post-item-dropdown-item">Delete Post</div>
+            </div>
         </div>
         );
     } else {
       return(
-        <div className="post-item-dropdown-button"><i className="fa fa-arrow-down" aria-hidden="true"></i></div>
+        <div className="post-item-dropdown-wrapper">
+          <div className="post-item-dropdown-button"
+            onClick={this.toggleDropdown}>
+            <i className="fa fa-arrow-down" aria-hidden="true"></i>
+          </div>
+            </div>
         );
     }
 

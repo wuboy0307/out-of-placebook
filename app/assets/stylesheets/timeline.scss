@@ -207,13 +207,21 @@ a {
 }
 
 .post-item-dropdown-button {
+  // border: 1px solid red;
+  padding: 5px 20px;
+  margin: 0 auto;
+  cursor: pointer;
+    color: #E9EBEE;
+      right: 0px;
+      position: absolute;
+}
+
+.post-item-dropdown-wrapper {
   position: absolute;
   right: 0px;
-  // height: 20px;
-  // width: 20px;
-  padding: 5px;
-  color: #E9EBEE;
-  cursor: pointer;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-item-dropdown-item {
@@ -242,6 +250,7 @@ a {
     flex-direction: column;
     text-align: right;
     white-space: nowrap;
+    top: 25px;
 }
 
 

@@ -16,7 +16,7 @@
 #
 #
 #
-# users = User.all
+users = User.all
 #
 # 100.times do
 #   current_user = users.sample
@@ -31,29 +31,31 @@
 #   current_user = users.sample
 #   Comment.create!(author_id: current_user.id, post_id: post.id, body: Faker::Hacker.say_something_smart)
 # end
-#
-# comments = Comment.all
-#
-# 2.times do
-#   100.times do
-#     user = users.sample
-#     comment = comments.sample
-#     Comment.create!(author_id: user.id, post_id: comment.post_id, parent_id: comment.id, body: Faker::Hacker.say_something_smart)
-#   end
-# end
-#
+
+comments = Comment.all
+
+2.times do
+  100.times do
+    user = users.sample
+    comment = comments.sample
+    Comment.create!(author_id: user.id, post_id: comment.post_id, parent_id: comment.id, body: Faker::Hacker.say_something_smart)
+  end
+end
+
 users = User.all
 posts = Post.all
 comments = Comment.all
 
-# 500.times do
-#   activity = posts.sample
-#   user = users.sample
-#   Like.create!(liker_id: user.id, likeable: activity)
-# end
+500.times do
+  activity = posts.sample
+  user = users.sample
+  l = Like.new(liker_id: user.id, likeable: activity)
+  l.save
+end
 
 700.times do
   activity = comments.sample
   user = users.sample
-  Like.create!(liker_id: user.id, likeable: activity)
+  l = Like.new(liker_id: user.id, likeable: activity)
+  l.save
 end

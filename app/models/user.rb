@@ -238,7 +238,7 @@ class User < ApplicationRecord
 
 
   def friend_ids
-    friendships.map(&:id)
+    friendships.map(&:friend_id)
   end
 
   def full_name

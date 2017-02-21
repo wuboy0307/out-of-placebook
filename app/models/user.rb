@@ -125,15 +125,15 @@ class User < ApplicationRecord
 
   def created_time_for_n_notifications(n)
     first = Activity.joins(join_sql)
+      .where(activity_parent_id: self.wall_posts + self.posts)
       .where(activity_source_type: ['Comment','Like'])
       .where(activity_parent_type: ['Post'])
-      .where(activity_parent_id: self.wall_posts + self.posts)
       .order(created_at: :desc)
 
     second = Activity.joins(join_sql)
+      .where(activity_parent_id: self.comments)
       .where(activity_source_type: ['Comment','Like'])
       .where(activity_parent_type: ['Comment'])
-      .where(activity_parent_id: self.comments)
       .order(created_at: :desc)
 
     first.or(second).order(created_at: :desc).limit(n)[0..n].last.created_at
@@ -229,9 +229,9 @@ class User < ApplicationRecord
 
   def base_notification_query(last_search_time, source_type, parent_type, parent_id)
     Activity.joins(join_sql)
+      .where(activity_parent_id: parent_id)
       .where(activity_source_type: source_type)
       .where(activity_parent_type: parent_type)
-      .where(activity_parent_id: parent_id)
       .where('created_at >= ?', last_search_time)
       .order(created_at: :desc)
   end

@@ -5,9 +5,7 @@ import { fetchSinglePostRequest } from '../../actions/post_actions';
 import { fetchNotificationCountRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
-  posts: selectPosts(state),
-  profile: state.profile
-  // profileList: state.profiles.profileList
+  posts: selectPosts(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -42,8 +40,7 @@ class SinglePost extends React.Component {
     return(
       <div className="home">
       <div className='single-post-container'>
-        { this.props.posts.map(post => <PostItem key={post.id} post={post}
-          profile={this.props.profile}/>)}
+        { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
       </div>
       </div>
     );

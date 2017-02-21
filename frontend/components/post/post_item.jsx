@@ -19,6 +19,7 @@ class PostItem extends React.Component {
     this.toggleLike = this.toggleLike.bind(this);
     this.selectCommentBox = this.selectCommentBox.bind(this);
     this.renderBody = this.renderBody.bind(this);
+    // this.renderDropdown = this.renderDropdown.bind(this);
     // this.renderComments = this.renderComments.bind(this);
     this.state = {
       selected: false
@@ -67,8 +68,8 @@ class PostItem extends React.Component {
             <span className="post-item-user-1">{this.props.post.authorFullName}</span>
           </Link>
           <i className="fa fa-chevron-right" aria-hidden="true"></i>
-          <Link to={`/profile/${this.props.profile.id}`}>
-            <span className="post-item-user-1">{`${this.props.profile.fname} ${this.props.profile.lname}`}</span>
+          <Link to={`/profile/${this.props.post.wallId}`}>
+            <span className="post-item-user-1">{`${this.props.post.wallIdFullName}`}</span>
           </Link>
         </div>
       );
@@ -116,6 +117,13 @@ class PostItem extends React.Component {
       );
     }
   }
+  //
+  // renderDropdown() {
+  //   if (post.authorId !== )
+  //   <div className="post-item-dropdown"><i className="fa fa-arrow-down" aria-hidden="true"></i></div>
+  //
+  // }
+  // { this.renderDropdown() }
 
   render () {
     return(
@@ -123,7 +131,6 @@ class PostItem extends React.Component {
         <div className="post-item">
 
           <div className="post-item-header">
-            <div className="post-item-dropdown"><i className="fa fa-arrow-down" aria-hidden="true"></i></div>
             <div className="post-item-img-wrapper">
               <img src={this.props.post.authorAvatarUrl || `/assets/avatar.jpg`} className="user-pic-xs" />
             </div>

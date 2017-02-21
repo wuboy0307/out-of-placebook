@@ -33,6 +33,7 @@ json.posts do
     json.authorAvatarUrl post.author.avatar_url
     json.createdAt post.age
     json.body post.body
+    json.wallIdFullName post.wall.full_name
     json.parentID post.parent_id
     json.contentType post.content.class.name.downcase
     if post.content.class.name.downcase === "url"

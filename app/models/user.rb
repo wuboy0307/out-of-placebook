@@ -255,22 +255,55 @@ class User < ApplicationRecord
   def parse_newsfeed
     # can add .limit to limit here
     # also add created_at constraint
-    activity = newsfeed_activity.includes(:activity_parent, activity_source: [:author])
+    activity_types = []
+    activity_types << newsfeed_activity.where(activity_source_type: "Post")
+                        .includes(:activity_parent, activity_source: [:liking_users, :content, :author, :likes,
+                        comments: [:author, :likes, :liking_users,
+                        children: [:author, :likes, :liking_users]]])
+    activity_types << newsfeed_activity.where(activity_parent_type: "Post")
+                        .includes(:activity_source, activity_parent: [:liking_users, :content, :author, :likes,
+                        comments: [:author, :likes, :liking_users,
+                        children: [:author, :likes, :liking_users]]])
+    activity_types << newsfeed_activity.where(activity_parent_type: "Comment")
+                        .includes(:activity_source, activity_parent: [post: [:liking_users, :content, :author, :likes, comments: [:author, :likes, :liking_users,
+                        children: [:author, :likes, :liking_users]]]])
     output = []
-    activity.each do |act|
-      case [act.activity_source_type, act.activity_parent_type]
-      when ["Post", "User"]
-        output << [act.activity_source, ""]
-      when ["Like", "Post"]
-        output << [act.activity_parent, "#{act.activity_source.author.full_name} likes a post."]
-      when ["Comment", "Post"]
-        output << [act.activity_parent, "#{act.activity_source.author.full_name} commented on a post."]
-      when ["Comment", "Comment"]
-        output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on a post."]
+    activity_types.each do |activity|
+      activity.each do |act|
+        case [act.activity_source_type, act.activity_parent_type]
+        when ["Post", "User"]
+          output << [act.activity_source, nil]
+        when ["Like", "Post"]
+          output << [act.activity_parent, "#{act.activity_source.author.full_name} likes a post."]
+        when ["Comment", "Post"]
+          output << [act.activity_parent, "#{act.activity_source.author.full_name} commented on a post."]
+        when ["Comment", "Comment"]
+          output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on a post."]
+        end
       end
     end
     output
   end
+  #
+  # def parse_newsfeed
+  #   # can add .limit to limit here
+  #   # also add created_at constraint
+  #   activity = newsfeed_activity.includes(:activity_parent, activity_source: [:author])
+  #   output = []
+  #   activity.each do |act|
+  #     case [act.activity_source_type, act.activity_parent_type]
+  #     when ["Post", "User"]
+  #       output << [act.activity_source, nil]
+  #     when ["Like", "Post"]
+  #       output << [act.activity_parent, "#{act.activity_source.author.full_name} likes a post."]
+  #     when ["Comment", "Post"]
+  #       output << [act.activity_parent, "#{act.activity_source.author.full_name} commented on a post."]
+  #     when ["Comment", "Comment"]
+  #       output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on a post."]
+  #     end
+  #   end
+  #   output
+  # end
 
 
   def friend_ids

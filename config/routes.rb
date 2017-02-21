@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
     resources :notifications, only: [:index, :create]
 
+    resources :newsfeed, only: [:index]
+
     resource :session, only: [:create, :destroy]
 
     resources :profiles, only: [:show]

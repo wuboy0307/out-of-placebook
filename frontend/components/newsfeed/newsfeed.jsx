@@ -15,7 +15,7 @@ class NewsFeed extends React.Component {
 
     return(
       <div className="home">
-        <div className="newsfeed">
+        <div className="newsfeed-container">
           { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
         </div>
       </div>

@@ -23,7 +23,9 @@ convert everything to jbuilder
 
 delete posts on your own wall
 
+CLEANUP: change arrays to hashes with keys
 
+sticky-kit: make sure pictures stick clears navbar
 
 ---- newsfeed
 

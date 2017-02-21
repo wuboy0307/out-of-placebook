@@ -94,9 +94,12 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
-  # Add index on [source type, parent type, parent id, created at] AND [user_id, created_at]
   def generate_notifications(last_search_time)
     output = []
+    wall_posts.where('created_at > ?', last_search_time).where.not(author_id: self.id).map{|act| output << [act, 'post_on_your_wall']}
+    # base_notification_query(last_search_time, 'Post', 'User', self.id).includes(activity_source: [:author])
+    #   .map{|act| output << [act, 'post_on_your_wall']}
+
     base_notification_query(last_search_time, 'Like', 'Post', self.posts).includes(activity_parent: [:author], activity_source: [:liker])
       .map{|act| output << [act, 'like_on_your_post']}
 
@@ -119,7 +122,8 @@ class User < ApplicationRecord
       .map{|act| output << [act, 'comment_on_your_commented_post']}
 
     output.uniq!{|el| el[0].id }
-    output.sort!{|x, y| y[0].id <=> x[0].id }
+    output.sort_by!{|el| el[0].created_at}.reverse!
+    # output.sort!{|x, y| y[0].id <=> x[0].id }
     output
   end
 
@@ -153,6 +157,8 @@ class User < ApplicationRecord
     parsed = []
     unparsed_notifications.each do |note, message|
       case message
+      when "post_on_your_wall"
+        parsed << ["#{note.author.full_name} posted on your wall.", note.age, note.author.avatar_url, note.id]
       when "like_on_your_post"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self

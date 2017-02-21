@@ -8,6 +8,7 @@ json.authorFullName post.author.full_name
 json.authorAvatarUrl post.author.avatar_url
 json.createdAt post.age
 json.body post.body
+json.wallIdFullName post.wall.full_name
 json.parentID post.parent_id
 json.content post.content
 json.contentType post.content.class.name.downcase

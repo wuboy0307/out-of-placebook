@@ -13,7 +13,6 @@ const mapStateToProps = (state) => ({
 class Timeline extends React.Component {
 
   render () {
-
     return(
       <div className="timeline">
           <TimelineSideBar />

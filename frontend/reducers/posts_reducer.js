@@ -5,6 +5,7 @@ import { CREATE_SINGLE_COMMENT_SUCCESS,
         CREATE_SINGLE_POST_SUCCESS,
         DESTROY_SINGLE_POST_SUCCESS,
         EDIT_SINGLE_POST_SUCCESS } from '../actions/post_actions';
+import { FETCH_NEWSFEED_SUCCESS } from '../actions/newsfeed_actions';
 import merge from 'lodash/merge';
 
 const postsReducer = ( oldState = {}, action) => {
@@ -15,7 +16,11 @@ const postsReducer = ( oldState = {}, action) => {
     case FETCH_SINGLE_PROFILE_SUCCESS:
       return action.profile.posts;
 
+    case FETCH_NEWSFEED_SUCCESS:
+      return action.posts.posts;
+
     case CREATE_SINGLE_COMMENT_SUCCESS:
+
       let newComment = action.comment;
       let oldComments = newState[newComment.postId].comments;
       if (!newComment.parentId) {

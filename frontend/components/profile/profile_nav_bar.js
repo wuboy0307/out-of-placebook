@@ -8,6 +8,14 @@ class ProfileNavBar extends React.Component {
     this.renderFriendButton = this.renderFriendButton.bind(this);
   }
 
+  friendAction() {
+    const friendStatus = this.props.profile.friendStatus;
+    switch (friendStatus) {
+      case "add":
+
+    }
+  }
+
   renderFriendButton() {
     const friendStatus = this.props.profile.friendStatus;
     switch (friendStatus) {
@@ -15,13 +23,13 @@ class ProfileNavBar extends React.Component {
         return null;
 
       case "outgoing":
-        return(<button className="profile-friend-button">Requested</button>);
+        return(<button className="profile-friend-button">Cancel Request</button>);
 
       case "incoming":
-        return(<button className="profile-friend-button">Respond</button>);
+        return(<button className="profile-friend-button">Accept Request</button>);
 
       case "friends":
-        return(<button className="profile-friend-button">Friends</button>);
+        return(<button className="profile-friend-button">Remove Friend</button>);
 
       case "add":
         return(<button className="profile-friend-button">Add Friend</button>);

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../post/post_item';
-import { selectNewsfeedPosts } from '../../reducers/selectors';
+import { selectPosts } from '../../reducers/selectors';
 import { fetchNewsfeedRequest } from '../../actions/newsfeed_actions';
 
 const mapStateToProps = (state) => ({
-  posts: selectNewsfeedPosts(state)
+  posts: selectPosts(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

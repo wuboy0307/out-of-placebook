@@ -12,8 +12,8 @@ export const DESTROY_SINGLE_POST_SUCCESS = "DESTROY_SINGLE_POST_SUCCESS";
 export const DESTROY_SINGLE_POST_FAILURE = "DESTROY_SINGLE_POST_FAILURE";
 export const EDIT_SINGLE_POST_SUCCESS = "EDIT_SINGLE_POST_SUCCESS";
 export const EDIT_SINGLE_POST_FAILURE = "EDIT_SINGLE_POST_FAILURE";
-import { FETCH_SINGLE_PROFILE_SUCCESS } from './profile_actions';
 export const FETCH_SINGLE_POST_FAILURE = "FETCH_SINGLE_POST_FAILURE";
+export const FETCH_SINGLE_POST_SUCCESS = "FETCH_SINGLE_POST_FAILURE";
 
 export const createSingleCommentSuccess = comment => ({
   type: CREATE_SINGLE_COMMENT_SUCCESS,
@@ -65,9 +65,9 @@ export const destroySinglePostFailure = errors => ({
   errors
 });
 
-export const fetchSinglePostSuccess = profile => ({
-  type: FETCH_SINGLE_PROFILE_SUCCESS,
-  profile
+export const fetchSinglePostSuccess = post => ({
+  type: FETCH_SINGLE_POST_SUCCESS,
+  post
 });
 
 export const fetchSinglePostFailure = errors => ({

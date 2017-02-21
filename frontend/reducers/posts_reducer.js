@@ -4,7 +4,8 @@ import { CREATE_SINGLE_COMMENT_SUCCESS,
         DESTROY_SINGLE_LIKE_SUCCESS,
         CREATE_SINGLE_POST_SUCCESS,
         DESTROY_SINGLE_POST_SUCCESS,
-        EDIT_SINGLE_POST_SUCCESS } from '../actions/post_actions';
+        EDIT_SINGLE_POST_SUCCESS,
+        FETCH_SINGLE_POST_SUCCESS } from '../actions/post_actions';
 import { FETCH_NEWSFEED_SUCCESS } from '../actions/newsfeed_actions';
 import merge from 'lodash/merge';
 
@@ -15,6 +16,9 @@ const postsReducer = ( oldState = {}, action) => {
   switch(action.type) {
     case FETCH_SINGLE_PROFILE_SUCCESS:
       return action.profile.posts;
+
+    case FETCH_SINGLE_POST_SUCCESS:
+      return action.post.posts;
 
     case FETCH_NEWSFEED_SUCCESS:
       return action.posts.posts;

@@ -4,7 +4,7 @@ json.posts do
   @activities.each do |post, message|
     json.set! post.id do
     json.id post.id
-    json.postHeaderText message
+    json.postDescription message
     json.wallId post.wall_id
     json.authorId post.author_id
     json.authorFullName post.author.full_name

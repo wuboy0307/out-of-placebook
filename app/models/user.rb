@@ -274,11 +274,11 @@ class User < ApplicationRecord
         when ["Post", "User"]
           output << [act.activity_source, nil]
         when ["Like", "Post"]
-          output << [act.activity_parent, "#{act.activity_source.author.full_name} likes a post."]
+          output << [act.activity_parent, "#{act.activity_source.author.full_name} likes this."]
         when ["Comment", "Post"]
-          output << [act.activity_parent, "#{act.activity_source.author.full_name} commented on a post."]
+          output << [act.activity_parent, "#{act.activity_source.author.full_name} commented this."]
         when ["Comment", "Comment"]
-          output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on a post."]
+          output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on this."]
         end
       end
     end

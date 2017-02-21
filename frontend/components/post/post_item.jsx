@@ -29,6 +29,7 @@ class PostItem extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.deletePost = this.deletePost.bind(this);
     this.renderEditForm = this.renderEditForm.bind(this);
+    this.renderPostDescription = this.renderPostDescription.bind(this);
     this.editFormSubmit = this.editFormSubmit.bind(this);
 
     this.state = {
@@ -184,11 +185,23 @@ class PostItem extends React.Component {
 
   }
 
+  renderPostDescription() {
+    if (!this.props.post.postDescription) {
+      return null;
+    } else {
+      return(
+        <div className="post-description">
+          {this.props.post.postDescription}
+        </div>
+      );
+    }
+  }
+
   render () {
     return(
       <div className="post-item-container">
         <div className="post-item">
-
+          { this.renderPostDescription() }
           <div className="post-item-header">
             { this.renderDropdown() }
             <div className="post-item-img-wrapper">

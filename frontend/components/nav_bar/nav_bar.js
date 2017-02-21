@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { fetchSearchResultsRequest } from '../../actions/search_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
@@ -8,7 +9,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest())
+  fetchSearchResultsRequest: (query) => dispatch(fetchSearchResultsRequest(query))
 });
 
 class NavBar extends React.Component {
@@ -16,8 +17,10 @@ class NavBar extends React.Component {
     super(props);
     this.renderNotifications = this.renderNotifications.bind(this);
     this.clickNotificationButton = this.clickNotificationButton.bind(this);
+    this.performSearch = this.performSearch.bind(this);
     this.state = {
-      flyoutVisible: false
+      flyoutVisible: false,
+      search: ''
     };
   }
 
@@ -67,6 +70,17 @@ class NavBar extends React.Component {
   );
   }
 
+  performSearch(e) {
+    this.setState({search: e.target.value});
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      // doesnt search if query is empty
+      if (this.state.search.length > 0) {
+        this.props.fetchSearchResultsRequest({query: this.state.search});
+      }
+    }, 1000);
+  }
+
   render() {
     const currentUser = this.props.currentUser;
     return(
@@ -74,12 +88,18 @@ class NavBar extends React.Component {
         <div className="nav-container">
           <div className="nav-left-side">
             <div className="small-logo">O</div>
-            <form className="search-form">
+            <form className="search-form" onClick={() => this.searchInput.focus()}>
               <div className="search-form-input">
-                <input type="text" placeholder="search" />
+                <input type="text" placeholder="search" onChange={this.performSearch}
+                  ref={(input) => { this.searchInput = input; }} />
               </div>
               <button type="button">Search</button>
             </form>
+
+            <div className="search-dropdown">
+
+            </div>
+
           </div>
           <div className="nav-right-side">
             <div className="nav-link-profile"><img className="user-pic-header" src={currentUser.avatar_url}/>

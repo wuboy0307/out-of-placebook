@@ -142,6 +142,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
 }
 
 .notifications-bar {
@@ -167,10 +168,21 @@
   max-width: 448px;
   overflow: hidden;
   padding-left: 5px;
-  padding-right: 48px;
+  padding-right: 20px;
   min-width: 144px;
   width: 300px;
   border-right: 0;
+}
+
+.search-dropdown {
+  width: 300px;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  background: orange;
+  height: 200px;
+  // border: 1px solid red;
+  z-index: 10;
 }
 
 .search-form-input input {
@@ -185,6 +197,7 @@
   box-sizing: border-box;
   outline: 1px solid rgba(0, 0, 0, 0);
   border-right: 0;
+  width: 300px;
 }
 
 .search-form {

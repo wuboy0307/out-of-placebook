@@ -6,6 +6,7 @@ import posts from './posts_reducer';
 import errors from './errors_reducer';
 import notifications from './notifications_reducer';
 import friends from './friends_reducer';
+import search from './search_reducer';
 // import newsfeed from './newsfeed_reducer';
 // newsfeed not used, merged in to posts reducer
 
@@ -15,7 +16,8 @@ const RootReducer = combineReducers({
   posts,
   errors,
   notifications,
-  friends
+  friends,
+  search
 });
 
 

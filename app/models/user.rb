@@ -94,6 +94,16 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
+  include PgSearch
+
+  pg_search_scope :search_by_full_name, :against => [:fname, :lname],
+                  :using => {
+                    :tsearch => {:prefix => true},
+                    :trigram => {
+                      :threshold => 0.1,
+                    }
+                  }
+
   def generate_notifications(last_search_time)
     output = []
     wall_posts.where('created_at > ?', last_search_time).where.not(author_id: self.id).map{|act| output << [act, 'post_on_your_wall']}

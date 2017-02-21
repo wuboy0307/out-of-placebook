@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221042756) do
+ActiveRecord::Schema.define(version: 20170221212054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",              null: false
@@ -106,6 +107,8 @@ ActiveRecord::Schema.define(version: 20170221042756) do
     t.string   "avatar_url"
     t.datetime "last_fetch_time"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["fname"], name: "index_users_on_fname", using: :btree
+    t.index ["lname"], name: "index_users_on_lname", using: :btree
     t.index ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
   end
 

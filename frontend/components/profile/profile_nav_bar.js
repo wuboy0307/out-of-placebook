@@ -64,10 +64,11 @@ class ProfileNavBar extends React.Component {
   }
 
   renderMutualFriendCount() {
+    const profileId = this.props.profile.id;
     let myFriends = Object.keys(this.props.friends.friends).map((n) => parseInt(n));
     let theirFriends = this.props.profile.friendIds;
     let mutualFriends = myFriends.filter((n) => theirFriends.indexOf(n) !== -1).length;
-    if (mutualFriends === 0 || this.props.friends.friends[this.props.profile.id]) return null;
+    if (mutualFriends === 0 || this.props.friends.friends[profileId] || this.props.currentUser.id === profileId) return null;
     return(
       <div className="mutual-friend-count">{mutualFriends} mutual {mutualFriends > 1 ? "friends" : "friend"}</div>
     );

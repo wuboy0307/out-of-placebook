@@ -36,6 +36,7 @@ gem 'link_thumbnailer'
 gem 'rails_12factor'
 gem 'bcrypt'
 gem 'faker'
+gem 'pg_search'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

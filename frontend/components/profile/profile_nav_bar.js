@@ -20,6 +20,7 @@ class ProfileNavBar extends React.Component {
     super(props);
     this.renderFriendButton = this.renderFriendButton.bind(this);
     this.friendAction = this.friendAction.bind(this);
+    this.renderMutualFriendCount = this.renderMutualFriendCount.bind(this);
   }
 
   friendAction(e) {
@@ -62,6 +63,16 @@ class ProfileNavBar extends React.Component {
     }
   }
 
+  renderMutualFriendCount() {
+    let myFriends = Object.keys(this.props.friends.friends).map((n) => parseInt(n));
+    let theirFriends = this.props.profile.friendIds;
+    let mutualFriends = myFriends.filter((n) => theirFriends.indexOf(n) !== -1).length;
+    if (mutualFriends === 0 || this.props.friends.friends[this.props.profile.id]) return null;
+    return(
+      <div className="mutual-friend-count">{mutualFriends} mutual {mutualFriends > 1 ? "friends" : "friend"}</div>
+    );
+  }
+
   render() {
     return(
       <div className="profile-nav-bar">
@@ -70,6 +81,7 @@ class ProfileNavBar extends React.Component {
         <div className="profile-picture"><img src={ this.props.profile.profile_url || `/assets/avatar.jpg`}/></div>
         <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
         { this.renderFriendButton() }
+        { this.renderMutualFriendCount() }
       </div>
     );
   }

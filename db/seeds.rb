@@ -16,46 +16,60 @@
 #
 #
 #
-users = User.all
+# users = User.all
+# #
+# # 100.times do
+# #   current_user = users.sample
+# #   target_user = users.sample
+# #   Post.create!(wall_id: target_user.id, author_id: current_user.id, body: Faker::ChuckNorris.fact)
+# # end
+# #
+# # posts = Post.all
+# #
+# # 100.times do
+# #   post = posts.sample
+# #   current_user = users.sample
+# #   Comment.create!(author_id: current_user.id, post_id: post.id, body: Faker::Hacker.say_something_smart)
+# # end
 #
-# 100.times do
-#   current_user = users.sample
-#   target_user = users.sample
-#   Post.create!(wall_id: target_user.id, author_id: current_user.id, body: Faker::ChuckNorris.fact)
+# comments = Comment.all
+#
+# 2.times do
+#   100.times do
+#     user = users.sample
+#     comment = comments.sample
+#     Comment.create!(author_id: user.id, post_id: comment.post_id, parent_id: comment.id, body: Faker::Hacker.say_something_smart)
+#   end
 # end
 #
+# users = User.all
 # posts = Post.all
+# comments = Comment.all
 #
-# 100.times do
-#   post = posts.sample
-#   current_user = users.sample
-#   Comment.create!(author_id: current_user.id, post_id: post.id, body: Faker::Hacker.say_something_smart)
+# 500.times do
+#   activity = posts.sample
+#   user = users.sample
+#   l = Like.new(liker_id: user.id, likeable: activity)
+#   l.save
+# end
+#
+# 700.times do
+#   activity = comments.sample
+#   user = users.sample
+#   l = Like.new(liker_id: user.id, likeable: activity)
+#   l.save
 # end
 
-comments = Comment.all
-
-2.times do
-  100.times do
-    user = users.sample
-    comment = comments.sample
-    Comment.create!(author_id: user.id, post_id: comment.post_id, parent_id: comment.id, body: Faker::Hacker.say_something_smart)
-  end
-end
-
 users = User.all
-posts = Post.all
-comments = Comment.all
 
-500.times do
-  activity = posts.sample
-  user = users.sample
-  l = Like.new(liker_id: user.id, likeable: activity)
-  l.save
-end
-
-700.times do
-  activity = comments.sample
-  user = users.sample
-  l = Like.new(liker_id: user.id, likeable: activity)
-  l.save
+100.times do
+  current_user = users.sample
+  target_user = users.sample
+  next if current_user == target_user
+  f = Friendship.find_or_create_by(user_id: current_user.id, friend_id: target_user.id)
+  g = Friendship.find_or_create_by(friend_id: current_user.id, user_id: target_user.id)
+  f.completed = true;
+  g.completed = true;
+  f.save;
+  g.save;
 end

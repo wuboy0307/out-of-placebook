@@ -15,12 +15,27 @@
 
 .post-description {
   font-size: 12px;
-    margin-top: -2px;
-    margin-bottom: 6px;
-    padding-right: 22px;
-    padding-bottom: 3px;
-    font-weight: normal;
-line-height: 1.38;
-color: #90949c;
-border-bottom: 1px solid #e5e5e5;
+  margin-top: -2px;
+  margin-bottom: 6px;
+  padding-right: 22px;
+  padding-bottom: 3px;
+  font-weight: normal;
+  line-height: 1.38;
+  color: #90949c;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.mutual-friend-count {
+  height: 50px;
+  // border: 1px solid red;
+  bottom: -20px;
+  right: 120px;
+  position: absolute;
+  // font-weight: 500;
+  // line-height: 30px;
+  max-width: 275px;
+  color: #666;
+  text-rendering: optimizelegibility;
+  font-family: Helvetica;
+  // text-shadow: 0 0 3px rgba(0,0,0,.8);
 }

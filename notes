@@ -38,3 +38,5 @@ how to display friendships? (ignore for now and add as bonus?)
 show each item in new newsfeed_post_item with appropriate description header
 
 do validations on model level to check if friends
+
+No postcreate box on user wall if not friends.

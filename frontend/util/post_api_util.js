@@ -29,3 +29,10 @@ export const destroyLike = (like) => {
     data: { like }
   });
 };
+
+export const getPost = (postId) => {
+  return $.ajax({
+    method: 'GET',
+    url: `/api/posts/${postId}`
+  });
+};

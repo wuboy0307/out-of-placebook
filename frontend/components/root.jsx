@@ -7,6 +7,7 @@ import { Router, Route, IndexRoute,
 // react components
 import App from './app';
 import Home from './home/home';
+import SinglePost from './post/single_post';
 import SignUpForm from './signup_form/signup_form';
 
 const Root = ({ store }) => {
@@ -33,6 +34,7 @@ const Root = ({ store }) => {
         <Route path="/" component={App} onEnter={_ensureLoggedIn} >
           <IndexRedirect to="/profile/1" />
           <Route path="/profile/:profileId" component={Home} />
+          <Route path="/post/:postId" component={SinglePost} />
         </Route>
 
         <Route path="/signup" component={SignUpForm}

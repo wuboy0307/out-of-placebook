@@ -8,6 +8,8 @@ export const DESTROY_SINGLE_LIKE_SUCCESS = "DESTROY_SINGLE_LIKE_SUCCESS";
 export const DESTROY_SINGLE_LIKE_FAILURE = "DESTROY_SINGLE_LIKE_FAILURE";
 export const CREATE_SINGLE_POST_SUCCESS = "CREATE_SINGLE_POST_SUCCESS";
 export const CREATE_SINGLE_POST_FAILURE = "CREATE_SINGLE_POST_FAILURE";
+import { FETCH_SINGLE_PROFILE_SUCCESS } from './profile_actions';
+export const FETCH_SINGLE_POST_FAILURE = "FETCH_SINGLE_POST_FAILURE";
 
 export const createSingleCommentSuccess = comment => ({
   type: CREATE_SINGLE_COMMENT_SUCCESS,
@@ -39,13 +41,13 @@ export const createSinglePostFailure = errors => ({
   errors
 });
 
-export const destroySingleLikeSuccess = likeInfo => ({
-  type: DESTROY_SINGLE_LIKE_SUCCESS,
-  likeInfo
+export const fetchSinglePostSuccess = profile => ({
+  type: FETCH_SINGLE_PROFILE_SUCCESS,
+  profile
 });
 
-export const destroySingleLikeFailure = errors => ({
-  type: DESTROY_SINGLE_LIKE_FAILURE,
+export const fetchSinglePostFailure = errors => ({
+  type: FETCH_SINGLE_POST_FAILURE,
   errors
 });
 
@@ -73,4 +75,10 @@ export const createSingleCommentRequest = comment => dispatch => (
   APIUtil.createComment(comment)
     .then(data => dispatch(createSingleCommentSuccess(data)),
       err => dispatch(createSingleCommentFailure(err.responseJSON)))
+);
+
+export const fetchSinglePostRequest = postId => dispatch => (
+  APIUtil.getPost(postId)
+    .then(data => dispatch(fetchSinglePostSuccess(data)),
+      err => dispatch(fetchSinglePostFailure(err.responseJSON)))
 );

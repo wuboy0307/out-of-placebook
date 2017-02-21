@@ -9,7 +9,15 @@ class Api::PostsController < ApplicationController
     else
       render json: @post.errors, status: 422
     end
+  end
 
+  def show
+    @post = Post.where(id: params[:id])
+    if @post
+      render :show
+    else
+      render json: ['Post not found!']
+    end
   end
 
 end

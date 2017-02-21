@@ -5,6 +5,10 @@ import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
 import { createSingleLikeRequest, destroySingleLikeRequest } from '../../actions/post_actions';
 
+const mapStateToProps = (state) => ({
+  currentUser: state.auth.currentUser
+});
+
 const mapDispatchToProps = dispatch => ({
   createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
   destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo))
@@ -19,10 +23,11 @@ class PostItem extends React.Component {
     this.toggleLike = this.toggleLike.bind(this);
     this.selectCommentBox = this.selectCommentBox.bind(this);
     this.renderBody = this.renderBody.bind(this);
-    // this.renderDropdown = this.renderDropdown.bind(this);
-    // this.renderComments = this.renderComments.bind(this);
+    this.renderDropdown = this.renderDropdown.bind(this);
+
     this.state = {
-      selected: false
+      selected: false,
+      dropdownVisible: false
     };
   }
 
@@ -117,13 +122,32 @@ class PostItem extends React.Component {
       );
     }
   }
-  //
-  // renderDropdown() {
-  //   if (post.authorId !== )
-  //   <div className="post-item-dropdown"><i className="fa fa-arrow-down" aria-hidden="true"></i></div>
-  //
-  // }
-  // { this.renderDropdown() }
+
+  toggleDropdown() {
+    this.setState({dropdownVisible: !this.state.dropdownVisible});
+  }
+
+  renderDropdown() {
+    if (this.props.post.authorId !== this.props.currentUser.id) {
+      return null;
+    } else if (this.state.dropdownVisible) {
+      return(
+        <div className="post-item-dropdown-button"
+          onClick={this.toggleDropdown}>
+          <i className="fa fa-arrow-down" aria-hidden="true"></i>
+          <div className="post-item-dropdown">
+            <div className="post-item-dropdown-item">Edit Post</div>
+            <div className="post-item-dropdown-item">Delete Post</div>
+          </div>
+        </div>
+        );
+    } else {
+      return(
+        <div className="post-item-dropdown-button"><i className="fa fa-arrow-down" aria-hidden="true"></i></div>
+        );
+    }
+
+  }
 
   render () {
     return(
@@ -131,6 +155,7 @@ class PostItem extends React.Component {
         <div className="post-item">
 
           <div className="post-item-header">
+            { this.renderDropdown() }
             <div className="post-item-img-wrapper">
               <img src={this.props.post.authorAvatarUrl || `/assets/avatar.jpg`} className="user-pic-xs" />
             </div>
@@ -176,6 +201,6 @@ class PostItem extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PostItem);

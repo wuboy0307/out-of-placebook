@@ -46,7 +46,9 @@ class Api::FriendsController < ApplicationController
     when 'accept'
       @friendship.completed = true
       @friendship.save!
-      Friendship.create!(user_id: user.id, friend_id: params[:friend][:target_id])
+      f = Friendship.find_or_create_by(user_id: user.id, friend_id: params[:friend][:target_id])
+      f.completed = true
+      f.save!
     when 'reject'
       @friendship.destroy
     else
@@ -65,7 +67,7 @@ class Api::FriendsController < ApplicationController
       return
     end
 
-    @friendship = Friendship.find(friend_id: user.id, user_id: params[:friend][:target_id])
+    @friendship = Friendship.find_by(friend_id: user.id, user_id: params[:friend][:target_id])
     if @friendship.destroy
       render :index
     else

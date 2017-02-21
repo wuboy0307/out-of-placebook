@@ -19,14 +19,27 @@ class ProfileNavBar extends React.Component {
   constructor(props) {
     super(props);
     this.renderFriendButton = this.renderFriendButton.bind(this);
+    this.friendAction = this.friendAction.bind(this);
   }
 
   friendAction(e) {
+    const friends = this.props.friends;
+    const profileId = this.props.profile.id;
+    if (this.props.currentUser.id === profileId) return null;
+
     e.preventDefault();
-    const friendStatus = this.props.profile.friendStatus;
-    switch (friendStatus) {
-      case "add":
-        this.props.addFriendRequest({target_id: this.props.profile.id});
+    let friendObj;
+    if (friends.friends[profileId]) {
+      friendObj = {target_id: profileId};
+      this.props.removeFriendRequest(friendObj);
+    } else if (friends.outgoingFriends[profileId]) {
+      return(<button className="profile-friend-button">Cancel Request</button>);
+    } else if (friends.incomingFriends[profileId])  {
+      friendObj = {target_id: profileId, type: 'accept'};
+      this.props.respondToFriendRequest(friendObj);
+    } else {
+      friendObj = {target_id: profileId};
+      this.props.addFriendRequest(friendObj);
     }
   }
 
@@ -39,13 +52,13 @@ class ProfileNavBar extends React.Component {
     }
 
     if (friends.friends[profileId]) {
-      return(<button className="profile-friend-button">Remove Friend</button>);
+      return(<button className="profile-friend-button" onClick={this.friendAction}>Remove Friend</button>);
     } else if (friends.outgoingFriends[profileId]) {
-      return(<button className="profile-friend-button">Cancel Request</button>);
+      return(<button className="profile-friend-button" onClick={this.friendAction}>Cancel Request</button>);
     } else if (friends.incomingFriends[profileId])  {
-      return(<button className="profile-friend-button">Accept Request</button>);
+      return(<button className="profile-friend-button" onClick={this.friendAction}>Accept Request</button>);
     } else {
-      return(<button className="profile-friend-button">Add Friend</button>);
+      return(<button className="profile-friend-button" onClick={this.friendAction}>Add Friend</button>);
     }
   }
 

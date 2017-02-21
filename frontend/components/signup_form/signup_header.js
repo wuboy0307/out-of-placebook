@@ -21,7 +21,7 @@ class SignupHeader extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = this.state;
-    this.props.login(user);
+    this.props.login(user).then(() => this.props.router.push('/'));
   }
 
   handleChange(property) {

@@ -22,3 +22,15 @@ how to update timestamps on notifications without refetching? consider calculati
 convert everything to jbuilder
 
 delete posts on your own wall
+
+
+
+---- newsfeed
+
+Add own posts at end
+
+filter friend's activity using max created at (only on parent source/id)
+# NOT LIKE ON COMMENT - OR - Only on posts - better: not like on comments (comment on comments show as comment on post)
+how to display friendships? (ignore for now and add as bonus?)
+
+show each item in new newsfeed_post_item with appropriate description header

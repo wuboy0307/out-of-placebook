@@ -242,6 +242,14 @@ class User < ApplicationRecord
       .order(created_at: :desc)
   end
 
+  def newsfeed_activity
+    Activity.joins(join_sql_friends_activity)
+      .where(user_id: self.friends)
+      .where.not('activities.activity_source_type = ? AND activities.activity_parent_type = ?', 'Like', 'Comment')
+      .where.not(activity_source_type: 'Friendship')
+      .order(created_at: :desc)
+  end
+
 
   def friend_ids
     friendships.map(&:friend_id)
@@ -290,6 +298,17 @@ class User < ApplicationRecord
         GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedact
     ON activities.activity_source_type = groupedact.activity_source_type
     AND activities.activity_parent_type = groupedact.activity_parent_type
+    AND activities.activity_parent_id = groupedact.activity_parent_id
+    AND activities.created_at = groupedact.maxcreated"
+    sql
+  end
+
+  def join_sql_friends_activity
+    sql = "INNER JOIN
+        (SELECT activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
+        FROM activities
+        GROUP BY activity_parent_type, activity_parent_id) groupedact
+    ON activities.activity_parent_type = groupedact.activity_parent_type
     AND activities.activity_parent_id = groupedact.activity_parent_id
     AND activities.created_at = groupedact.maxcreated"
     sql

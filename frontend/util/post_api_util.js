@@ -36,3 +36,10 @@ export const getPost = (postId) => {
     url: `/api/posts/${postId}`
   });
 };
+
+export const destroyPost = (postId) => {
+  return $.ajax({
+    method: 'DELETE',
+    url: `/api/posts/${postId}`
+  });
+};

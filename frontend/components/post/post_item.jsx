@@ -3,7 +3,7 @@ import CommentBox from '../comment/comment_box';
 import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
-import { createSingleLikeRequest, destroySingleLikeRequest } from '../../actions/post_actions';
+import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser
@@ -11,7 +11,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
   createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
-  destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo))
+  destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo)),
+  destroySinglePostRequest: (postId) => dispatch(destroySinglePostRequest(postId))
 });
 
 class PostItem extends React.Component {
@@ -25,6 +26,7 @@ class PostItem extends React.Component {
     this.renderBody = this.renderBody.bind(this);
     this.renderDropdown = this.renderDropdown.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.deletePost = this.deletePost.bind(this);
 
     this.state = {
       selected: false,
@@ -128,6 +130,10 @@ class PostItem extends React.Component {
     this.setState({dropdownVisible: !this.state.dropdownVisible});
   }
 
+  deletePost() {
+    this.props.destroySinglePostRequest(this.props.post.id).then(() => this.setState({dropdownVisible: false}));
+  }
+
   renderDropdown() {
     if (this.props.post.authorId !== this.props.currentUser.id) {
       return null;
@@ -140,7 +146,7 @@ class PostItem extends React.Component {
           </div>
             <div className="post-item-dropdown">
               <div className="post-item-dropdown-item">Edit Post</div>
-              <div className="post-item-dropdown-item">Delete Post</div>
+              <div className="post-item-dropdown-item" onClick={this.deletePost}>Delete Post</div>
             </div>
         </div>
         );

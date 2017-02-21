@@ -2,7 +2,8 @@ import { FETCH_SINGLE_PROFILE_SUCCESS } from '../actions/profile_actions';
 import { CREATE_SINGLE_COMMENT_SUCCESS,
         CREATE_SINGLE_LIKE_SUCCESS,
         DESTROY_SINGLE_LIKE_SUCCESS,
-        CREATE_SINGLE_POST_SUCCESS } from '../actions/post_actions';
+        CREATE_SINGLE_POST_SUCCESS,
+        DESTROY_SINGLE_POST_SUCCESS } from '../actions/post_actions';
 import merge from 'lodash/merge';
 
 const postsReducer = ( oldState = {}, action) => {
@@ -72,6 +73,10 @@ const postsReducer = ( oldState = {}, action) => {
           }
           break;
       }
+      return newState;
+
+    case DESTROY_SINGLE_POST_SUCCESS:
+      delete newState[action.post.postId];
       return newState;
 
     default:

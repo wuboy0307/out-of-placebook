@@ -1,6 +1,19 @@
 import React from 'react';
 import CoverPhoto from './cover_photo';
+import { connect } from 'react-redux';
 import ProfileLinkBar from './profile_link_bar';
+import { addFriendRequest, removeFriendRequest, respondToFriendRequest } from '../../actions/friend_actions';
+
+const mapDispatchToProps = (dispatch) => ({
+  addFriendRequest: (friend) => dispatch(addFriendRequest(friend)),
+  removeFriendRequest: (friend) => dispatch(removeFriendRequest(friend)),
+  respondToFriendRequest: (friend) => dispatch(respondToFriendRequest(friend))
+});
+
+const mapStateToProps = (state) => ({
+  friends: state.friends,
+  currentUser: state.auth.currentUser
+});
 
 class ProfileNavBar extends React.Component {
   constructor(props) {
@@ -8,34 +21,54 @@ class ProfileNavBar extends React.Component {
     this.renderFriendButton = this.renderFriendButton.bind(this);
   }
 
-  friendAction() {
+  friendAction(e) {
+    e.preventDefault();
     const friendStatus = this.props.profile.friendStatus;
     switch (friendStatus) {
       case "add":
-
+        this.props.addFriendRequest({target_id: this.props.profile.id});
     }
   }
 
+  // renderFriendButton() {
+  //   const friends = this.props.friends;
+  //   switch (friendStatus) {
+  //     case "self":
+  //       return null;
+  //
+  //     case "outgoing":
+  //       return(<button className="profile-friend-button">Cancel Request</button>);
+  //
+  //     case "incoming":
+  //       return(<button className="profile-friend-button">Accept Request</button>);
+  //
+  //     case "friends":
+  //       return(<button className="profile-friend-button">Remove Friend</button>);
+  //
+  //     case "add":
+  //       return(<button className="profile-friend-button">Add Friend</button>);
+  //
+  //     default:
+  //       return null;
+  //   }
+  // }
+
   renderFriendButton() {
-    const friendStatus = this.props.profile.friendStatus;
-    switch (friendStatus) {
-      case "self":
-        return null;
+    const friends = this.props.friends;
+    const profileId = this.props.profile.id;
 
-      case "outgoing":
-        return(<button className="profile-friend-button">Cancel Request</button>);
+    if (this.props.currentUser.id === profileId) {
+      return null;
+    }
 
-      case "incoming":
-        return(<button className="profile-friend-button">Accept Request</button>);
-
-      case "friends":
-        return(<button className="profile-friend-button">Remove Friend</button>);
-
-      case "add":
-        return(<button className="profile-friend-button">Add Friend</button>);
-
-      default:
-        return null;
+    if (friends.friends[profileId]) {
+      return(<button className="profile-friend-button">Remove Friend</button>);
+    } else if (friends.outgoingFriends[profileId]) {
+      return(<button className="profile-friend-button">Cancel Request</button>);
+    } else if (friends.incomingFriends[profileId])  {
+      return(<button className="profile-friend-button">Accept Request</button>);
+    } else {
+      return(<button className="profile-friend-button">Add Friend</button>);
     }
   }
 
@@ -52,4 +85,7 @@ class ProfileNavBar extends React.Component {
   }
 }
 
-export default ProfileNavBar;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileNavBar);

@@ -8,7 +8,6 @@ const profilesReducer = (oldState = _initialState, action) => {
   let newState;
   switch(action.type) {
     case FETCH_SINGLE_PROFILE_SUCCESS:
-      debugger
       let fetchedProfile = action.profile.profile;
       // newState = merge({}, _initialState, oldState);
       // newState.profileList[fetchedProfile.id] = fetchedProfile;

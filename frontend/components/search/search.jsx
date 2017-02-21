@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router';
 import {selectSearchResults} from '../../reducers/selectors';
 import { fetchSearchResultsRequest } from '../../actions/search_actions';
 
@@ -19,6 +20,12 @@ class Search extends React.Component {
     this.state = {
       search: ''
     };
+  }
+
+  componentWillReceiveProps(newProps){
+    if (newProps.params !== this.props.params) {
+      this.setState({search: ''});
+    }
   }
 
 
@@ -59,19 +66,21 @@ class Search extends React.Component {
     return(
       <div className="search-dropdown">
         {this.props.search.map((user) => (
-          <div className="search-result" key={user.id}>
-            <div className="search-result-pic">
-              <img className="user-pic-xs" src={user.avatarUrl} />
-            </div>
-            <div className="search-result-body">
-              <div className="search-result-name">
-                {user.fullName}
+          <Link to={`/profile/${user.id}`} key={user.id}>
+            <div className="search-result">
+              <div className="search-result-pic">
+                <img className="user-pic-xs" src={user.avatarUrl} />
               </div>
-              <div className="search-result-friends">
-                { this.renderMutualFriends(user.mutualFriends) }
+              <div className="search-result-body">
+                <div className="search-result-name">
+                  {user.fullName}
+                </div>
+                <div className="search-result-friends">
+                  { this.renderMutualFriends(user.mutualFriends) }
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
 
       </div>
@@ -84,7 +93,7 @@ class Search extends React.Component {
       <form className="search-form" onClick={() => this.searchInput.focus()}>
         <div className="search-form-input">
           <input type="text" placeholder="search" onChange={this.performSearch}
-            ref={(input) => { this.searchInput = input; }} />
+            ref={(input) => { this.searchInput = input; }} value={this.state.search}/>
         </div>
         <button type="button">Search</button>
 
@@ -98,4 +107,4 @@ class Search extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Search);
+)(withRouter(Search));

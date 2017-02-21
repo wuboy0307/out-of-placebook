@@ -13,6 +13,8 @@ json.profile do
 end
 
 
+json.set! "posts", {} if @posts.empty?
+
 json.posts do
   @posts.each do |post|
     json.set! post.id do

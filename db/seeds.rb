@@ -10,11 +10,11 @@
 #
 # User.create!(fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
 #
-# 10.times do
+# 1000.times do
 #   User.create!(fname: Faker::Name.first_name , lname: Faker::Name.last_name , email: Faker::Internet.email, password: "password")
 # end
-#
-#
+
+
 #
 # users = User.all
 # #
@@ -59,10 +59,10 @@
 #   l = Like.new(liker_id: user.id, likeable: activity)
 #   l.save
 # end
-
+#
 users = User.all
 
-100.times do
+1000.times do
   current_user = users.sample
   target_user = users.sample
   next if current_user == target_user

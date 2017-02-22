@@ -40,3 +40,11 @@ show each item in new newsfeed_post_item with appropriate description header
 do validations on model level to check if friends
 
 No postcreate box on user wall if not friends.
+
+
+--- messages:
+finds unique 'chats':
+
+[37] pry(main)> Message.find_by_sql("select m1.sender_id, m1.receiver_id from messages m1 inner join messages m2 on m1.sender_id = m2.receiver_id and m1.receiver_id = m2.sender_id where m1.receiver_id <> m1.sender_id group by m1.receiver_id, m1.sender_id")
+
+46] pry(main)> Message.find_by_sql("select * from messages m1 inner join messages m2 on m1.sender_id = m2.receiver_id and m1.receiver_id = m2.sender_id where m1.receiver_id <> m1.sender_id and m1.sender_id = 1 or m1.receiver_id = 1 order by m1.created_at desc")

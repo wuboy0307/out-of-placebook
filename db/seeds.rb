@@ -62,14 +62,21 @@
 #
 users = User.all
 
-1000.times do
+# 1000.times do
+#   current_user = users.sample
+#   target_user = users.sample
+#   next if current_user == target_user
+#   f = Friendship.find_or_create_by(user_id: current_user.id, friend_id: target_user.id)
+#   g = Friendship.find_or_create_by(friend_id: current_user.id, user_id: target_user.id)
+#   f.completed = true;
+#   g.completed = true;
+#   f.save;
+#   g.save;
+# end
+
+500.times do
   current_user = users.sample
   target_user = users.sample
   next if current_user == target_user
-  f = Friendship.find_or_create_by(user_id: current_user.id, friend_id: target_user.id)
-  g = Friendship.find_or_create_by(friend_id: current_user.id, user_id: target_user.id)
-  f.completed = true;
-  g.completed = true;
-  f.save;
-  g.save;
+  Message.create!(sender_id: current_user.id, receiver_id: target_user.id, body: Faker::ChuckNorris.fact)
 end

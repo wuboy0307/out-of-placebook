@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Search from '../search/search';
+import { toggleFlyout } from '../../actions/flyout_actions';
 import { fetchNotificationsRequest, fetchNotificationCountRequest,
         fetchMessageNotificationCountRequest, fetchMessagesRequest,
       fetchChatRequest } from '../../actions/notification_actions';
@@ -9,7 +10,8 @@ import { fetchNotificationsRequest, fetchNotificationCountRequest,
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
   notifications: state.notifications,
-  messages: state.messages
+  messages: state.messages,
+  flyout: state.flyout
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -17,7 +19,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchNotificationCountRequest: () => dispatch(fetchNotificationCountRequest()),
   fetchMessageNotificationCountRequest: () => dispatch(fetchMessageNotificationCountRequest()),
   fetchMessagesRequest: () => dispatch(fetchMessagesRequest()),
-  fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId))
+  fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId)),
+  toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType))
 });
 
 
@@ -59,29 +62,23 @@ class NavBar extends React.Component {
 
 
   clickNotificationButton() {
-    if (this.props.notifications.count > 0 || this.props.notifications.list.length < 1) {
-      if (!this.state.notificationFlyout) {
-        this.props.fetchNotificationsRequest().then(() => {
-          this.setState({notificationFlyout: !this.state.notificationFlyout});
-          // debugger
-        });
-      } else {
-        this.setState({notificationFlyout: !this.state.notificationFlyout});
-      }
+    if (this.props.toggleFlyout !== 'notifications') {
+      this.props.fetchNotificationsRequest().then(() => {
+        this.props.toggleFlyout('notifications');
+      });
     } else {
-      this.setState({notificationFlyout: !this.state.notificationFlyout});
-    }
+    this.props.toggleFlyout('notifications');
+  }
   }
 
   clickMessageNotificationButton() {
-      if (!this.state.messageFlyout) {
-        this.props.fetchMessagesRequest().then(() => {
-          this.setState({messageFlyout: !this.state.messageFlyout});
-          // debugger
-        });
-      } else {
-        this.setState({messageFlyout: !this.state.messageFlyout});
-      }
+    if (this.props.toggleFlyout !== 'messages') {
+      this.props.fetchMessagesRequest().then(() => {
+        this.props.toggleFlyout('messages');
+      });
+    } else {
+    this.props.toggleFlyout('messages');
+  }
   }
 
   fetchChat(channelId) {
@@ -89,7 +86,7 @@ class NavBar extends React.Component {
   }
 
   renderMessages() {
-    if (!this.state.messageFlyout) {
+    if (this.props.flyout !== 'messages') {
       return null;
     }
 
@@ -118,7 +115,7 @@ class NavBar extends React.Component {
   }
 
   renderNotifications() {
-    if (!this.state.notificationFlyout) {
+    if (this.props.flyout !== 'notifications') {
       return null;
     }
 

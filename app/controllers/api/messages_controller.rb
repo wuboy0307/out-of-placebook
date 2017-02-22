@@ -77,6 +77,7 @@ class Api::MessagesController < ApplicationController
 
       # send pusher notifications
       @message.channel.participants.map(&:id).each do |id|
+        next if id == u.id
         Pusher.trigger("notifications-#{id}", 'new-message-notification', {})
         Pusher.trigger("notifications-#{id}", "new-message-#{@message.channel_id}", {})
       end

@@ -107,7 +107,7 @@ class User < ApplicationRecord
                   :using => {
                     :tsearch => {:prefix => true},
                     :trigram => {
-                      :threshold => 0.3,
+                      :threshold => 0.1,
                     }
                   }
 

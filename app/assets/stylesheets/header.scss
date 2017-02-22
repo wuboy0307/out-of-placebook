@@ -278,6 +278,23 @@ background-clip: padding-box;
     right: -11px;
 }
 
+.small-messages-count {
+  background-color: #fa3e3e;
+border-radius: 2px;
+color: #fff;
+padding: 1px 3px;
+background-clip: padding-box;
+    display: inline-block;
+    font-family: 'helvetica neue', Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    -webkit-font-smoothing: subpixel-antialiased;
+    line-height: 1.3;
+    min-height: 13px;
+    position: absolute;
+    top: -8px;
+    right: 18px;
+}
+
 .flyout {
   background: #fff;
 border: 1px solid rgba(100, 100, 100, .4);

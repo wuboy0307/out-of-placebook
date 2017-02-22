@@ -2,16 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Search from '../search/search';
-import { fetchNotificationsRequest, fetchNotificationCountRequest } from '../../actions/notification_actions';
+import { fetchNotificationsRequest, fetchNotificationCountRequest,
+        fetchMessageNotificationCountRequest, fetchMessagesRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
-  notifications: state.notifications
+  notifications: state.notifications,
+  messages: state.messages
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest()),
   fetchNotificationCountRequest: () => dispatch(fetchNotificationCountRequest()),
+  fetchMessageNotificationCountRequest: () => dispatch(fetchMessageNotificationCountRequest()),
+  fetchMessagesRequest: () => dispatch(fetchMessagesRequest())
 });
 
 
@@ -21,11 +25,13 @@ class NavBar extends React.Component {
     this.renderNotifications = this.renderNotifications.bind(this);
     this.clickNotificationButton = this.clickNotificationButton.bind(this);
     this.state = {
-      flyoutVisible: false
+      notificationFlyout: false
     };
   }
 
   componentDidMount() {
+    this.props.fetchMessageNotificationCountRequest();
+    this.props.fetchMessagesRequest();
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('40464ec5305ef59a7c32', {
@@ -39,27 +45,42 @@ class NavBar extends React.Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({flyoutVisible: false});
+    this.setState({notificationFlyout: false});
   }
 
 
   clickNotificationButton() {
     if (this.props.notifications.count > 0 || this.props.notifications.list.length < 1) {
-      if (!this.state.flyoutVisible) {
+      if (!this.state.notificationFlyout) {
         this.props.fetchNotificationsRequest().then(() => {
-          this.setState({flyoutVisible: !this.state.flyoutVisible});
+          this.setState({notificationFlyout: !this.state.notificationFlyout});
           // debugger
         });
       } else {
-        this.setState({flyoutVisible: !this.state.flyoutVisible});
+        this.setState({notificationFlyout: !this.state.notificationFlyout});
       }
     } else {
-      this.setState({flyoutVisible: !this.state.flyoutVisible});
+      this.setState({notificationFlyout: !this.state.notificationFlyout});
+    }
+  }
+
+  clickMessageNotificationButton() {
+    if (this.props.messages.numUnseenChats > 0 || this.props.notifications.c.length < 1) {
+      if (!this.state.notificationFlyout) {
+        this.props.fetchNotificationsRequest().then(() => {
+          this.setState({notificationFlyout: !this.state.notificationFlyout});
+          // debugger
+        });
+      } else {
+        this.setState({notificationFlyout: !this.state.notificationFlyout});
+      }
+    } else {
+      this.setState({notificationFlyout: !this.state.notificationFlyout});
     }
   }
 
   renderNotifications() {
-    if (!this.state.flyoutVisible) {
+    if (!this.state.notificationFlyout) {
       return null;
     }
     return (<div className="flyout">
@@ -108,6 +129,7 @@ class NavBar extends React.Component {
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
               <div><i className="fa fa-comments" aria-hidden="true"></i></div>
               <div className="small-notification-count">{this.props.notifications.count}</div>
+              <div className="small-messages-count">{this.props.messages.numUnseenChats}</div>
 
 
 

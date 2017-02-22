@@ -19,7 +19,7 @@ messages: {
       body: "hello world!"
       timestamp: "...",
       authorAvatar: "...",
-      authorFullName: "..."
+      authorFirstName: "..."
     }
   ]
 

@@ -243,11 +243,11 @@ class User < ApplicationRecord
         num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
         case num_comments_minus_self
         when 1
-          parsed << ["#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.post_id]
+          parsed << ["#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
         when 2
-          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.post_id]
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
         else
-          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.post_id]
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
         end
 
       end

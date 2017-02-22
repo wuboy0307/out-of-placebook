@@ -77,7 +77,9 @@ class NavBar extends React.Component {
       <nav className="header-nav">
         <div className="nav-container">
           <div className="nav-left-side">
-            <div className="small-logo">O</div>
+            <Link to="/newsfeed">
+              <div className="small-logo">O</div>
+            </Link>
 
             <Search />
 

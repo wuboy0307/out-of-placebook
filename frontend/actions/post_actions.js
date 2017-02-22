@@ -13,7 +13,9 @@ export const DESTROY_SINGLE_POST_FAILURE = "DESTROY_SINGLE_POST_FAILURE";
 export const EDIT_SINGLE_POST_SUCCESS = "EDIT_SINGLE_POST_SUCCESS";
 export const EDIT_SINGLE_POST_FAILURE = "EDIT_SINGLE_POST_FAILURE";
 export const FETCH_SINGLE_POST_FAILURE = "FETCH_SINGLE_POST_FAILURE";
-export const FETCH_SINGLE_POST_SUCCESS = "FETCH_SINGLE_POST_FAILURE";
+export const FETCH_SINGLE_POST_SUCCESS = "FETCH_SINGLE_POST_SUCCESS";
+export const FETCH_SINGLE_SHARED_POST_FAILURE = "FETCH_SINGLE_SHARED_POST_FAILURE";
+export const FETCH_SINGLE_SHARED_POST_SUCCESS = "FETCH_SINGLE_SHARED_POST_SUCCESS";
 
 export const createSingleCommentSuccess = comment => ({
   type: CREATE_SINGLE_COMMENT_SUCCESS,
@@ -67,6 +69,11 @@ export const destroySinglePostFailure = errors => ({
 
 export const fetchSinglePostSuccess = post => ({
   type: FETCH_SINGLE_POST_SUCCESS,
+  post
+});
+
+export const fetchSingleSharedPostSuccess = post => ({
+  type: FETCH_SINGLE_SHARED_POST_SUCCESS,
   post
 });
 
@@ -126,5 +133,11 @@ export const createSingleCommentRequest = comment => dispatch => (
 export const fetchSinglePostRequest = postId => dispatch => (
   APIUtil.getPost(postId)
     .then(data => dispatch(fetchSinglePostSuccess(data)),
+      err => dispatch(fetchSinglePostFailure(err.responseJSON)))
+);
+
+export const fetchSingleSharedPostRequest = postId => dispatch => (
+  APIUtil.getPost(postId)
+    .then(data => dispatch(fetchSingleSharedPostSuccess(data)),
       err => dispatch(fetchSinglePostFailure(err.responseJSON)))
 );

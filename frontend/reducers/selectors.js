@@ -1,6 +1,10 @@
+import merge from 'lodash/merge';
+
 export const selectPosts = ({ posts }) => {
-  if (posts) {
-    return Object.keys(posts).map(post => posts[post]).reverse();
+  let newPosts = merge({}, posts);
+  if (newPosts['sharedPosts']) delete newPosts['sharedPosts'];
+  if (newPosts) {
+    return Object.keys(newPosts).map(post => newPosts[post]).reverse();
   } else {
     return [];
   }

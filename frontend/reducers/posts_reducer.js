@@ -5,23 +5,30 @@ import { CREATE_SINGLE_COMMENT_SUCCESS,
         CREATE_SINGLE_POST_SUCCESS,
         DESTROY_SINGLE_POST_SUCCESS,
         EDIT_SINGLE_POST_SUCCESS,
-        FETCH_SINGLE_POST_SUCCESS } from '../actions/post_actions';
+        FETCH_SINGLE_POST_SUCCESS,
+        FETCH_SINGLE_SHARED_POST_SUCCESS } from '../actions/post_actions';
 import { FETCH_NEWSFEED_SUCCESS } from '../actions/newsfeed_actions';
 import merge from 'lodash/merge';
 
-const postsReducer = ( oldState = {}, action) => {
+const _initialState = { sharedPosts: {} };
+
+const postsReducer = ( oldState = _initialState, action) => {
   Object.freeze(oldState);
-  let newState = merge({}, oldState);
+  let newState = merge({}, _initialState, oldState);
   let likeInfo;
   switch(action.type) {
     case FETCH_SINGLE_PROFILE_SUCCESS:
-      return action.profile.posts;
+      return merge({}, _initialState, action.profile.posts);
 
     case FETCH_SINGLE_POST_SUCCESS:
-      return action.post.posts;
+      return merge({}, _initialState, action.post.posts);
 
     case FETCH_NEWSFEED_SUCCESS:
-      return action.posts.posts;
+      return merge({}, _initialState, action.posts.posts);
+
+    case FETCH_SINGLE_SHARED_POST_SUCCESS:
+      newState.sharedPosts = merge({}, newState.sharedPosts, action.post.posts);
+      return newState;
 
     case CREATE_SINGLE_COMMENT_SUCCESS:
 

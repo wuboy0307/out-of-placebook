@@ -9,6 +9,8 @@ json.profile do
   json.work @user.work
   json.description @user.description
   json.friendIds @user.friend_ids
+  json.avatarUrl @user.avatar_url
+  json.coverUrl @user.cover_url
 
 end
 
@@ -31,6 +33,10 @@ json.posts do
     if post.content.class.name.downcase === "url"
       json.content do
         json.extract! post.content, :url, :title, :description, :domain_name, :image
+      end
+    elsif post.content.class.name.downcase === "post"
+      json.content do
+        json.extract! post.content, :id
       end
     else
       json.set! "content", {}

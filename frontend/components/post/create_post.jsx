@@ -7,7 +7,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => ({
-  currentUserAvatarUrl: state.auth.currentUser.avatar_url
+  currentUserAvatarUrl: state.auth.currentUser.avatar_url,
+  friends: state.friends.friends,
+  currentUserId: state.auth.currentUser.id
 });
 
 class CreatePost extends React.Component {
@@ -49,6 +51,8 @@ class CreatePost extends React.Component {
   }
 
   render () {
+    
+    if (!this.props.friends[this.props.profileId] && (this.props.profileId != this.props.currentUserId)) return null;
     return(
       <div className="create-post">
         <div className="create-post-header">

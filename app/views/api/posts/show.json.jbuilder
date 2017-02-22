@@ -17,6 +17,10 @@ json.posts do
       json.content do
         json.extract! post.content, :url, :title, :description, :domain_name, :image
       end
+    elsif post.content.class.name.downcase === "post"
+      json.content do
+        json.extract! post.content, :id
+      end
     else
       json.set! "content", {}
     end

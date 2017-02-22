@@ -16,7 +16,6 @@ class FriendsBox extends React.Component {
           <img className="timeline-side-bar-friend" />
           <img className="timeline-side-bar-friend" />
           <img className="timeline-side-bar-friend" />
-          <img className="timeline-side-bar-friend" />
         </div>
       </div>
     );

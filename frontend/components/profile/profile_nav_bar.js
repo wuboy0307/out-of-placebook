@@ -77,9 +77,9 @@ class ProfileNavBar extends React.Component {
   render() {
     return(
       <div className="profile-nav-bar">
-        <CoverPhoto photoUrl={this.props.profile.cover_url}/>
+        <CoverPhoto photoUrl={this.props.profile.coverUrl}/>
         <ProfileLinkBar />
-        <div className="profile-picture"><img src={ this.props.profile.profile_url || `/assets/avatar.jpg`}/></div>
+        <div className="profile-picture"><img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/></div>
         <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
         { this.renderFriendButton() }
         { this.renderMutualFriendCount() }

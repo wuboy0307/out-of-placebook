@@ -106,29 +106,41 @@ class User < ApplicationRecord
 
   def generate_notifications(last_search_time)
     output = []
-    wall_posts.where('created_at > ?', last_search_time).where.not(author_id: self.id).map{|act| output << [act, 'post_on_your_wall']}
+    wall_posts.where('created_at > ?', last_search_time).where.not(author_id: self.id).includes(:liking_users, :content, :author, :likes,
+    comments: [:author, :likes, :liking_users,
+    children: [:author, :likes, :liking_users]]).map{|act| output << [act, 'post_on_your_wall']}
     # base_notification_query(last_search_time, 'Post', 'User', self.id).includes(activity_source: [:author])
     #   .map{|act| output << [act, 'post_on_your_wall']}
 
-    base_notification_query(last_search_time, 'Like', 'Post', self.posts).includes(activity_parent: [:author], activity_source: [:liker])
+    base_notification_query(last_search_time, 'Like', 'Post', self.posts).includes(activity_parent: [:liking_users, :content, :author, :likes,
+    comments: [:author, :likes, :liking_users,
+    children: [:author, :likes, :liking_users]]], activity_source: [:liker, :likeable])
       .map{|act| output << [act, 'like_on_your_post']}
 
-    base_notification_query(last_search_time, 'Comment', 'Post', self.posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
+    base_notification_query(last_search_time, 'Comment', 'Post', self.posts).includes(activity_parent: [:liking_users, :content, :author, :likes,
+    comments: [:author, :likes, :liking_users,
+    children: [:author, :likes, :liking_users]]], activity_source: [:author])
     .map{|act| output << [act, 'comment_on_your_post']}
 
-    base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts).includes(activity_parent: [:author], activity_source: [:liker])
+    base_notification_query(last_search_time, 'Like', 'Post', self.wall_posts).includes(activity_parent: [:liking_users, :content, :author, :likes,
+    comments: [:author, :likes, :liking_users,
+    children: [:author, :likes, :liking_users]]], activity_source: [:liker, :likeable])
       .map{|act| output << [act, 'like_on_your_wall_post']}
 
-    base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
+    base_notification_query(last_search_time, 'Comment', 'Post', self.wall_posts).includes(activity_parent: [:liking_users, :content, :author, :likes,
+    comments: [:author, :likes, :liking_users,
+    children: [:author, :likes, :liking_users]]], activity_source: [:author])
     .map{|act| output << [act, 'comment_on_your_wall_post']}
 
-    base_notification_query(last_search_time, 'Like', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:liker])
+    base_notification_query(last_search_time, 'Like', 'Comment', self.comments).includes(activity_parent: [:author, :likes], activity_source: [:liker, :likeable])
       .map{|act| output << [act, 'like_on_your_comment']}
 
-    base_notification_query(last_search_time, 'Comment', 'Comment', self.comments).includes(activity_parent: [:author], activity_source: [:author])
+    base_notification_query(last_search_time, 'Comment', 'Comment', self.comments).includes(activity_parent: [:author, :likes], activity_source: [:author])
     .map{|act| output << [act, 'comment_on_your_comment']}
 
-    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts).includes(activity_parent: [:author, :comments], activity_source: [:author])
+    base_notification_query(last_search_time, 'Comment', 'Post', self.commented_on_posts).includes(activity_parent: [:liking_users, :content, :author, :likes,
+    comments: [:author, :likes, :liking_users,
+    children: [:author, :likes, :liking_users]]], activity_source: [:author])
       .map{|act| output << [act, 'comment_on_your_commented_post']}
 
     output.uniq!{|el| el[0].id }
@@ -150,7 +162,7 @@ class User < ApplicationRecord
       .where(activity_parent_type: ['Comment'])
       .order(created_at: :desc)
 
-    first.or(second).order(created_at: :desc).limit(n)[0..n].last.created_at
+    first.or(second).order(created_at: :desc).limit(n).last.created_at
   end
 
   def generate_n_notifications(n)
@@ -249,7 +261,7 @@ class User < ApplicationRecord
       .where(activity_source_type: source_type)
       .where(activity_parent_type: parent_type)
       .where('created_at >= ?', last_search_time)
-      .order(created_at: :desc)
+      .order(created_at: :desc).includes(:activity_parent, :activity_source)
   end
 
   # TODO: Add in friendship activity to newsfeed later on
@@ -295,26 +307,6 @@ class User < ApplicationRecord
     end
     output
   end
-  #
-  # def parse_newsfeed
-  #   # can add .limit to limit here
-  #   # also add created_at constraint
-  #   activity = newsfeed_activity.includes(:activity_parent, activity_source: [:author])
-  #   output = []
-  #   activity.each do |act|
-  #     case [act.activity_source_type, act.activity_parent_type]
-  #     when ["Post", "User"]
-  #       output << [act.activity_source, nil]
-  #     when ["Like", "Post"]
-  #       output << [act.activity_parent, "#{act.activity_source.author.full_name} likes a post."]
-  #     when ["Comment", "Post"]
-  #       output << [act.activity_parent, "#{act.activity_source.author.full_name} commented on a post."]
-  #     when ["Comment", "Comment"]
-  #       output << [act.activity_parent.post, "#{act.activity_source.author.full_name} commented on a post."]
-  #     end
-  #   end
-  #   output
-  # end
 
 
   def friend_ids

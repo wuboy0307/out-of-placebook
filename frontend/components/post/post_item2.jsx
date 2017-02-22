@@ -3,20 +3,17 @@ import CommentBox from '../comment/comment_box';
 import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
-import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest, editSinglePostRequest, fetchSingleSharedPostRequest } from '../../actions/post_actions';
-import PostItem2 from './post_item2';
+import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest, editSinglePostRequest } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
-  currentUser: state.auth.currentUser,
-  sharedPosts: state.posts.sharedPosts
+  currentUser: state.auth.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
   createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
   destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo)),
   destroySinglePostRequest: (postId) => dispatch(destroySinglePostRequest(postId)),
-  editSinglePostRequest: (postInfo) => dispatch(editSinglePostRequest(postInfo)),
-  fetchSingleSharedPostRequest: (postInfo) => dispatch(fetchSingleSharedPostRequest(postInfo))
+  editSinglePostRequest: (postInfo) => dispatch(editSinglePostRequest(postInfo))
 });
 
 class PostItem extends React.Component {
@@ -34,7 +31,6 @@ class PostItem extends React.Component {
     this.renderEditForm = this.renderEditForm.bind(this);
     this.renderPostDescription = this.renderPostDescription.bind(this);
     this.editFormSubmit = this.editFormSubmit.bind(this);
-    this.renderSharedPost = this.renderSharedPost.bind(this);
 
     this.state = {
       selected: false,
@@ -42,12 +38,6 @@ class PostItem extends React.Component {
       editPost: false,
       postBody: this.props.post.body
     };
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.sharedPosts !== this.props.sharedPosts) {
-      this.render.bind(this)();
-    }
   }
 
   renderContent() {
@@ -58,20 +48,6 @@ class PostItem extends React.Component {
     if (post.contentType === 'url') {
       return this.renderUrlContent();
     }
-    if (post.contentType === 'post') {
-      if (!this.props.sharedPosts[post.content.id]) {
-      this.props.fetchSingleSharedPostRequest(post.content.id);
-    } else {
-      return(<PostItem2 post={this.props.sharedPosts[post.content.id]} />);
-    }
-      // return this.renderSharedPost();
-    }
-  }
-
-  renderSharedPost() {
-    return(
-      <PostItem2 post={this.props.sharedPosts[this.props.post.content.id]} />
-    );
   }
 
   renderUrlContent() {
@@ -181,6 +157,7 @@ class PostItem extends React.Component {
   }
 
   renderDropdown() {
+    return null;
     if (this.props.post.authorId !== this.props.currentUser.id) {
       return null;
     } else if (this.state.dropdownVisible) {
@@ -247,27 +224,11 @@ class PostItem extends React.Component {
 
 
           <div className="post-item-content">
-
-            { this.renderContent() }
-
           </div>
 
-          <div className="post-item-footer">
-            <div className="post-action-container">
-              <div className={`like-action ${this.props.post.userLikesPost}`} onClick={this.toggleLike}>Like</div>
-              <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
-              <div className="post-action">Share</div>
-            </div>
-          </div>
 
         </div>
 
-        <CommentBox comments={selectComments(this.props.post.comments)}
-          numLikes={this.props.post.numLikes}
-          currentUserLikes={this.props.post.userLikesPost}
-          likeText={this.props.post.likeText}
-          selected={this.state.selected}
-          postId={this.props.post.id} />
 
       </div>
     );

@@ -30,6 +30,21 @@ ActiveRecord::Schema.define(version: 20170222123153) do
     t.index ["user_id", "created_at"], name: "index_activities_on_user_id_and_created_at", using: :btree
   end
 
+  create_table "channel_subs", force: :cascade do |t|
+    t.integer  "participant_id", null: false
+    t.integer  "channel_id",     null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["channel_id"], name: "index_channel_subs_on_channel_id", using: :btree
+    t.index ["participant_id"], name: "index_channel_subs_on_participant_id", using: :btree
+  end
+
+  create_table "channels", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.integer  "author_id",    null: false
     t.integer  "post_id",      null: false
@@ -67,13 +82,11 @@ ActiveRecord::Schema.define(version: 20170222123153) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "sender_id",   null: false
-    t.integer  "receiver_id", null: false
+    t.integer  "sender_id",  null: false
+    t.integer  "channel_id", null: false
     t.text     "body"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["receiver_id", "sender_id"], name: "index_messages_on_receiver_id_and_sender_id", using: :btree
-    t.index ["sender_id", "receiver_id"], name: "index_messages_on_sender_id_and_receiver_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|

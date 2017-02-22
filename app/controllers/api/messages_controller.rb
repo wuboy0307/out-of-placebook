@@ -9,7 +9,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def index
-    @channels = Channel.where(id: current_user.active_channels.map(&:channel_id))
+    @channels = current_user.active_channels.map{|channel| Channel.find(channel.channel.id)}
     render :index
     return
   end

@@ -8,7 +8,6 @@ class Api::PostsController < ApplicationController
 
       Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {})
 
-
       render :create
     else
       render json: @post.errors.full_messages, status: 422

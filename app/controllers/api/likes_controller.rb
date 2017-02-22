@@ -19,8 +19,13 @@ class Api::LikesController < ApplicationController
 
     if @like.save
       if params[:like][:type] == "post"
+        Pusher.trigger("notifications-#{@target.wall_id}", 'new-notification', {})
+        Pusher.trigger("notifications-#{@target.author_id}", 'new-notification', {})
+
         render json: { type: 'post', postId: @target.id}
       elsif params[:like][:type] == "comment"
+        Pusher.trigger("notifications-#{@target.author_id}", 'new-notification', {})
+
         render json: { type: 'comment', commentId: @target.id,
           parentId: @target.parent_id, postId: @target.post_id}
       end

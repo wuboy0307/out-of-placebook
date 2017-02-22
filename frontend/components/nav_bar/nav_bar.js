@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Search from '../search/search';
-import { fetchNotificationsRequest } from '../../actions/notification_actions';
+import { fetchNotificationsRequest, fetchNotificationCountRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest())
+  fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest()),
+  fetchNotificationCountRequest: () => dispatch(fetchNotificationCountRequest()),
 });
 
 
@@ -24,9 +25,23 @@ class NavBar extends React.Component {
     };
   }
 
+  componentDidMount() {
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('40464ec5305ef59a7c32', {
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe(`notifications-${this.props.currentUser.id}`);
+    channel.bind('new-notification', () => {
+      this.props.fetchNotificationCountRequest();
+    });
+  }
+
   componentWillReceiveProps() {
     this.setState({flyoutVisible: false});
   }
+
 
   clickNotificationButton() {
     if (this.props.notifications.count > 0 || this.props.notifications.list.length < 1) {

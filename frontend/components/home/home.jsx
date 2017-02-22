@@ -33,6 +33,7 @@ class Home extends React.Component {
     this.props.fetchSingleProfileRequest(this.props.params.profileId)
       .then(() =>  this.props.fetchNotificationCountRequest());
       // .then(() => this.props.fetchNotificationsRequest());
+      
   }
 
   render() {

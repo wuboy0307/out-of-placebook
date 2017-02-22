@@ -5,6 +5,10 @@ class Api::PostsController < ApplicationController
     @post = Post.new(author_id: user.id, wall_id: params[:post][:wall_id], body: params[:post][:body])
 
     if @post.save
+
+      Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {})
+
+
       render :create
     else
       render json: @post.errors.full_messages, status: 422

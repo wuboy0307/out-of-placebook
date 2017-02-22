@@ -23,6 +23,47 @@ class App extends React.Component {
       <div>
         <NavBar />
         {this.props.children}
+        <div className="chat-container">
+          <div className="chat-header">John Smith</div>
+          <div className="chat-body">
+
+            <div className="chat-message-other">
+              <img className="user-pic-xxs" />
+              <div className="message-other"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-self">
+              <div className="message-self"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-self">
+              <div className="message-self"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-other">
+              <img className="user-pic-xxs" />
+              <div className="message-other"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-self">
+              <div className="message-self"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-other">
+              <img className="user-pic-xxs" />
+              <div className="message-other"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-self">
+              <div className="message-self"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+            <div className="chat-message-other">
+              <img className="user-pic-xxs" />
+              <div className="message-other"> ajsdijas diosajdoiasjdioasjd ioasjdaisoj dioasjdoiasjioasjd asj dasoij saijdoijas oidjasioj</div>
+            </div>
+        </div>
+
+        <div className="chat-input">
+          <form className="chat-input-form">
+            <input type="text" className="chat-input-input" placeholder="Type a message..."></input>
+          </form>
+        </div>
+
+        </div>
       </div>
     );
   }

@@ -14,6 +14,10 @@ class Api::MessagesController < ApplicationController
     return
   end
 
+  def create_or_find
+    Channel.where
+  end
+
   def show
     @messages = Channel.find_by(id: params[:id]).messages
                   .order(created_at: :desc).includes(:sender)

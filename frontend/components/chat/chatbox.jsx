@@ -19,8 +19,15 @@ class Chatbox extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderMessages = this.renderMessages.bind(this);
     this.state = {
-      messageInput: ''
+      messageInput: '',
+      hidden: false
     };
+  }
+
+  componentDidUpdate() {
+    if (this.props.messages.length > 1) {
+      this.lastMessage.scrollIntoView();
+    }
   }
 
   renderMessages() {
@@ -29,7 +36,7 @@ class Chatbox extends React.Component {
       if (msg.authorId == this.props.currentUser.id) {
         return(
           <div className="chat-message-self" key={idx}>
-            <div className="message-self" ref={(input) => { this.lastMessage = input; }} >
+            <div className="message-self" >
               {msg.body}
             </div>
           </div>
@@ -38,7 +45,7 @@ class Chatbox extends React.Component {
         return(
           <div className="chat-message-other" key={idx}>
             <img className="user-pic-xxs" src={msg.authorAvatar} />
-            <div className="message-other" ref={(input) => { this.lastMessage = input; }}>{msg.body}</div>
+            <div className="message-other">{msg.body}</div>
         </div>
       );
       }
@@ -48,7 +55,9 @@ class Chatbox extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     this.props.sendMessageRequest({channel_id: this.props.channelId, body: this.state.messageInput})
-      .then(() => this.setState({messageInput: ''}));
+      .then(() => {this.setState({messageInput: ''})
+                this.lastMessage.scrollIntoView();
+              });
   }
 
   render() {
@@ -56,15 +65,17 @@ class Chatbox extends React.Component {
     if (this.props.messages.length < 1) return null;
 
     return(
-        <div className="chat-container">
-          <div className="chat-header">{this.props.channelText}</div>
+        <div className={this.state.hidden ? 'chat-container-hidden' : 'chat-container'}>
+          <div className="chat-header" onClick={() => this.setState({hidden: !this.state.hidden})}>{this.props.channelText}</div>
 
           <div className="chat-body">
 
             { this.renderMessages() }
 
-            </div>
-            { this.lastMessage ? this.lastMessage.focus() : null }
+            <div ref={(input) => (this.lastMessage = input)}></div>
+
+          </div>
+
             <div className="chat-input">
               <form className="chat-input-form" onSubmit={this.handleSubmit}>
                 <input autoFocus type="text" className="chat-input-input"

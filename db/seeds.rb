@@ -74,9 +74,28 @@ users = User.all
 #   g.save;
 # end
 
-500.times do
-  current_user = users.sample
-  target_user = users.sample
-  next if current_user == target_user
-  Message.create!(sender_id: current_user.id, receiver_id: target_user.id, body: Faker::ChuckNorris.fact)
-end
+# 500.times do
+#   current_user = users.sample
+#   target_user = users.sample
+#   next if current_user == target_user
+#   Message.create!(sender_id: current_user.id, receiver_id: target_user.id, body: Faker::ChuckNorris.fact)
+# end
+#
+# 20.times do
+#   Channel.create!
+# end
+#
+# channels = Channel.all
+#
+# 50.times do
+#   u1 = users.sample
+#   channel = channels.sample
+#   ChannelSub.find_or_create_by(participant_id: u1.id, channel_id: channel.id)
+# end
+#
+# 500.times do
+#   u = users.sample
+#   c = u.channels.sample
+#   next if c.nil?
+#   Message.create!(sender_id: u.id, channel_id: c.id, body: Faker::Hacker.say_something_smart)
+# end

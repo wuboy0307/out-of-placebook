@@ -347,6 +347,15 @@ class User < ApplicationRecord
 		self.session_token
 	end
 
+	def active_channels
+		Message.select('messages.channel_id, MAX(messages.created_at)')
+			.joins('INNER JOIN channels ON messages.channel_id = channels.id')
+			.where(channel_id: self.channels)
+			.group('messages.channel_id')
+			.order('MAX(messages.created_at) desc')
+			.map(&:channel_id)
+	end
+
 	private
 
 	def ensure_session_token

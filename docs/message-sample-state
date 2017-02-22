@@ -1,0 +1,44 @@
+messages: {
+
+  chats: [
+    {
+      channelId : 2,
+      image: '...',
+      lastMessage: '...',
+      lastMessageTime: '...',
+      lastMessageFullName: '...'
+    },
+    { ... }
+  ]
+
+  currentChat: [
+    {
+      body: "hello world!"
+      timestamp: "...",
+      authorAvatar: "...",
+      authorFullName: "..."
+    }
+  ]
+
+}
+
+GET /api/messages/
+  - get message count
+
+POST /api/messages/
+  - reset message count and get message previews
+
+GET /api/messages/id
+  - get messages for channel
+
+POST /api/messages/id
+  - create message for channel
+
+# SELECT messages.channel_id, MAX(messages.created_at) FROM messages
+# INNER JOIN channels
+# ON messages.channel_id = channels.id
+# GROUP BY messages.channel_id
+# ORDER BY MAX(messages.created_at) desc
+#
+# Message.select('messages.channel_id, MAX(messages.created_at)').joins('INNER JOIN channels
+# ON messages.channel_id = channels.id').group('messages.channel_id').order('MAX(messages.created_at)')

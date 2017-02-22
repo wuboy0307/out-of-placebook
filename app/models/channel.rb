@@ -24,6 +24,7 @@ class Channel < ApplicationRecord
       .where('(uone.id = ? and utwo.id = ?) OR (uone.id = ? and utwo.id = ?)',
         user_one, user_two, user_two, user_one)
       .distinct
+      .first
   end
 
   private

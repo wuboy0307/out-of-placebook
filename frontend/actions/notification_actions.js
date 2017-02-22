@@ -78,6 +78,12 @@ export const fetchChatRequest = (channelId) => dispatch => (
       err => dispatch(fetchChatFailure(err.responseJSON)))
 );
 
+export const createOrFetchChatRequest = (user) => dispatch => (
+  APIUtil.createOrFetchChat(user)
+    .then(data => dispatch(fetchChatSuccess(data)),
+      err => dispatch(fetchChatFailure(err.responseJSON)))
+);
+
 export const fetchMessageNotificationCountRequest = () => dispatch => (
   APIUtil.fetchMessageNotificationCount()
     .then(data => dispatch(fetchMessageNotificationCountSuccess(data)),

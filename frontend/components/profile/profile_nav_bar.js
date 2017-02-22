@@ -3,11 +3,13 @@ import CoverPhoto from './cover_photo';
 import { connect } from 'react-redux';
 import ProfileLinkBar from './profile_link_bar';
 import { addFriendRequest, removeFriendRequest, respondToFriendRequest } from '../../actions/friend_actions';
+import {createOrFetchChatRequest } from '../../actions/notification_actions';
 
 const mapDispatchToProps = (dispatch) => ({
   addFriendRequest: (friend) => dispatch(addFriendRequest(friend)),
   removeFriendRequest: (friend) => dispatch(removeFriendRequest(friend)),
-  respondToFriendRequest: (friend) => dispatch(respondToFriendRequest(friend))
+  respondToFriendRequest: (friend) => dispatch(respondToFriendRequest(friend)),
+  createOrFetchChatRequest: (user) => dispatch(createOrFetchChatRequest(user))
 });
 
 const mapStateToProps = (state) => ({
@@ -65,8 +67,9 @@ class ProfileNavBar extends React.Component {
     }
   }
 
-  messageAction(){
-
+  messageAction(e){
+    e.preventDefault();
+    this.props.createOrFetchChatRequest({user_id: this.props.profile.id});
   }
 
   renderMessageButton() {

@@ -63,7 +63,7 @@ class Chatbox extends React.Component {
 
   render() {
     if (!this.props.messages) return null;
-    if (this.props.messages.length < 1) return null;
+    if (!this.props.channelText) return null;
 
     return(
         <div className={this.state.hidden ? 'chat-container-hidden' : 'chat-container'}>

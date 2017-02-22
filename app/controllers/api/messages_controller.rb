@@ -15,7 +15,26 @@ class Api::MessagesController < ApplicationController
   end
 
   def create_or_find
-    Channel.where
+    @channel = Channel.find_channel_given_users(current_user.id,
+      params[:channel][:user_id])
+    if @channel.nil?
+      @channel = Channel.create!
+      ChannelSub.create!(participant_id: current_user.id, channel_id: @channel.id)
+      ChannelSub.create!(participant_id: params[:channel][:user_id], channel_id: @channel.id)
+    end
+    raise 'error' if @channel.participants.length != 2
+    # debugger
+    @messages = @channel.messages
+    @channel_text = @channel.participants.where.not(id: current_user).first.full_name
+    
+    user_sub = current_user.channel_subs.find_by(channel_id: @channel.id)
+    user_sub.last_fetch_time = Time.now
+
+    if user_sub.save
+      render :show
+    else
+      render json: ['Error saving last fetch time'], status: 422
+    end
   end
 
   def show

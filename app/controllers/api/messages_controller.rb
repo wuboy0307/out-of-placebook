@@ -15,7 +15,8 @@ class Api::MessagesController < ApplicationController
     @messages = Channel.find_by(id: params[:id]).messages
                   .order(created_at: :desc).includes(:sender)
     if @messages
-      user_sub = User.first.channel_subs.find_by(channel_id: params[:id])
+      user_sub = current_user.channel_subs.find_by(channel_id: params[:id])
+      # debugger
       user_sub.last_fetch_time = Time.now
       if user_sub.save
         render :show

@@ -19,6 +19,13 @@ export const fetchMessages = () => {
   });
 };
 
+export const fetchChat = (channelId) => {
+  return $.ajax({
+    method: 'GET',
+    url: `/api/messages/${channelId}`
+  });
+};
+
 export const fetchNotifications = (notifications) => {
   return $.ajax({
     method: 'POST',

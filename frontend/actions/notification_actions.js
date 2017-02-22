@@ -8,6 +8,8 @@ export const FETCH_NOTIFICATIONS_SUCCESS = "FETCH_NOTIFICATIONS_SUCCESS";
 export const FETCH_NOTIFICATIONS_FAILURE = "FETCH_NOTIFICATIONS_FAILURE";
 export const FETCH_MESSAGES_SUCCESS = "FETCH_MESSAGES_SUCCESS";
 export const FETCH_MESSAGES_FAILURE = "FETCH_MESSAGES_FAILURE";
+export const FETCH_CHAT_SUCCESS = "FETCH_CHAT_SUCCESS";
+export const FETCH_CHAT_FAILURE = "FETCH_CHAT_FAILURE";
 
 export const fetchMessagesSuccess = messages => ({
   type: FETCH_MESSAGES_SUCCESS,
@@ -16,6 +18,15 @@ export const fetchMessagesSuccess = messages => ({
 
 export const fetchMessagesFailure = errors => ({
   type: FETCH_MESSAGES_FAILURE,
+  errors
+});
+export const fetchChatSuccess = chat => ({
+  type: FETCH_CHAT_SUCCESS,
+  chat
+});
+
+export const fetchChatFailure = errors => ({
+  type: FETCH_CHAT_FAILURE,
   errors
 });
 
@@ -59,6 +70,12 @@ export const fetchMessagesRequest = () => dispatch => (
   APIUtil.fetchMessages()
     .then(data => dispatch(fetchMessagesSuccess(data)),
       err => dispatch(fetchMessagesFailure(err.responseJSON)))
+);
+
+export const fetchChatRequest = (channelId) => dispatch => (
+  APIUtil.fetchChat(channelId)
+    .then(data => dispatch(fetchChatSuccess(data)),
+      err => dispatch(fetchChatFailure(err.responseJSON)))
 );
 
 export const fetchMessageNotificationCountRequest = () => dispatch => (

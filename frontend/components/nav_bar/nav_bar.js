@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Search from '../search/search';
 import { fetchNotificationsRequest, fetchNotificationCountRequest,
-        fetchMessageNotificationCountRequest, fetchMessagesRequest } from '../../actions/notification_actions';
+        fetchMessageNotificationCountRequest, fetchMessagesRequest,
+      fetchChatRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
@@ -15,7 +16,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest()),
   fetchNotificationCountRequest: () => dispatch(fetchNotificationCountRequest()),
   fetchMessageNotificationCountRequest: () => dispatch(fetchMessageNotificationCountRequest()),
-  fetchMessagesRequest: () => dispatch(fetchMessagesRequest())
+  fetchMessagesRequest: () => dispatch(fetchMessagesRequest()),
+  fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId))
 });
 
 
@@ -23,15 +25,18 @@ class NavBar extends React.Component {
   constructor(props){
     super(props);
     this.renderNotifications = this.renderNotifications.bind(this);
+    this.renderMessages = this.renderMessages.bind(this);
     this.clickNotificationButton = this.clickNotificationButton.bind(this);
+    this.clickMessageNotificationButton = this.clickMessageNotificationButton.bind(this);
+    this.fetchChat = this.fetchChat.bind(this);
     this.state = {
-      notificationFlyout: false
+      notificationFlyout: false,
+      messageFlyout: false
     };
   }
 
   componentDidMount() {
     this.props.fetchMessageNotificationCountRequest();
-    this.props.fetchMessagesRequest();
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('40464ec5305ef59a7c32', {
@@ -65,24 +70,58 @@ class NavBar extends React.Component {
   }
 
   clickMessageNotificationButton() {
-    if (this.props.messages.numUnseenChats > 0 || this.props.notifications.c.length < 1) {
-      if (!this.state.notificationFlyout) {
-        this.props.fetchNotificationsRequest().then(() => {
-          this.setState({notificationFlyout: !this.state.notificationFlyout});
+    if (this.props.messages.numUnseenChats > 0 || this.props.messages.chats.length < 1) {
+      if (!this.state.messageFlyout) {
+        this.props.fetchMessagesRequest().then(() => {
+          this.setState({messageFlyout: !this.state.messageFlyout});
           // debugger
         });
       } else {
-        this.setState({notificationFlyout: !this.state.notificationFlyout});
+        this.setState({messageFlyout: !this.state.messageFlyout});
       }
     } else {
-      this.setState({notificationFlyout: !this.state.notificationFlyout});
+      this.setState({messageFlyout: !this.state.messageFlyout});
     }
+  }
+
+  fetchChat(channelId) {
+    return (e) => this.props.fetchChatRequest(channelId);
+  }
+
+  renderMessages() {
+    if (!this.state.messageFlyout) {
+      return null;
+    }
+
+    return (<div className="messages-flyout">
+      <div className="flyout-header">
+        Messages
+      </div>
+      <div className="flyout-list">
+       {this.props.messages.chats.map((el, idx) => {
+        return(
+          <div onClick={this.fetchChat(el.channelId)}>
+          <li className={el.numUnseenMessages > 0 ? 'message-list-item-seen' : 'message-list-item'}>
+            <img className="user-pic-flyout" src={el.image}/>
+            <div className="flyout-item-body">
+              <div className="flyout-item-text">{el.lastMessageFullName} {el.numUnseenMessages ? `(${el.numUnseenMessages})` : null}</div>
+              <div className="flyout-item-text">{el.lastMessage}</div>
+              <div className="flyout-item-timestamp">{el.lastMessageTime}</div>
+            </div>
+          </li>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+  );
   }
 
   renderNotifications() {
     if (!this.state.notificationFlyout) {
       return null;
     }
+
     return (<div className="flyout">
       <div className="flyout-header">
         Notifications
@@ -127,12 +166,12 @@ class NavBar extends React.Component {
             <div className="nav-link-home">Home</div>
             <div className="notifications-bar">
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
-              <div><i className="fa fa-comments" aria-hidden="true"></i></div>
+              <div><i className="fa fa-comments" aria-hidden="true" onClick={this.clickMessageNotificationButton}></i></div>
               <div className="small-notification-count">{this.props.notifications.count}</div>
               <div className="small-messages-count">{this.props.messages.numUnseenChats}</div>
 
 
-
+                {this.renderMessages()}
                   { this.renderNotifications() }
 
 

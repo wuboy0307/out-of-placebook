@@ -25,20 +25,20 @@ class Chatbox extends React.Component {
 
   renderMessages() {
     // debugger
-    return this.props.messages.map((msg) => {
+    return this.props.messages.map((msg, idx) => {
       if (msg.authorId == this.props.currentUser.id) {
         return(
-          <div className="chat-message-self">
-            <div className="message-self">
+          <div className="chat-message-self" key={idx}>
+            <div className="message-self" ref={(input) => { this.lastMessage = input; }} >
               {msg.body}
             </div>
           </div>
       );
       } else {
         return(
-          <div className="chat-message-other">
+          <div className="chat-message-other" key={idx}>
             <img className="user-pic-xxs" src={msg.authorAvatar} />
-            <div className="message-other">{msg.body}</div>
+            <div className="message-other" ref={(input) => { this.lastMessage = input; }}>{msg.body}</div>
         </div>
       );
       }
@@ -63,13 +63,14 @@ class Chatbox extends React.Component {
 
             { this.renderMessages() }
 
+            </div>
+            { this.lastMessage ? this.lastMessage.focus() : null }
             <div className="chat-input">
               <form className="chat-input-form" onSubmit={this.handleSubmit}>
                 <input autoFocus type="text" className="chat-input-input"
                   placeholder="Type a message..." value={this.state.messageInput}
                   onChange={(e) => this.setState({messageInput: e.target.value})}></input>
               </form>
-            </div>
 
           </div>
         </div>

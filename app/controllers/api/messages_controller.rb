@@ -1,7 +1,10 @@
 class Api::MessagesController < ApplicationController
 
   def count
-    render json: {count: User.first.message_notification_count}
+    u = current_user
+    render json: {count: u.message_notification_count}
+    u.last_message_fetch = Time.now
+    u.save
     return
   end
 
@@ -20,7 +23,6 @@ class Api::MessagesController < ApplicationController
     else
       @channel_text = @channel.participants.where.not(id: current_user).first.full_name
     end
-
 
 
     if @messages
@@ -45,6 +47,16 @@ class Api::MessagesController < ApplicationController
       user_sub = current_user.channel_subs.find_by(channel_id: @message.channel_id)
       user_sub.last_fetch_time = Time.now
       user_sub.save!
+
+      u = current_user
+      u.last_message_fetch = Time.now
+      u.save
+
+      # send pusher notifications
+      @message.channel.participants.map(&:id).each do |id|
+        Pusher.trigger("notifications-#{id}", 'new-message-notification', {})
+      end
+
       render :update
     else
       render json: @message.errors.full_messages

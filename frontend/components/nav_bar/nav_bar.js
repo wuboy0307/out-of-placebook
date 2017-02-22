@@ -44,8 +44,12 @@ class NavBar extends React.Component {
     });
 
     var channel = pusher.subscribe(`notifications-${this.props.currentUser.id}`);
+
     channel.bind('new-notification', () => {
       this.props.fetchNotificationCountRequest();
+    });
+    channel.bind('new-message-notification', () => {
+      this.props.fetchMessageNotificationCountRequest();
     });
   }
 

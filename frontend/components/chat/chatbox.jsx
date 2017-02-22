@@ -24,8 +24,9 @@ class Chatbox extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    if (this.props.messages.length > 1) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.messages.length > 1 && this.state === prevState) {
+      this.setState({hidden: false});
       this.lastMessage.scrollIntoView();
     }
   }

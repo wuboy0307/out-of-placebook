@@ -104,7 +104,7 @@ class NavBar extends React.Component {
       <div className="flyout-list">
        {this.props.messages.chats.map((el, idx) => {
         return(
-          <div onClick={this.fetchChat(el.channelId)}>
+          <div onClick={this.fetchChat(el.channelId)} key={idx}>
           <li className={el.numUnseenMessages > 0 ? 'message-list-item-seen' : 'message-list-item'}>
             <img className="user-pic-flyout" src={el.image}/>
             <div className="flyout-item-body">
@@ -176,7 +176,7 @@ class NavBar extends React.Component {
 
 
                 {this.renderMessages()}
-                  { this.renderNotifications() }
+                { this.renderNotifications() }
 
 
 

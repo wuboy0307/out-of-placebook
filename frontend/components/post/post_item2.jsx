@@ -224,6 +224,8 @@ class PostItem extends React.Component {
 
 
           <div className="post-item-content">
+
+            { this.renderContent() }
           </div>
 
 

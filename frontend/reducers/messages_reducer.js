@@ -19,7 +19,7 @@ const messagesReducer = (oldState = _initialState, action) => {
       return newState;
 
     case FETCH_MESSAGES_SUCCESS:
-      newState.chats = action.messages.chats;
+      newState.chats = action.messages.chats.reverse();
       newState.numUnseenChats = 0;
       return newState;
 

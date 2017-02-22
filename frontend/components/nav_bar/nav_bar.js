@@ -74,7 +74,6 @@ class NavBar extends React.Component {
   }
 
   clickMessageNotificationButton() {
-    if (this.props.messages.numUnseenChats > 0 || this.props.messages.chats.length < 1) {
       if (!this.state.messageFlyout) {
         this.props.fetchMessagesRequest().then(() => {
           this.setState({messageFlyout: !this.state.messageFlyout});
@@ -83,9 +82,6 @@ class NavBar extends React.Component {
       } else {
         this.setState({messageFlyout: !this.state.messageFlyout});
       }
-    } else {
-      this.setState({messageFlyout: !this.state.messageFlyout});
-    }
   }
 
   fetchChat(channelId) {
@@ -108,7 +104,7 @@ class NavBar extends React.Component {
           <li className={el.numUnseenMessages > 0 ? 'message-list-item-seen' : 'message-list-item'}>
             <img className="user-pic-flyout" src={el.image}/>
             <div className="flyout-item-body">
-              <div className="flyout-item-text">{el.lastMessageFullName} {el.numUnseenMessages ? `(${el.numUnseenMessages})` : null}</div>
+              <div className="flyout-item-text">{el.channelText} {el.numUnseenMessages ? `(${el.numUnseenMessages})` : null}</div>
               <div className="flyout-item-text">{el.lastMessage}</div>
               <div className="flyout-item-timestamp">{el.lastMessageTime}</div>
             </div>

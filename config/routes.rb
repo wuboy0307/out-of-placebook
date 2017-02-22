@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 
     resources :notifications, only: [:index, :create]
 
+    resources :messages, only: [:index]
+    get 'messages/count' => 'messages#count'
+
     resources :search, only: [:create]
 
     resources :newsfeed, only: [:index]

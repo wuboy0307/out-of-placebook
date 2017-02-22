@@ -1,12 +1,15 @@
 messages: {
 
+  numUnseenChats: 0
+
   chats: [
     {
       channelId : 2,
       image: '...',
       lastMessage: '...',
       lastMessageTime: '...',
-      lastMessageFullName: '...'
+      lastMessageFullName: '...',
+      numUnseen: 15
     },
     { ... }
   ]
@@ -22,16 +25,16 @@ messages: {
 
 }
 
-GET /api/messages/
+GET /api/messages/count
   - get message count
 
-POST /api/messages/
+GET /api/messages/
   - reset message count and get message previews
 
 GET /api/messages/id
   - get messages for channel
 
-POST /api/messages/id
+UPDATE /api/messages/id
   - create message for channel
 
 # SELECT messages.channel_id, MAX(messages.created_at) FROM messages
@@ -42,3 +45,6 @@ POST /api/messages/id
 #
 # Message.select('messages.channel_id, MAX(messages.created_at)').joins('INNER JOIN channels
 # ON messages.channel_id = channels.id').group('messages.channel_id').order('MAX(messages.created_at)')
+
+
+UPDATE lastfetch for channel on both request and sending of message

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222123153) do
+ActiveRecord::Schema.define(version: 20170222153228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,10 +31,11 @@ ActiveRecord::Schema.define(version: 20170222123153) do
   end
 
   create_table "channel_subs", force: :cascade do |t|
-    t.integer  "participant_id", null: false
-    t.integer  "channel_id",     null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "participant_id",  null: false
+    t.integer  "channel_id",      null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.datetime "last_fetch_time"
     t.index ["channel_id"], name: "index_channel_subs_on_channel_id", using: :btree
     t.index ["participant_id"], name: "index_channel_subs_on_participant_id", using: :btree
   end
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20170222123153) do
     t.text     "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_messages_on_created_at", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
@@ -114,21 +116,23 @@ ActiveRecord::Schema.define(version: 20170222123153) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "fname",           null: false
-    t.string   "lname",           null: false
-    t.string   "email",           null: false
-    t.string   "session_token",   null: false
-    t.string   "password_digest", null: false
+    t.string   "fname",              null: false
+    t.string   "lname",              null: false
+    t.string   "email",              null: false
+    t.string   "session_token",      null: false
+    t.string   "password_digest",    null: false
     t.text     "home"
     t.text     "work"
     t.text     "from"
     t.text     "intro"
     t.text     "description"
     t.string   "cover_url"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "avatar_url"
     t.datetime "last_fetch_time"
+    t.datetime "last_friend_fetch"
+    t.datetime "last_message_fetch"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["fname"], name: "index_users_on_fname", using: :btree
     t.index ["lname"], name: "index_users_on_lname", using: :btree

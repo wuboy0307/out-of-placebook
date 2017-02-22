@@ -2,22 +2,24 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  fname           :string           not null
-#  lname           :string           not null
-#  email           :string           not null
-#  session_token   :string           not null
-#  password_digest :string           not null
-#  home            :text
-#  work            :text
-#  from            :text
-#  intro           :text
-#  description     :text
-#  cover_url       :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  avatar_url      :string
-#  last_fetch_time :datetime
+#  id                 :integer          not null, primary key
+#  fname              :string           not null
+#  lname              :string           not null
+#  email              :string           not null
+#  session_token      :string           not null
+#  password_digest    :string           not null
+#  home               :text
+#  work               :text
+#  from               :text
+#  intro              :text
+#  description        :text
+#  cover_url          :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  avatar_url         :string
+#  last_fetch_time    :datetime
+#  last_friend_fetch  :datetime
+#  last_message_fetch :datetime
 #
 
 class User < ApplicationRecord
@@ -353,7 +355,12 @@ class User < ApplicationRecord
 			.where(channel_id: self.channels)
 			.group('messages.channel_id')
 			.order('MAX(messages.created_at) desc')
-			.map(&:channel_id)
+
+			# .map(&:channel_id)
+	end
+
+	def message_notification_count
+		active_channels.having('MAX(messages.created_at) > ?', self.last_message_fetch).length
 	end
 
 	private

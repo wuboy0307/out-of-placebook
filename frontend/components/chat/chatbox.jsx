@@ -26,18 +26,24 @@ class Chatbox extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.channelId) return null;
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('40464ec5305ef59a7c32', {
+  componentDidMount() {
+    this.pusher = new Pusher('40464ec5305ef59a7c32', {
       encrypted: true
     });
+    Pusher.logToConsole = true;
+    this.channel = this.pusher.subscribe(`notifications-${this.props.currentUser.id}`);
+  }
 
-    var channel = pusher.subscribe(`notifications-${this.props.currentUser.id}`);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.channelId === this.props.channelId) return null;
 
-    channel.bind(`new-message-${this.props.channelId}`, () => {
-      this.props.fetchChatRequest(this.props.channelId)
+
+
+
+    if (!this.pusher) return null;
+    this.channel.unbind(`new-message-${this.props.channelId}`);
+    this.channel.bind(`new-message-${nextProps.channelId}`, () => {
+      this.props.fetchChatRequest(nextProps.channelId)
         .then(() => this.lastMessage.scrollIntoView());
     });
   }

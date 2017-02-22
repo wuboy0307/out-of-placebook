@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { sendMessageRequest } from '../../actions/message_actions';
+import { fetchChatRequest } from '../../actions/notification_actions';
 
 const mapStateToProps = (state) => ({
   messages: state.messages.currentChat.messages,
@@ -10,7 +11,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  sendMessageRequest: (message) => dispatch(sendMessageRequest(message))
+  sendMessageRequest: (message) => dispatch(sendMessageRequest(message)),
+  fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId))
 });
 
 class Chatbox extends React.Component {
@@ -24,8 +26,24 @@ class Chatbox extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.channelId) return null;
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('40464ec5305ef59a7c32', {
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe(`notifications-${this.props.currentUser.id}`);
+
+    channel.bind(`new-message-${this.props.channelId}`, () => {
+      this.props.fetchChatRequest(this.props.channelId)
+        .then(() => this.lastMessage.scrollIntoView());
+    });
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.messages.length > 1 && this.state === prevState) {
+    if (prevProps.channelText !== this.props.channelText) {
       this.setState({hidden: false});
       this.lastMessage.scrollIntoView();
     }

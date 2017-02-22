@@ -26,7 +26,7 @@ class Api::MessagesController < ApplicationController
     # debugger
     @messages = @channel.messages
     @channel_text = @channel.participants.where.not(id: current_user).first.full_name
-    
+
     user_sub = current_user.channel_subs.find_by(channel_id: @channel.id)
     user_sub.last_fetch_time = Time.now
 
@@ -78,6 +78,7 @@ class Api::MessagesController < ApplicationController
       # send pusher notifications
       @message.channel.participants.map(&:id).each do |id|
         Pusher.trigger("notifications-#{id}", 'new-message-notification', {})
+        Pusher.trigger("notifications-#{id}", "new-message-#{@message.channel_id}", {})
       end
 
       render :update

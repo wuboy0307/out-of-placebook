@@ -72,7 +72,7 @@ class Post < ApplicationRecord
   end
 
   def scan_for_url
-    url = self.body.slice(URI.regexp)
+    url = self.body.slice(URI.regexp(['http','https']))
 
     if url
       new_url = Url.new

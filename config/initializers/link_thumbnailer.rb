@@ -10,7 +10,7 @@ LinkThumbnailer.configure do |config|
 
   # Enable or disable SSL verification
   #
-  # config.verify_ssl = true
+  config.verify_ssl = false
 
   # The amount of time in seconds to wait for a connection to be opened.
   # If the HTTP object cannot open a connection in this many seconds,

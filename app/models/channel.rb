@@ -15,4 +15,8 @@ class Channel < ApplicationRecord
 
   has_many :participants, through: :channel_subs, source: :participant
 
+  def channel_description
+    self.description || "Group chat with #{participants.length - 1} others."
+  end
+  
 end

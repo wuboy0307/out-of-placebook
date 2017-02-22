@@ -1,6 +1,7 @@
 import merge from 'lodash/merge';
 import { FETCH_MESSAGE_NOTIFICATION_COUNT_SUCCESS,
          FETCH_MESSAGES_SUCCESS, FETCH_CHAT_SUCCESS } from '../actions/notification_actions';
+import { SEND_MESSAGE_SUCCESS } from '../actions/message_actions';
 
 const _initialState = {
   numUnseenChats: null,
@@ -24,6 +25,11 @@ const messagesReducer = (oldState = _initialState, action) => {
 
     case FETCH_CHAT_SUCCESS:
       newState.currentChat = action.chat;
+      newState.currentChat.messages = action.chat.messages.reverse();
+      return newState;
+
+    case SEND_MESSAGE_SUCCESS:
+      newState.currentChat.messages.push(action.message);
       return newState;
 
     default:

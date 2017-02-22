@@ -33,7 +33,7 @@ font-size: 12px;
 .chat-container {
   height: 335px;
   width: 260px;
-  border: 1px solid red;
+  // border: 1px solid red;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -81,7 +81,7 @@ border-top-right-radius: 12px;
     border-bottom-left-radius: 12px;
     max-width: 181px;
     word-wrap: break-word;
-    border: 1px solid red;
+    // border: 1px solid red;
 }
 .message-self {
   color: white;
@@ -92,7 +92,7 @@ border-top-right-radius: 12px;
     border-bottom-left-radius: 12px;
     max-width: 181px;
     word-wrap: break-word;
-    border: 1px solid red;
+    // border: 1px solid red;
 
 }
 
@@ -111,13 +111,15 @@ border-top-right-radius: 12px;
 }
 
 .chat-input-input {
-  color: #dddfe2;
-  width: 220px;
-  margin: 0 auto;
-  border-radius: 3px;
-  border-style: none;
-      // line-height: 1.6
   color: #4b4f56;
+  height: 29px;
+  width: 220px;
+  border: 1px solid #dddfe2;
+  padding-left: 5px;
+  outline: 1px solid transparent;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  word-break: break-word;
+  border-style: none;
 }
 
 .chat-message-other {

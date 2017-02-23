@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     post 'messages' => 'messages#create_or_find'
     resources :messages, only: [:index, :show, :update]
 
+    resources :photos, only: [:create]
+
     resources :search, only: [:create]
 
     resources :newsfeed, only: [:index]

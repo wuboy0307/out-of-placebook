@@ -4,6 +4,7 @@ import {
   RECEIVE_ERRORS,
   LOG_IN_FAILURE,
   SIGN_UP_FAILURE } from '../actions/session_actions';
+import { FETCH_SINGLE_PROFILE_SUCCESS } from '../actions/profile_actions';
 import merge from 'lodash/merge';
 
 const _nullUser = Object.freeze({
@@ -41,6 +42,16 @@ const authReducer = (state = _nullUser, action) => {
     case LOG_IN_FAILURE:
       newState = merge({}, _nullUser);
       newState.errors.logInFormErrors = action.errors;
+      return newState;
+
+    case FETCH_SINGLE_PROFILE_SUCCESS:
+      newState = merge({}, state);
+      if (state.currentUser.id == action.profile.profile.id) {
+        newState.currentUser.avatarHeader = action.profile.profile.avatarHeader;
+        newState.currentUser.avatarXS = action.profile.profile.avatarXS;
+        newState.currentUser.avatarXXS = action.profile.profile.avatarXXS;
+        newState.currentUser.avatarXXXS = action.profile.profile.avatarXXXS;
+      }
       return newState;
 
     default:

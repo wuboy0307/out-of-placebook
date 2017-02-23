@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import ProfileLinkBar from './profile_link_bar';
 import { addFriendRequest, removeFriendRequest, respondToFriendRequest } from '../../actions/friend_actions';
 import {createOrFetchChatRequest } from '../../actions/notification_actions';
+import {profilePicUploadRequest } from '../../actions/profile_actions';
 
 const mapDispatchToProps = (dispatch) => ({
   addFriendRequest: (friend) => dispatch(addFriendRequest(friend)),
   removeFriendRequest: (friend) => dispatch(removeFriendRequest(friend)),
   respondToFriendRequest: (friend) => dispatch(respondToFriendRequest(friend)),
-  createOrFetchChatRequest: (user) => dispatch(createOrFetchChatRequest(user))
+  createOrFetchChatRequest: (user) => dispatch(createOrFetchChatRequest(user)),
+  profilePicUploadRequest: (formData) => dispatch(profilePicUploadRequest(formData))
 });
 
 const mapStateToProps = (state) => ({
@@ -25,6 +27,7 @@ class ProfileNavBar extends React.Component {
     this.renderMutualFriendCount = this.renderMutualFriendCount.bind(this);
     this.messageAction = this.messageAction.bind(this);
     this.renderFriendButton = this.renderFriendButton.bind(this);
+    this.updateFile = this.updateFile.bind(this);
   }
 
   friendAction(e) {
@@ -91,12 +94,35 @@ class ProfileNavBar extends React.Component {
     );
   }
 
+  updateFile(e) {
+   let fileReader = new FileReader();
+   let file = e.currentTarget.files[0];
+   fileReader.onloadend = () => {
+     this.setState({ image_file: file, image_preview_url: fileReader.result });
+   };
+
+   if (file) {
+     fileReader.readAsDataURL(file);
+     let formData = new FormData();
+     formData.id = this.props.currentUser.id;
+     formData.append("profile[image]", file);
+     this.props.profilePicUploadRequest(formData);
+     }
+   }
+
   render() {
     return(
       <div className="profile-nav-bar">
         <CoverPhoto photoUrl={this.props.profile.coverUrl}/>
         <ProfileLinkBar />
-        <div className="profile-picture"><img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/></div>
+        <div className="profile-picture" onClick={() => this.pictureInput.click()}>
+          <img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/>
+          <form>
+            <input type="file"
+                id="file-input"
+                onChange={this.updateFile} ref={(input) => this.pictureInput = input}/>
+          </form>
+          </div>
         <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
         { this.renderMessageButton() }
         { this.renderFriendButton() }

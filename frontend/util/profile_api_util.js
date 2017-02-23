@@ -4,3 +4,14 @@ export const fetchProfile = (profileId) => {
     url: `/api/profiles/${profileId}`
   });
 };
+
+export const updateProfilePic = (formData) => {
+  return $.ajax({
+    method: "POST",
+    url: `/api/photos`,
+    contentType: false,
+    processData: false,
+    data: formData,
+    dataType: 'json'
+  });
+};

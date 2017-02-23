@@ -16,7 +16,7 @@ if post.content.class.name.downcase === "url"
   end
 elsif post.content.class.name.downcase === "post"
   json.content do
-    json.partial! 'api/profiles/show', post: post.content, user: user
+    json.partial! 'api/posts/post_in_post', post: post.content, user: user
   end
 else
   json.set! "content", {}

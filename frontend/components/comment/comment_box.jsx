@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSingleCommentRequest } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
-  currentUserAvatarUrl: state.auth.currentUser.avatar_url
+  currentUserAvatarUrl: state.auth.currentUser.avatarXXS
 });
 
 const mapDispatchToProps = (dispatch) => ({

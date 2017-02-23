@@ -251,6 +251,10 @@
   -webkit-font-smoothing: antialiased;
   text-decoration: none;
   white-space: nowrap;
+  > a {
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .notifications-bar {
@@ -366,4 +370,5 @@ font-size: 12px;
 
 .notification {
   position: relative;
+  cursor: pointer;
 }

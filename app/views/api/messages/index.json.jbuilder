@@ -10,6 +10,7 @@ json.chats @channels.each do |channel|
   json.lastMessage channel.messages.last.body
   json.lastMessageTime channel.messages.last.age
   json.lastMessageFullName channel.messages.last.sender.full_name
+  json.lastMessageAvatar channel.messages.last.sender.avatar.url(:xs)
   json.numUnseenMessages ChannelSub.find_by(participant_id: current_user.id,
             channel_id: channel.id).num_unseen
 end

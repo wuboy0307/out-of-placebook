@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => ({
-  currentUserAvatarUrl: state.auth.currentUser.avatar_url,
+  currentUserAvatar: state.auth.currentUser.avatarXS,
   friends: state.friends.friends,
   currentUserId: state.auth.currentUser.id,
   sharedPosts: state.posts.sharedPosts
@@ -92,7 +92,7 @@ class CreatePost extends React.Component {
 
         <div className="create-post-main">
           <div className="create-post-img-wrapper">
-            <img src={this.props.currentUserAvatarUrl || `/assets/avatar.jpg`} className="user-pic-xs" />
+            <img src={this.props.currentUserAvatar || `/assets/avatar.jpg`} className="user-pic-xs" />
           </div>
 
           <div className="create-post-body">

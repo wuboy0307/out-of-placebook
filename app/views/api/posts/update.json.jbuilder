@@ -6,7 +6,7 @@ json.id post.id
 json.wallId post.wall_id
 json.authorId post.author_id
 json.authorFullName post.author.full_name
-json.authorAvatarUrl post.author.avatar_url
+json.authorAvatarUrl post.author.avatar.url(:xs)
 json.createdAt post.age
 json.body post.body
 json.wallIdFullName post.wall.full_name
@@ -30,7 +30,7 @@ json.comments do
       json.authorId comment.author_id
       json.postId comment.post_id
       json.authorFullName comment.author.full_name
-      json.authorAvatarUrl post.author.avatar_url
+      json.authorAvatarUrl comment.author.avatar.url(:xxs)
       json.userLikesComment comment.user_likes?(user)
       json.body comment.body
       json.createdAt comment.age
@@ -41,7 +41,7 @@ json.comments do
               json.id child.id
               json.authorId child.author_id
               json.authorFullName child.author.full_name
-              json.authorAvatarUrl post.author.avatar_url
+              json.authorAvatarUrl child.author.avatar.url(:xxxs)
               json.userLikesComment child.user_likes?(user)
               json.postId child.post_id
               json.parentId child.parent_id

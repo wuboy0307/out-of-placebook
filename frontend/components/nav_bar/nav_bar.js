@@ -175,10 +175,10 @@ class NavBar extends React.Component {
 
           </div>
           <div className="nav-right-side">
-            <div className="nav-link-profile"><img className="user-pic-header" src={currentUser.avatar_url}/>
+            <div className="nav-link-profile"><img className="user-pic-header" src={currentUser.avatarHeader}/>
             <Link to={`profile/${currentUser.id}`}>{currentUser.fname}</Link>
           </div>
-            <div className="nav-link-home">Home</div>
+            <div className="nav-link-home"><Link to="/newsfeed">Home</Link></div>
             <div className="notifications-bar">
               <div><i className="fa fa-users notification" aria-hidden="true">
                 <div className="small-notification-count">{this.props.friends.notificationCount}</div>

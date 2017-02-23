@@ -154,7 +154,7 @@ class CommentItem extends React.Component {
           <div className="comment-comment-box">
             <div className="comment-reply">
               <div className="comment-comment-reply-body">
-                <img className="user-pic-xxxs" src={this.props.currentUser.avatar_url || `/assets/avatar.jpg` } />
+                <img className="user-pic-xxxs" src={this.props.currentUser.avatarXXXS || `/assets/avatar.jpg` } />
                 <form className="comment-reply-form" onSubmit={this.handleSubmit}>
                   <input type="text" className="comment-reply-input"
                     ref={(input) => { this.nameInput = input; }}

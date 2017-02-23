@@ -35,7 +35,7 @@ const Root = ({ store }) => {
         <Route path="/" component={App} onEnter={_ensureLoggedIn} >
           <IndexRedirect to="/newsfeed" />
           <Route path="/profile/:profileId" component={Home} />
-          <Route path="/post/:postId" component={SinglePost} />
+
           <Route path="/newsfeed" component={NewsFeed} />
         </Route>
 

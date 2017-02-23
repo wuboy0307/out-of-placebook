@@ -1,16 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSinglePostRequest } from '../../actions/post_actions';
+import PostItem2 from '../post/post_item2';
+import { fetchSingleSharedPostRequest } from '../../actions/post_actions';
+import { toggleFlyout } from '../../actions/flyout_actions';
+import { withRouter } from 'react-router';
 
 const mapDispatchToProps = dispatch => ({
-  createSinglePostRequest: (postInfo) => dispatch(createSinglePostRequest(postInfo))
+  createSinglePostRequest: (postInfo) => dispatch(createSinglePostRequest(postInfo)),
+  toggleFlyout: (flyoutInfo) => dispatch(toggleFlyout(flyoutInfo))
 });
 
 const mapStateToProps = (state) => ({
   currentUserAvatarUrl: state.auth.currentUser.avatar_url,
   friends: state.friends.friends,
-  currentUserId: state.auth.currentUser.id
+  currentUserId: state.auth.currentUser.id,
+  sharedPosts: state.posts.sharedPosts
 });
+
 
 class CreatePost extends React.Component {
   constructor(props) {
@@ -19,10 +26,15 @@ class CreatePost extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderPost = this.renderPost.bind(this);
+    this.renderSharedPost = this.renderSharedPost.bind(this);
     this.state = {
       postBody: '',
       bodyError: false
     };
+  }
+
+  componentDidMount(){
+    // this.props.fetchSingleSharedPostRequest(121);
   }
 
   handleInput(e) {
@@ -36,10 +48,17 @@ class CreatePost extends React.Component {
       return;
     }
     const postInfo = {
-      wall_id: this.props.profileId,
-      body: this.state.postBody
+      wall_id: this.props.profileId ? this.props.profileId : this.props.currentUserId,
+      body: this.state.postBody,
+      content_id: this.props.sharedPost ? this.props.sharedPost.id : null
     };
-    this.props.createSinglePostRequest(postInfo).then(() => this.setState({bodyError: false, postBody: ''}));
+    this.props.createSinglePostRequest(postInfo).then(() => {
+      this.setState({bodyError: false, postBody: ''});
+      if (this.props.sharedPost) {
+        this.props.toggleFlyout(null);
+        this.props.router.push(`/profile/${this.props.currentUserId}`);
+      }
+    });
   }
 
   renderForm(){
@@ -51,6 +70,16 @@ class CreatePost extends React.Component {
     );
   }
 
+  renderSharedPost() {
+
+    if (!this.props.sharedPost){
+      return null;
+    } else {
+      return(<PostItem2 post={this.props.sharedPost}/>);
+    }
+  }
+
+  // <PostItem2 post={this.props.sharedPosts[121]} />
   renderPost() {
     return(
       <div className="create-post">
@@ -59,6 +88,7 @@ class CreatePost extends React.Component {
           <div className="create-post-header-item">Photo</div>
           <div className="create-post-header-item">Video</div>
         </div>
+        { this.renderSharedPost() }
 
         <div className="create-post-main">
           <div className="create-post-img-wrapper">
@@ -68,7 +98,11 @@ class CreatePost extends React.Component {
           <div className="create-post-body">
             { this.renderForm()}
           </div>
+
         </div>
+
+
+
 
         <div className="create-post-footer">
           <button type="button" className="create-post-button" onClick={this.handleSubmit}>Post</button>
@@ -76,6 +110,8 @@ class CreatePost extends React.Component {
 
       </div>
     );
+
+  return null;
   }
 
   render () {
@@ -90,4 +126,4 @@ class CreatePost extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreatePost);
+)(withRouter(CreatePost));

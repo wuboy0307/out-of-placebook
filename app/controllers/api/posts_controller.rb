@@ -2,8 +2,11 @@ class Api::PostsController < ApplicationController
   # ENSURE CURRENT USER AND TARGET USER ARE FRIENDS.
   def create
     user = current_user
+    # debugger
     @post = Post.new(author_id: user.id, wall_id: params[:post][:wall_id], body: params[:post][:body])
-
+    if params[:post][:content_id].length > 0
+      @post.content = Post.find(params[:post][:content_id])
+    end
     if @post.save
 
       Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {})

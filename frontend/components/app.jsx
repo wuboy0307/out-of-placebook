@@ -29,13 +29,13 @@ class App extends React.Component {
         <NavBar />
 
         {this.props.children}
-        
+
         <Chatbox />
-        <ClickListener />
       </div>
     );
   }
 }
+// <ClickListener />
 
 export default connect(
   null,

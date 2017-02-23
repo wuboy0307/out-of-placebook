@@ -5,6 +5,7 @@ import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
 import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest, editSinglePostRequest, fetchSingleSharedPostRequest } from '../../actions/post_actions';
 import PostItem2 from './post_item2';
+import { toggleFlyout } from '../../actions/flyout_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
@@ -16,7 +17,8 @@ const mapDispatchToProps = dispatch => ({
   destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo)),
   destroySinglePostRequest: (postId) => dispatch(destroySinglePostRequest(postId)),
   editSinglePostRequest: (postInfo) => dispatch(editSinglePostRequest(postInfo)),
-  fetchSingleSharedPostRequest: (postInfo) => dispatch(fetchSingleSharedPostRequest(postInfo))
+  fetchSingleSharedPostRequest: (postInfo) => dispatch(fetchSingleSharedPostRequest(postInfo)),
+  toggleFlyout: (flyoutType, data) => dispatch(toggleFlyout(flyoutType, data))
 });
 
 class PostItem extends React.Component {
@@ -50,6 +52,15 @@ class PostItem extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const post = this.props.post;
+    if (post.contentType === 'post') {
+      if (!this.props.sharedPosts[post.content.id]) {
+      this.props.fetchSingleSharedPostRequest(post.content.id);
+    };
+  }
+}
+
   renderContent() {
     const post = this.props.post;
     if (!post.content) {
@@ -59,14 +70,11 @@ class PostItem extends React.Component {
       return this.renderUrlContent();
     }
     if (post.contentType === 'post') {
-      if (!this.props.sharedPosts[post.content.id]) {
-      this.props.fetchSingleSharedPostRequest(post.content.id);
-    } else {
       return(<PostItem2 post={this.props.sharedPosts[post.content.id]} />);
     }
       // return this.renderSharedPost();
     }
-  }
+
 
   renderSharedPost() {
     return(
@@ -222,6 +230,7 @@ class PostItem extends React.Component {
   }
 
   render () {
+    if (this.props.post.contentType === 'post' &&  !this.props.sharedPosts[this.props.post.content.id]) return null;
     return(
       <div className="post-item-container">
         <div className="post-item">
@@ -256,7 +265,7 @@ class PostItem extends React.Component {
             <div className="post-action-container">
               <div className={`like-action ${this.props.post.userLikesPost}`} onClick={this.toggleLike}>Like</div>
               <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
-              <div className="post-action">Share</div>
+              <div className="post-action" onClick={() => this.props.toggleFlyout('modal', {type: 'sharepost', data: this.props.post})}>Share</div>
             </div>
           </div>
 

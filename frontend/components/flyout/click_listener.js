@@ -26,7 +26,7 @@ class ClickListener extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isFlyoutActive: state.flyout !== null,
+  isFlyoutActive: state.flyout.flyout !== null,
 });
 
 export default connect(

@@ -1,4 +1,3 @@
-
 json.id post.id
 json.wallId post.wall_id
 json.authorId post.author_id

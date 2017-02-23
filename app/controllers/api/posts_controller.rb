@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
     user = current_user
     # debugger
     @post = Post.new(author_id: user.id, wall_id: params[:post][:wall_id], body: params[:post][:body])
-    debugger
+    # debugger
     if params[:post][:content_id].to_i > 0
       @post.content = Post.find(params[:post][:content_id].to_i)
     end

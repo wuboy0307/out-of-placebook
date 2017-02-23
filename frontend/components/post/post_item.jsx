@@ -38,6 +38,7 @@ class PostItem extends React.Component {
     this.editFormSubmit = this.editFormSubmit.bind(this);
     this.renderSharedPost = this.renderSharedPost.bind(this);
     this.renderModal = this.renderModal.bind(this);
+    this.postOrContent = this.postOrContent.bind(this);
 
     this.state = {
       selected: false,
@@ -238,6 +239,14 @@ class PostItem extends React.Component {
     }
   }
 
+  postOrContent() {
+    if (this.props.post.contentType === 'post') {
+      return this.props.post.content;
+    } else {
+      return this.props.post
+    }
+  }
+
   renderModal(type, data) {
     return (e) => {
       e.stopPropagation();
@@ -281,7 +290,7 @@ class PostItem extends React.Component {
             <div className="post-action-container">
               <div className={`like-action ${this.props.post.userLikesPost}`} onClick={this.toggleLike}>Like</div>
               <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
-              <div className="post-action" onClick={this.renderModal('sharepost', this.props.post)}>Share</div>
+              <div className="post-action" onClick={this.renderModal('sharepost', this.postOrContent())}>Share</div>
             </div>
           </div>
 

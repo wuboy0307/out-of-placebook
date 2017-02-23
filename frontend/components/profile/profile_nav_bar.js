@@ -28,6 +28,7 @@ class ProfileNavBar extends React.Component {
     this.messageAction = this.messageAction.bind(this);
     this.renderFriendButton = this.renderFriendButton.bind(this);
     this.updateFile = this.updateFile.bind(this);
+    this.disableUnlessOwnProfile = this.disableUnlessOwnProfile.bind(this);
   }
 
   friendAction(e) {
@@ -95,19 +96,24 @@ class ProfileNavBar extends React.Component {
   }
 
   updateFile(e) {
-   let fileReader = new FileReader();
-   let file = e.currentTarget.files[0];
-   fileReader.onloadend = () => {
-     this.setState({ image_file: file, image_preview_url: fileReader.result });
-   };
+    let fileReader = new FileReader();
+    let file = e.currentTarget.files[0];
+    fileReader.onloadend = () => {
+      this.setState({ image_file: file, image_preview_url: fileReader.result });
+    };
 
-   if (file) {
-     fileReader.readAsDataURL(file);
-     let formData = new FormData();
-     formData.id = this.props.currentUser.id;
-     formData.append("profile[image]", file);
-     this.props.profilePicUploadRequest(formData);
-     }
+    if (file) {
+      fileReader.readAsDataURL(file);
+      let formData = new FormData();
+      formData.id = this.props.currentUser.id;
+      formData.append("profile[image]", file);
+      this.props.profilePicUploadRequest(formData);
+    }
+   }
+
+   disableUnlessOwnProfile() {
+     if (this.props.profile.id !== this.props.currentUser.id) return null;
+     this.pictureInput.click();
    }
 
   render() {
@@ -115,7 +121,8 @@ class ProfileNavBar extends React.Component {
       <div className="profile-nav-bar">
         <CoverPhoto photoUrl={this.props.profile.coverUrl}/>
         <ProfileLinkBar />
-        <div className="profile-picture" onClick={() => this.pictureInput.click()}>
+        <div className="profile-picture" onClick={this.disableUnlessOwnProfile}>
+          <div className="profile-picture-change">Update Profile Picture</div>
           <img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/>
           <form>
             <input type="file"

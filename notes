@@ -1,6 +1,5 @@
 Remove RECEIVE_ERRORS from auth_reducer and actions as not currently being used
 
-remove 'hit thunk' from thunk.js
 
 remove window.store from oopbook.jsx
 
@@ -39,4 +38,6 @@ show each item in new newsfeed_post_item with appropriate description header
 
 do validations on model level to check if friends
 
-No postcreate box on user wall if not friends.
+fix editing shared post
+fix profile instantly updating (should wait for new posts)
+fix sharing a shared post (doesnt display properly)

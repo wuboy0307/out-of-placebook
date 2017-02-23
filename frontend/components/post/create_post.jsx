@@ -33,10 +33,6 @@ class CreatePost extends React.Component {
     };
   }
 
-  componentDidMount(){
-    // this.props.fetchSingleSharedPostRequest(121);
-  }
-
   handleInput(e) {
     this.setState({postBody: e.target.value});
   }

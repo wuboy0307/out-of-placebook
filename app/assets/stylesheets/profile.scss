@@ -20,6 +20,10 @@
   width: 100%;
   height: 313px;
   // border: 1px solid red;
+  border: 1px solid #000;
+  border-color: rgba(0, 0, 0, .25);
+  border-top-color: rgba(0, 0, 0, .1);
+  border-bottom: 0;
 }
 
 .profile-link-bar {
@@ -30,6 +34,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  border-top: 0;
+  border: 1px solid #000;
+  border-color: rgba(0, 0, 0, .25);
+  border-top-color: rgba(0, 0, 0, .1);
 }
 
 .link-item {
@@ -60,6 +68,11 @@
   margin: 0;
   padding: 1px;
   // border: 4px solid pink;
+  &:hover > .profile-picture-change {
+    background: linear-gradient(transparent, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 100%);
+    transition: opacity .13s ease-out;
+    display: block;
+  }
 }
 
 .profile-friend-button {
@@ -137,4 +150,22 @@ button {
 
 #file-input {
   display: none;
+}
+
+.profile-picture-change {
+  bottom: 0px;
+      left: 0px;
+      overflow: hidden;
+      width: 168px;
+      text-align: center;
+      top: auto;
+      position: absolute;
+      z-index: 5;
+      color: white;
+      direction: ltr;
+      line-height: 4.34;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      display: none;
+      border-radius: 3px;
 }

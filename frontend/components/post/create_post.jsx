@@ -18,6 +18,7 @@ class CreatePost extends React.Component {
     this.renderForm = this.renderForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.renderPost = this.renderPost.bind(this);
     this.state = {
       postBody: '',
       bodyError: false
@@ -50,9 +51,7 @@ class CreatePost extends React.Component {
     );
   }
 
-  render () {
-    
-    if (!this.props.friends[this.props.profileId] && (this.props.profileId != this.props.currentUserId)) return null;
+  renderPost() {
     return(
       <div className="create-post">
         <div className="create-post-header">
@@ -77,6 +76,14 @@ class CreatePost extends React.Component {
 
       </div>
     );
+  }
+
+  render () {
+
+    if (!this.props.profileId) return this.renderPost();
+    if (!this.props.friends[this.props.profileId] && (this.props.profileId != this.props.currentUserId)) return null;
+    return this.renderPost();
+
   }
 }
 

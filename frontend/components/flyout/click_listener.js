@@ -13,10 +13,6 @@ class ClickListener extends React.Component {
     window.addEventListener('click', this.windowClick);
   }
 
-  // componentWillUnmount() {
-  //
-  // }
-
   windowClick(e) {
     // If we click anywhere except the Flyout, we want to close the Flyout.
     if (this.props.isFlyoutActive) {

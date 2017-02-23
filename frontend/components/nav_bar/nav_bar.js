@@ -61,7 +61,8 @@ class NavBar extends React.Component {
   }
 
 
-  clickNotificationButton() {
+  clickNotificationButton(e) {
+    e.stopPropagation();
     if (this.props.toggleFlyout !== 'notifications') {
       this.props.fetchNotificationsRequest().then(() => {
         this.props.toggleFlyout('notifications');
@@ -71,7 +72,8 @@ class NavBar extends React.Component {
   }
   }
 
-  clickMessageNotificationButton() {
+  clickMessageNotificationButton(e) {
+    e.stopPropagation();
     if (this.props.toggleFlyout !== 'messages') {
       this.props.fetchMessagesRequest().then(() => {
         this.props.toggleFlyout('messages');

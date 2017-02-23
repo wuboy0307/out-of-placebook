@@ -16,10 +16,6 @@ class App extends React.Component {
     this.props.fetchFriendsRequest();
   }
 
-  componentWillReceiveProps() {
-    this.props.fetchFriendsRequest();
-  }
-
 
   render() {
     return(
@@ -36,6 +32,8 @@ class App extends React.Component {
     );
   }
 }
+
+
 
 export default connect(
   null,

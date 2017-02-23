@@ -80,5 +80,8 @@ class Api::FriendsController < ApplicationController
     render :index
   end
 
+  def count
+    render json: {count: User.first.friend_notification_count}
+  end
 
 end

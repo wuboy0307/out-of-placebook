@@ -10,9 +10,10 @@ Rails.application.routes.draw do
     resources :likes, only: [:create]
     delete 'likes' => 'likes#destroy'
 
-    resources :friends, only: [:create, :index]
+    get 'friends/count' => 'friends#count'
     delete 'friends' => 'friends#destroy'
     put 'friends' => 'friends#update'
+    resources :friends, only: [:create, :index]
 
     resources :notifications, only: [:index, :create]
 

@@ -363,6 +363,10 @@ class User < ApplicationRecord
 		active_channels.having('MAX(messages.created_at) > ?', self.last_message_fetch).length
 	end
 
+	def friend_notification_count
+		incoming_friends.where('friendships.created_at > ?', self.last_friend_fetch).length
+	end
+
 	private
 
 	def ensure_session_token

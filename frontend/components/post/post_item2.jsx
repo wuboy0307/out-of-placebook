@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
 import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest, editSinglePostRequest } from '../../actions/post_actions';
+import { toggleFlyout } from '../../actions/flyout_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser
@@ -13,7 +14,8 @@ const mapDispatchToProps = dispatch => ({
   createSingleLikeRequest: (likeInfo) => dispatch(createSingleLikeRequest(likeInfo)),
   destroySingleLikeRequest: (likeInfo) => dispatch(destroySingleLikeRequest(likeInfo)),
   destroySinglePostRequest: (postId) => dispatch(destroySinglePostRequest(postId)),
-  editSinglePostRequest: (postInfo) => dispatch(editSinglePostRequest(postInfo))
+  editSinglePostRequest: (postInfo) => dispatch(editSinglePostRequest(postInfo)),
+  toggleFlyout: (flyoutType, data) => dispatch(toggleFlyout(flyoutType, data))
 });
 
 class PostItem extends React.Component {
@@ -134,7 +136,7 @@ class PostItem extends React.Component {
               <p>
                 {body}
               </p>
-            <img src={this.props.post.content.imageUrlTimeline} className="post-in-post-image"/>
+            <img src={this.props.post.content.imageUrlTimeline} className="post-image" onClick={this.renderModal('photo', this.props.post.content.imageUrlOriginal)}/>
           </div>
           );
         }
@@ -205,6 +207,13 @@ class PostItem extends React.Component {
           {this.props.post.postDescription}
         </div>
       );
+    }
+  }
+
+  renderModal(type, data) {
+    return (e) => {
+      e.stopPropagation();
+      this.props.toggleFlyout('modal', {type, data});
     }
   }
 

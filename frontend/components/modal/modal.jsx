@@ -28,6 +28,8 @@ class Modal extends React.Component {
     if (!this.props.data) return null;
     if (this.props.data.type === "sharepost") {
       return(<CreatePost sharedPost={this.props.data.data}/>);
+    } else if (this.props.data.type === "photo") {
+      return(<img src={this.props.data.data} className="post-image"/>);
     } else {
       return null;
     }

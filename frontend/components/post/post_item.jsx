@@ -71,7 +71,8 @@ class PostItem extends React.Component {
       return this.renderUrlContent();
     }
     if (post.contentType === 'photo') {
-      return (<img src={this.props.post.content.imageUrlTimeline} />);
+      return (<img src={this.props.post.content.imageUrlTimeline} className="post-image"
+        onClick={this.renderModal('photo', this.props.post.content.imageUrlOriginal)}/>);
     }
     if (post.contentType === 'post') {
       if (post.content.id) {
@@ -237,9 +238,11 @@ class PostItem extends React.Component {
     }
   }
 
-  renderModal(e) {
-    e.stopPropagation();
-    this.props.toggleFlyout('modal', {type: 'sharepost', data: this.props.post});
+  renderModal(type, data) {
+    return (e) => {
+      e.stopPropagation();
+      this.props.toggleFlyout('modal', {type, data});
+    }
   }
 
   render () {
@@ -278,7 +281,7 @@ class PostItem extends React.Component {
             <div className="post-action-container">
               <div className={`like-action ${this.props.post.userLikesPost}`} onClick={this.toggleLike}>Like</div>
               <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
-              <div className="post-action" onClick={this.renderModal}>Share</div>
+              <div className="post-action" onClick={this.renderModal('sharepost', this.props.post)}>Share</div>
             </div>
           </div>
 

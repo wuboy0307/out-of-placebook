@@ -463,16 +463,17 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 0 5px;
 }
 
 .timeline-side-bar-photo {
-  min-width: 101px;
-  min-height: 101px;
-  width: 101px;
-  height: 101px;
-  margin: 3px 0;
+  min-width: 100px;
+  min-height: 100px;
+  width: 100px;
+  height: 100px;
+  margin: 2px;
+  cursor: pointer;
 }
 
 .timeline-friends-container {
@@ -494,6 +495,8 @@ a {
   width: 100px;
   height: 100px;
   margin: 2px;
+  cursor: pointer;
+  
 }
 
 .post-item-url {

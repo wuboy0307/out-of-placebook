@@ -15,6 +15,11 @@ json.profile do
   json.avatarXS @user.avatar.url(:xs)
   json.avatarXXS @user.avatar.url(:xxs)
   json.avatarXXXS @user.avatar.url(:xxxs)
+  json.photos @user.photos.order(created_at: :desc).limit(9).each do |photo|
+    json.id photo.id
+    json.thumbUrl photo.image.url(:thumb)
+    json.imageUrlOriginal photo.image.url
+  end
 end
 
 

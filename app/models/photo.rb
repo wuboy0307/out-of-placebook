@@ -14,7 +14,7 @@ class Photo < ApplicationRecord
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :posts, as: :content
 
-  has_attached_file :image, styles: { timeline: "485x" },default_url: "missing.png"
+  has_attached_file :image, styles: { timeline: "485x", thumb: "100x100#" },default_url: "missing.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
 end

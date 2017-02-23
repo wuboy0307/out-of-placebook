@@ -7,7 +7,7 @@ import { toggleFlyout } from '../../actions/flyout_actions';
 import { withRouter } from 'react-router';
 
 const mapDispatchToProps = dispatch => ({
-  createSinglePostRequest: (postInfo) => dispatch(createSinglePostRequest(postInfo)),
+  createSinglePostRequest: (formData) => dispatch(createSinglePostRequest(formData)),
   toggleFlyout: (flyoutInfo) => dispatch(toggleFlyout(flyoutInfo))
 });
 
@@ -27,9 +27,14 @@ class CreatePost extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderPost = this.renderPost.bind(this);
     this.renderSharedPost = this.renderSharedPost.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
+    this.updateFile = this.updateFile.bind(this);
     this.state = {
       postBody: '',
-      bodyError: false
+      bodyError: false,
+      photo: false,
+      image_file: null,
+      image_preview_url: null
     };
   }
 
@@ -43,13 +48,20 @@ class CreatePost extends React.Component {
       this.setState({bodyError: true});
       return;
     }
-    const postInfo = {
-      wall_id: this.props.profileId ? this.props.profileId : this.props.currentUserId,
-      body: this.state.postBody,
-      content_id: this.props.sharedPost ? this.props.sharedPost.id : null
-    };
-    this.props.createSinglePostRequest(postInfo).then(() => {
-      this.setState({bodyError: false, postBody: ''});
+
+    let formData = new FormData();
+    formData.append("post[wall_id]", this.props.profileId ? this.props.profileId : this.props.currentUserId);
+    formData.append("post[body]", this.state.postBody);
+    formData.append("post[content_id]", this.props.sharedPost ? this.props.sharedPost.id : 0);
+    formData.append("post[image]", this.state.image_file);
+    // const postInfo = {
+    //   wall_id: this.props.profileId ? this.props.profileId : this.props.currentUserId,
+    //   body: this.state.postBody,
+    //   content_id: this.props.sharedPost ? this.props.sharedPost.id : null,
+    //   image: this.state.image_file
+    // };
+    this.props.createSinglePostRequest(formData).then(() => {
+      this.setState({bodyError: false, postBody: '', image_file: null, image_preview_url: null});
       if (this.props.sharedPost) {
         this.props.toggleFlyout(null);
         this.props.router.push(`/profile/${this.props.currentUserId}`);
@@ -57,13 +69,40 @@ class CreatePost extends React.Component {
     });
   }
 
+  updateFile(e) {
+    let fileReader = new FileReader();
+    let file = e.currentTarget.files[0];
+    fileReader.onloadend = () => {
+      this.setState({ image_file: file, image_preview_url: fileReader.result });
+    };
+
+    if (file) {
+      fileReader.readAsDataURL(file);
+      this.setState({photo: false});
+    }
+   }
+
   renderForm(){
-    return(
-    <form className="create-post-form" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Whats on your mind?" className={`create-post-input-${this.state.bodyError}`}
-          value={this.state.postBody} onChange={this.handleInput} />
-    </form>
-    );
+    if (this.state.photo) {
+      return(
+        <div className="create-post-photo" onClick={() => this.pictureInput.click()}>
+          Upload Photo
+          <form>
+            <input type="file"
+                id="file-input"
+                onChange={this.updateFile} ref={(input) => this.pictureInput = input}/>
+          </form>
+        </div>
+      );
+    } else {
+        const placeHolderText = this.state.image_preview_url ? 'Say something about this photo...' : "Whats on your mind?";
+      return(
+      <form className="create-post-form" onSubmit={this.handleSubmit}>
+          <input type="text" placeholder={placeHolderText} className={`create-post-input-${this.state.bodyError}`}
+            value={this.state.postBody} onChange={this.handleInput} />
+      </form>
+      );
+    }
   }
 
   renderSharedPost() {
@@ -75,15 +114,28 @@ class CreatePost extends React.Component {
     }
   }
 
-  // <PostItem2 post={this.props.sharedPosts[121]} />
+  renderHeader() {
+    if (!this.props.sharedPost){
+    return(
+      <div className="create-post-header">
+        <div className="create-post-header-item" onClick={() => this.setState({photo: false})}>Status</div>
+        <div className="create-post-header-item" onClick={() => this.setState({photo: true})}>Photo</div>
+      </div>
+    );
+  } else {
+    return(
+      <div className="create-post-header">
+        <div className="create-post-header-item">Status</div>
+      </div>
+    );
+  }
+  }
+
   renderPost() {
     return(
       <div className="create-post">
-        <div className="create-post-header">
-          <div className="create-post-header-item">Status</div>
-          <div className="create-post-header-item">Photo</div>
-          <div className="create-post-header-item">Video</div>
-        </div>
+        { this.renderHeader() }
+
         { this.renderSharedPost() }
 
         <div className="create-post-main">
@@ -93,6 +145,7 @@ class CreatePost extends React.Component {
 
           <div className="create-post-body">
             { this.renderForm()}
+            { this.state.image_preview_url ? <img src={this.state.image_preview_url} className="timeline-side-bar-photo" /> : null}
           </div>
 
         </div>

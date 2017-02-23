@@ -10,7 +10,17 @@ json.createdAt post.age
 json.body post.body
 json.wallIdFullName post.wall.full_name
 json.parentID post.parent_id
-json.content post.content
+if post.content.class.name.downcase === "url"
+  json.content do
+    json.extract! post.content, :url, :title, :description, :domain_name, :image
+  end
+elsif post.content.class.name.downcase === "post"
+  json.content do
+    json.partial! 'api/profiles/show', post: post.content, user: user
+  end
+else
+  json.set! "content", {}
+end
 json.contentType post.content.class.name.downcase
 json.numLikes post.likes.length
 json.likeText post.like_preview_text(user)

@@ -14,11 +14,14 @@ export const createLike = (like) => {
   });
 };
 
-export const createPost = (post) => {
+export const createPost = (formData) => {
   return $.ajax({
     method: 'POST',
     url: '/api/posts/',
-    data: { post }
+    contentType: false,
+    processData: false,
+    data: formData,
+    dataType: 'json'
   });
 };
 

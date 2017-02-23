@@ -109,6 +109,8 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
+	has_many :photos
+
   include PgSearch
 
   pg_search_scope :search_by_full_name, :against => [:fname, :lname],

@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
   notifications: state.notifications,
   messages: state.messages,
-  flyout: state.flyout
+  flyout: state.flyout.flyout
 });
 
 const mapDispatchToProps = (dispatch) => ({

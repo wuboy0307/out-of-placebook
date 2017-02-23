@@ -128,6 +128,16 @@ class PostItem extends React.Component {
   renderBody() {
     if (this.state.editPost) return this.renderEditForm();
     const body = this.props.post.body;
+    if (this.props.post.contentType === 'photo') {
+          return (
+            <div className="post-item-body">
+              <p>
+                {body}
+              </p>
+            <img src={this.props.post.content.imageUrlTimeline} className="post-in-post-image"/>
+          </div>
+          );
+        }
     if (this.props.post.contentType !== 'url') {
       return (
         <div className="post-item-body">
@@ -136,9 +146,7 @@ class PostItem extends React.Component {
           </p>
         </div>
       );
-    } else if (this.props.post.contentType === 'photo') {
-          return (<img src={this.props.post.content.imageUrlTimeline} />);
-        } else {
+    }  else {
       const content = this.props.post.content;
       return (
         <div className="post-item-body">

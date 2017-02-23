@@ -28,3 +28,10 @@ export const getFriends = () => {
     url: '/api/friends/'
   });
 };
+
+export const fetchFriendCount = () => {
+  return $.ajax({
+    method: 'GET',
+    url: '/api/friends/count'
+  });
+};

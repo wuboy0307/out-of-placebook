@@ -6,13 +6,15 @@ import { toggleFlyout } from '../../actions/flyout_actions';
 import { fetchNotificationsRequest, fetchNotificationCountRequest,
         fetchMessageNotificationCountRequest, fetchMessagesRequest,
       fetchChatRequest } from '../../actions/notification_actions';
+import { fetchFriendCountRequest } from '../../actions/friend_actions';
 import { logout} from '../../actions/session_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
   notifications: state.notifications,
   messages: state.messages,
-  flyout: state.flyout.flyout
+  flyout: state.flyout.flyout,
+  friends: state.friends
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -22,7 +24,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchMessagesRequest: () => dispatch(fetchMessagesRequest()),
   fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId)),
   toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType)),
-  logout: () => dispatch(logout())
+  logout: () => dispatch(logout()),
+  fetchFriendCountRequest: () => dispatch(fetchFriendCountRequest())
 });
 
 
@@ -43,6 +46,7 @@ class NavBar extends React.Component {
 
   componentDidMount() {
     this.props.fetchMessageNotificationCountRequest();
+    this.props.fetchFriendCountRequest();
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('40464ec5305ef59a7c32', {
@@ -56,6 +60,9 @@ class NavBar extends React.Component {
     });
     channel.bind('new-message-notification', () => {
       this.props.fetchMessageNotificationCountRequest();
+    });
+    channel.bind('new-friend-notification', () => {
+      this.props.fetchFriendCountRequest();
     });
   }
 
@@ -172,7 +179,9 @@ class NavBar extends React.Component {
           </div>
             <div className="nav-link-home">Home</div>
             <div className="notifications-bar">
-              <div><i className="fa fa-users" aria-hidden="true"></i></div>
+              <div><i className="fa fa-users notification" aria-hidden="true">
+                <div className="small-notification-count">{this.props.friends.notificationCount}</div>
+              </i></div>
               <div><i className="fa fa-comments notification" aria-hidden="true" onClick={this.clickMessageNotificationButton}>
                 <div className="small-notification-count">{this.props.messages.numUnseenChats}</div>
               </i></div>

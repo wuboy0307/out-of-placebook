@@ -274,26 +274,26 @@ background-clip: padding-box;
     line-height: 1.3;
     min-height: 13px;
     position: absolute;
-    top: -8px;
-    right: -11px;
+    top: -7px;
+    right: -7px;
 }
-
-.small-messages-count {
-  background-color: #fa3e3e;
-border-radius: 2px;
-color: #fff;
-padding: 1px 3px;
-background-clip: padding-box;
-    display: inline-block;
-    font-family: 'helvetica neue', Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    -webkit-font-smoothing: subpixel-antialiased;
-    line-height: 1.3;
-    min-height: 13px;
-    position: absolute;
-    top: -8px;
-    right: 18px;
-}
+//
+// .small-messages-count {
+//   background-color: #fa3e3e;
+// border-radius: 2px;
+// color: #fff;
+// padding: 1px 3px;
+// background-clip: padding-box;
+//     display: inline-block;
+//     font-family: 'helvetica neue', Helvetica, Arial, sans-serif;
+//     font-size: 10px;
+//     -webkit-font-smoothing: subpixel-antialiased;
+//     line-height: 1.3;
+//     min-height: 13px;
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+// }
 
 .flyout {
   background: #fff;
@@ -358,4 +358,12 @@ font-size: 12px;
 
 .flyout-item-timestamp {
   color: #999;
+}
+
+.logout {
+  margin-left: 20px;
+}
+
+.notification {
+  position: relative;
 }

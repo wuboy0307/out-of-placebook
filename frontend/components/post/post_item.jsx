@@ -37,6 +37,7 @@ class PostItem extends React.Component {
     this.renderPostDescription = this.renderPostDescription.bind(this);
     this.editFormSubmit = this.editFormSubmit.bind(this);
     this.renderSharedPost = this.renderSharedPost.bind(this);
+    this.renderModal = this.renderModal.bind(this);
 
     this.state = {
       selected: false,
@@ -229,6 +230,11 @@ class PostItem extends React.Component {
     }
   }
 
+  renderModal(e) {
+    e.stopPropagation();
+    this.props.toggleFlyout('modal', {type: 'sharepost', data: this.props.post});
+  }
+
   render () {
     if (this.props.post.contentType === 'post' &&  !this.props.sharedPosts[this.props.post.content.id]) return null;
     return(
@@ -265,7 +271,7 @@ class PostItem extends React.Component {
             <div className="post-action-container">
               <div className={`like-action ${this.props.post.userLikesPost}`} onClick={this.toggleLike}>Like</div>
               <div className="post-action" onClick={this.selectCommentBox}>Comment</div>
-              <div className="post-action" onClick={() => this.props.toggleFlyout('modal', {type: 'sharepost', data: this.props.post})}>Share</div>
+              <div className="post-action" onClick={this.renderModal}>Share</div>
             </div>
           </div>
 

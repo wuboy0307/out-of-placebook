@@ -100,15 +100,15 @@ class Chatbox extends React.Component {
             <div ref={(input) => (this.lastMessage = input)}></div>
 
           </div>
-
-            <div className="chat-input">
-              <form className="chat-input-form" onSubmit={this.handleSubmit}>
-                <input autoFocus type="text" className="chat-input-input"
-                  placeholder="Type a message..." value={this.state.messageInput}
-                  onChange={(e) => this.setState({messageInput: e.target.value})}></input>
-              </form>
-
+          
+          <div className="chat-input">
+            <form className="chat-input-form" onSubmit={this.handleSubmit}>
+              <input autoFocus type="text" className="chat-input-input"
+                placeholder="Type a message..." value={this.state.messageInput}
+                onChange={(e) => this.setState({messageInput: e.target.value})}></input>
+            </form>
           </div>
+
         </div>
     );
   }

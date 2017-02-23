@@ -53,4 +53,9 @@ class Api::PostsController < ApplicationController
     end
   end
 
+  # todo
+  def get_likes
+    @post = Post.find_by(params[:post][:post_id])
+  end
+
 end

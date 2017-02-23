@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import Search from '../search/search';
 import { toggleFlyout } from '../../actions/flyout_actions';
 import { fetchNotificationsRequest, fetchNotificationCountRequest,
         fetchMessageNotificationCountRequest, fetchMessagesRequest,
       fetchChatRequest } from '../../actions/notification_actions';
+import { logout} from '../../actions/session_actions';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
@@ -20,7 +21,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchMessageNotificationCountRequest: () => dispatch(fetchMessageNotificationCountRequest()),
   fetchMessagesRequest: () => dispatch(fetchMessagesRequest()),
   fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId)),
-  toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType))
+  toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType)),
+  logout: () => dispatch(logout())
 });
 
 
@@ -32,6 +34,7 @@ class NavBar extends React.Component {
     this.clickNotificationButton = this.clickNotificationButton.bind(this);
     this.clickMessageNotificationButton = this.clickMessageNotificationButton.bind(this);
     this.fetchChat = this.fetchChat.bind(this);
+    this.logout = this.logout.bind(this);
     this.state = {
       notificationFlyout: false,
       messageFlyout: false
@@ -144,6 +147,11 @@ class NavBar extends React.Component {
   );
   }
 
+  logout() {
+    this.props.logout();
+    this.props.router.push('/signup');
+  }
+
 
   render() {
     const currentUser = this.props.currentUser;
@@ -165,9 +173,11 @@ class NavBar extends React.Component {
             <div className="nav-link-home">Home</div>
             <div className="notifications-bar">
               <div><i className="fa fa-users" aria-hidden="true"></i></div>
-              <div><i className="fa fa-comments" aria-hidden="true" onClick={this.clickMessageNotificationButton}></i></div>
-              <div className="small-notification-count">{this.props.notifications.count}</div>
-              <div className="small-messages-count">{this.props.messages.numUnseenChats}</div>
+              <div><i className="fa fa-comments notification" aria-hidden="true" onClick={this.clickMessageNotificationButton}>
+                <div className="small-notification-count">{this.props.messages.numUnseenChats}</div>
+              </i></div>
+
+
 
 
                 {this.renderMessages()}
@@ -175,7 +185,11 @@ class NavBar extends React.Component {
 
 
 
-              <div><i className="fa fa-globe" aria-hidden="true" onClick={this.clickNotificationButton}></i></div>
+              <div><i className="fa fa-globe notification" aria-hidden="true" onClick={this.clickNotificationButton}>
+                  <div className="small-notification-count">{this.props.notifications.count}</div>
+                  </i></div>
+
+                <div className="logout"><i className="fa fa-sign-out" aria-hidden="true" onClick={this.logout}></i></div>
             </div>
           </div>
         </div>
@@ -187,4 +201,4 @@ class NavBar extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NavBar);
+)(withRouter(NavBar));

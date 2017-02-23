@@ -105,7 +105,7 @@ class CreatePost extends React.Component {
 
 
         <div className="create-post-footer">
-          <button type="button" className="create-post-button" onClick={this.handleSubmit}>Post</button>
+          <button type="button" className="create-post-button" onClick={this.handleSubmit}>{ this.props.sharedPost ? 'Share' : 'Post'}</button>
         </div>
 
       </div>

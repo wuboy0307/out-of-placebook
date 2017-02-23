@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:create, :destroy, :update, :show]
     resources :comments, only: [:create, :destroy, :update]
 
+    get 'posts/:id/likes' => 'posts#get_likes'
     resources :likes, only: [:create]
     delete 'likes' => 'likes#destroy'
 

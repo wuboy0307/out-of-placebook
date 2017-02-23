@@ -31,11 +31,11 @@ class App extends React.Component {
         {this.props.children}
 
         <Chatbox />
+        <ClickListener />
       </div>
     );
   }
 }
-// <ClickListener />
 
 export default connect(
   null,

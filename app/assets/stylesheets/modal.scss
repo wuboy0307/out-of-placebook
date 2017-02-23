@@ -1,11 +1,11 @@
 .modal {
-  height: 500px;
+  // height: 500px;
   width: 512px;
   position: relative;
   margin: 0 auto;
   top: 241px;
   // right: 394px;
-  border: 1px solid red;
+  // border: 1px solid red;
   z-index: 100;
 }
 
@@ -13,7 +13,8 @@
   height: 100%;
   width: 100%;
   position: fixed;
-  // background-color: black;
-  border: 1px solid red;
+  background-color: black;
+  // border: 1px solid red;
   z-index: 10;
+  background-color:rgba(0, 0, 0, 0.5)
 }

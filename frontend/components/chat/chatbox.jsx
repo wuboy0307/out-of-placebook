@@ -79,6 +79,7 @@ class Chatbox extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
+    if (this.state.messageInput.length < 1) return null;
     this.props.sendMessageRequest({channel_id: this.props.channelId, body: this.state.messageInput})
       .then(() => {this.setState({messageInput: ''})
                 this.lastMessage.scrollIntoView();
@@ -100,7 +101,7 @@ class Chatbox extends React.Component {
             <div ref={(input) => (this.lastMessage = input)}></div>
 
           </div>
-          
+
           <div className="chat-input">
             <form className="chat-input-form" onSubmit={this.handleSubmit}>
               <input autoFocus type="text" className="chat-input-input"

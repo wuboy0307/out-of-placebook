@@ -47,6 +47,7 @@ class NavBar extends React.Component {
   componentDidMount() {
     this.props.fetchMessageNotificationCountRequest();
     this.props.fetchFriendCountRequest();
+    this.props.fetchMessageNotificationCountRequest();
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('40464ec5305ef59a7c32', {

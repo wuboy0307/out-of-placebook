@@ -7,8 +7,10 @@ import { connect } from 'react-redux';
 import { selectPosts } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
-  posts: selectPosts(state)
+  posts: selectPosts(state),
+  sharedPosts: state.posts
 });
+
 
 class Timeline extends React.Component {
 

@@ -70,6 +70,9 @@ class PostItem extends React.Component {
     if (post.contentType === 'url') {
       return this.renderUrlContent();
     }
+    if (post.contentType === 'photo') {
+      return (<img src={this.props.post.content.imageUrlTimeline} />);
+    }
     if (post.contentType === 'post') {
       if (post.content.id) {
         return(<PostItem2 post={post.content} />);

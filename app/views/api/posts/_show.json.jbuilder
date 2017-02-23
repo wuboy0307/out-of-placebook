@@ -17,6 +17,13 @@ elsif post.content.class.name.downcase === "post"
   json.content do
     json.partial! 'api/posts/post_in_post', post: post.content, user: user
   end
+elsif post.content.class.name.downcase === "photo"
+  json.content do
+    json.id post.content.id
+    json.imageUrlTimeline post.content.image.url(:timeline)
+    json.imageUrlOriginal post.content.image.url
+    json.authorId post.content.author.id
+  end
 else
   json.set! "content", {}
 end

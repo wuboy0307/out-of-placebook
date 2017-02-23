@@ -136,7 +136,9 @@ class PostItem extends React.Component {
           </p>
         </div>
       );
-    } else {
+    } else if (this.props.post.contentType === 'photo') {
+          return (<img src={this.props.post.content.imageUrlTimeline} />);
+        } else {
       const content = this.props.post.content;
       return (
         <div className="post-item-body">

@@ -7,6 +7,9 @@ class Api::PostsController < ApplicationController
     # debugger
     if params[:post][:content_id].to_i > 0
       @post.content = Post.find(params[:post][:content_id].to_i)
+    elsif params[:post][:image] != "null"
+      @photo = Photo.create!(user_id: user.id, image: params[:post][:image])
+      @post.content = @photo
     end
     if @post.save
 

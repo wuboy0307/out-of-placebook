@@ -12,6 +12,13 @@ if post.content.class.name.downcase === "url"
   json.content do
     json.extract! post.content, :url, :title, :description, :domain_name, :image
   end
+elsif post.content.class.name.downcase === "photo"
+  json.content do
+    json.id post.content.id
+    json.imageUrlTimeline post.content.image.url(:timeline)
+    json.imageUrlOriginal post.content.image.url
+    json.authorId post.content.author.id
+  end
 else
   json.set! "content", {}
 end

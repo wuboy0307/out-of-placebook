@@ -496,7 +496,26 @@ a {
   height: 100px;
   margin: 2px;
   cursor: pointer;
-  
+}
+
+.timeline-side-bar-friend-link {
+  position: relative;
+  color: white;
+
+}
+
+.timeline-side-bar-friend-name {
+  position: absolute;
+    bottom: 0px;
+    left: 0;
+    margin: 0 auto;
+    text-align: center;
+    width: 100px;
+    font-size: 12px;
+line-height: 16px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .7));
+  margin: 2px;
+  padding-bottom: 5px;
 }
 
 .post-item-url {

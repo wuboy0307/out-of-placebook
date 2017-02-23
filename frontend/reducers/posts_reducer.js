@@ -47,11 +47,12 @@ const postsReducer = ( oldState = _initialState, action) => {
 
     case CREATE_SINGLE_POST_SUCCESS:
       // debugger
-      newState[action.post.id] = action.post.post;
+      newState[action.post.post.id] = action.post.post;
       return newState;
 
     case CREATE_SINGLE_LIKE_SUCCESS:
       likeInfo = action.likeInfo;
+      // debugger
       switch(likeInfo.type) {
         case "post":
           newState[likeInfo.postId].userLikesPost = true;

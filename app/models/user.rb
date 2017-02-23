@@ -121,7 +121,7 @@ class User < ApplicationRecord
                     }
                   }
 
-	has_attached_file :avatar, styles: { profile: "160x160#", friend: "100x100#", header: "24x24#", xs: "48x48#", xxs: "32x32#", xxxs: "20x20#" }, default_url: "/images/:style/missing.png"
+	has_attached_file :avatar, styles: { profile: "160x160#", friend: "100x100#", header: "24x24#", xs: "48x48#", xxs: "32x32#", xxxs: "20x20#" }, default_url: "app/assets/images/avatar.jpg"
 	validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 	has_attached_file :cover, styles: { cover: "850x313#" }, default_url: "/images/:style/missing.png"
 	validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/

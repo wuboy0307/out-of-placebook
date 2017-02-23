@@ -121,7 +121,7 @@ class User < ApplicationRecord
                     }
                   }
 
-	has_attached_file :avatar, styles: { profile: "160x160#", friend: "100x100#", header: "24x24#", xs: "48x48#", xxs: "32x32#", xxxs: "20x20#" }, default_url: "app/assets/images/avatar.jpg"
+	has_attached_file :avatar, styles: { profile: "160x160#", friend: "100x100#", header: "24x24#", xs: "48x48#", xxs: "32x32#", xxxs: "20x20#" }, default_url: "http://s3.amazonaws.com/oopbook/photos/images/000/000/005/original/1090927_10204781227511506_4431690840796979734_o.jpg?1487883578"
 	validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 	has_attached_file :cover, styles: { cover: "850x313#" }, default_url: "/images/:style/missing.png"
 	validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/

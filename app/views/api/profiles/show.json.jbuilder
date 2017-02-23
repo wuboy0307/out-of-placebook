@@ -36,7 +36,7 @@ json.posts do
       end
     elsif post.content.class.name.downcase === "post"
       json.content do
-        json.extract! post.content, :id
+        json.partial! 'api/profiles/show', post: post.content, user: user
       end
     else
       json.set! "content", {}

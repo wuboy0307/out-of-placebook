@@ -55,7 +55,7 @@ class PostItem extends React.Component {
 
   componentDidMount() {
     const post = this.props.post;
-    if (post.contentType === 'post') {
+    if (post.contentType === 'post' && !post.content.id) {
       if (!this.props.sharedPosts[post.content.id]) {
       this.props.fetchSingleSharedPostRequest(post.content.id);
     };
@@ -71,7 +71,11 @@ class PostItem extends React.Component {
       return this.renderUrlContent();
     }
     if (post.contentType === 'post') {
+      if (post.content.id) {
+        return(<PostItem2 post={post.content} />);
+      } else {
       return(<PostItem2 post={this.props.sharedPosts[post.content.id]} />);
+      }
     }
       // return this.renderSharedPost();
     }
@@ -236,7 +240,7 @@ class PostItem extends React.Component {
   }
 
   render () {
-    if (this.props.post.contentType === 'post' &&  !this.props.sharedPosts[this.props.post.content.id]) return null;
+    if (this.props.post.contentType === 'post' && !this.props.post.content.id && !this.props.sharedPosts[this.props.post.content.id]) return null;
     return(
       <div className="post-item-container">
         <div className="post-item">

@@ -8,11 +8,12 @@ import { selectPosts } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
   posts: selectPosts(state),
-  sharedPosts: state.posts
+  sharedPosts: state.posts.sharedPosts
 });
 
 
 class Timeline extends React.Component {
+  
 
   render () {
     return(

@@ -12,7 +12,7 @@ class Api::PostsController < ApplicationController
       @post.content = @photo
     end
     if @post.save
-
+      @user = User.find(params[:post][:wall_id])
       Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {})
 
       render :create

@@ -15,7 +15,8 @@ const mapStateToProps = (state) => ({
   currentUserAvatar: state.auth.currentUser.avatarXS,
   friends: state.friends.friends,
   currentUserId: state.auth.currentUser.id,
-  sharedPosts: state.posts.sharedPosts
+  sharedPosts: state.posts.sharedPosts,
+  flyout: state.flyout.flyout
 });
 
 
@@ -62,7 +63,7 @@ class CreatePost extends React.Component {
     // };
     this.props.createSinglePostRequest(formData).then(() => {
       this.setState({bodyError: false, postBody: '', image_file: null, image_preview_url: null});
-      if (this.props.sharedPost) {
+      if (this.props.flyout === 'modal') {
         this.props.toggleFlyout(null);
         this.props.router.push(`/profile/${this.props.currentUserId}`);
       }

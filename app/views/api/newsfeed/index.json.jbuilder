@@ -3,8 +3,8 @@ user = current_user
 json.posts do
   @activities.each do |post, message|
     json.set! post.id do
-    json.id post.id
     json.postDescription message
+    json.id post.id
     json.wallId post.wall_id
     json.authorId post.author_id
     json.authorFullName post.author.full_name
@@ -17,6 +17,17 @@ json.posts do
     if post.content.class.name.downcase === "url"
       json.content do
         json.extract! post.content, :url, :title, :description, :domain_name, :image
+      end
+    elsif post.content.class.name.downcase === "post"
+      json.content do
+        json.partial! 'api/posts/post_in_post', post: post.content, user: user
+      end
+    elsif post.content.class.name.downcase === "photo"
+      json.content do
+        json.id post.content.id
+        json.imageUrlTimeline post.content.image.url(:timeline)
+        json.imageUrlOriginal post.content.image.url
+        json.authorId post.content.author.id
       end
     else
       json.set! "content", {}

@@ -21,6 +21,12 @@ json.profile do
     json.thumbUrl photo.image.url(:thumb)
     json.imageUrlOriginal photo.image.url
   end
+  json.friends @user.friends.order('friendships.updated_at desc').limit(9).each do |friend|
+    json.id friend.id
+    json.thumbUrl friend.avatar.url(:friend)
+    json.avatarUrlOriginal friend.avatar.url
+    json.fullName friend.full_name
+  end
 end
 
 json.post do

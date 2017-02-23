@@ -6,7 +6,7 @@ import { toggleFlyout } from '../../actions/flyout_actions';
 import { fetchNotificationsRequest, fetchNotificationCountRequest,
         fetchMessageNotificationCountRequest, fetchMessagesRequest,
       fetchChatRequest } from '../../actions/notification_actions';
-import { fetchFriendCountRequest } from '../../actions/friend_actions';
+import { fetchFriendCountRequest, fetchFriendsRequest } from '../../actions/friend_actions';
 import { logout} from '../../actions/session_actions';
 
 const mapStateToProps = (state) => ({
@@ -25,7 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId)),
   toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType)),
   logout: () => dispatch(logout()),
-  fetchFriendCountRequest: () => dispatch(fetchFriendCountRequest())
+  fetchFriendCountRequest: () => dispatch(fetchFriendCountRequest()),
+  fetchFriendsRequest: () => dispatch(fetchFriendsRequest())
 });
 
 
@@ -192,6 +193,7 @@ class NavBar extends React.Component {
 
                 {this.renderMessages()}
                 { this.renderNotifications() }
+
 
 
 

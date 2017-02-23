@@ -65,7 +65,7 @@ class CommentBox extends React.Component {
     this.props.createSingleCommentRequest(comment)
       .then(() => {
         this.setState({commentText: ''});
-        this.nameInput.select();
+        this.nameInput.scrollIntoView();
       });
   }
 

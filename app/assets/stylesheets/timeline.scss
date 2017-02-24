@@ -617,4 +617,13 @@ color: black;
     font-weight: bold;
     line-height: 14px;
     color: #4b4f56;
+    padding: 5px 20px;
+    border-right: 1px solid grey;
+    cursor: pointer;
+    > .fa {
+      margin-right: 10px;
+    }
+}
+.create-post-header-item:last-child {
+  border-right: 0;
 }

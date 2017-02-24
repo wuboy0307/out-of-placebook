@@ -119,8 +119,8 @@ class CreatePost extends React.Component {
     if (!this.props.sharedPost){
     return(
       <div className="create-post-header">
-        <div className="create-post-header-item" onClick={() => this.setState({photo: false})}>Status</div>
-        <div className="create-post-header-item" onClick={() => this.setState({photo: true})}>Photo</div>
+        <div className="create-post-header-item" onClick={() => this.setState({photo: false})}><i className="fa fa-pencil" aria-hidden="true"></i>Status</div>
+        <div className="create-post-header-item" onClick={() => this.setState({photo: true})}><i className="fa fa-camera" aria-hidden="true"></i>Photo</div>
       </div>
     );
   } else {

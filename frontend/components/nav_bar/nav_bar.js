@@ -8,13 +8,15 @@ import { fetchNotificationsRequest, fetchNotificationCountRequest,
       fetchChatRequest } from '../../actions/notification_actions';
 import { fetchFriendCountRequest, fetchFriendsRequest } from '../../actions/friend_actions';
 import { logout} from '../../actions/session_actions';
+import { selectFriendRequests } from '../../reducers/selectors.js';
 
 const mapStateToProps = (state) => ({
   currentUser: state.auth.currentUser,
   notifications: state.notifications,
   messages: state.messages,
   flyout: state.flyout.flyout,
-  friends: state.friends
+  friends: state.friends,
+  friendRequests: selectFriendRequests(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,6 +39,8 @@ class NavBar extends React.Component {
     this.renderMessages = this.renderMessages.bind(this);
     this.clickNotificationButton = this.clickNotificationButton.bind(this);
     this.clickMessageNotificationButton = this.clickMessageNotificationButton.bind(this);
+    this.clickFriendNotificationButton = this.clickFriendNotificationButton.bind(this);
+    this.renderFriends = this.renderFriends.bind(this);
     this.fetchChat = this.fetchChat.bind(this);
     this.logout = this.logout.bind(this);
     this.state = {
@@ -95,6 +99,17 @@ class NavBar extends React.Component {
   }
   }
 
+  clickFriendNotificationButton(e) {
+    e.stopPropagation();
+    if (this.props.toggleFlyout !== 'friends') {
+      this.props.fetchFriendsRequest().then(() => {
+        this.props.toggleFlyout('friends');
+      });
+    } else {
+    this.props.toggleFlyout('friends');
+  }
+  }
+
   fetchChat(channelId) {
     return (e) => this.props.fetchChatRequest(channelId);
   }
@@ -121,6 +136,34 @@ class NavBar extends React.Component {
             </div>
           </li>
           </div>
+        );
+      })}
+    </div>
+  </div>
+  );
+  }
+  renderFriends() {
+    if (this.props.flyout !== 'friends') {
+      return null;
+    }
+
+    return (<div className="friends-flyout">
+      <div className="flyout-header">
+        Friend Requests
+      </div>
+      <div className="flyout-list">
+       {this.props.friendRequests.map((el) => {
+        return(
+          <li className='flyout-list-item' key={el.id}>
+            <img className="user-pic-flyout" src={el.avatar}/>
+            <div className="flyout-friend-body">
+              <div className="flyout-friend-name">{el.fullName}</div>
+              <div className="flyout-item-buttons">
+                <div className="flyout-confirm">Confirm</div>
+                <div className="flyout-delete">Delete Request</div>
+              </div>
+            </div>
+          </li>
         );
       })}
     </div>
@@ -181,7 +224,7 @@ class NavBar extends React.Component {
           </div>
             <div className="nav-link-home"><Link to="/newsfeed">Home</Link></div>
             <div className="notifications-bar">
-              <div><i className="fa fa-users notification" aria-hidden="true">
+              <div><i className="fa fa-users notification" aria-hidden="true" onClick={this.clickFriendNotificationButton}>
                 <div className="small-notification-count">{this.props.friends.notificationCount}</div>
               </i></div>
               <div><i className="fa fa-comments notification" aria-hidden="true" onClick={this.clickMessageNotificationButton}>
@@ -191,8 +234,9 @@ class NavBar extends React.Component {
 
 
 
-                {this.renderMessages()}
+                { this.renderMessages() }
                 { this.renderNotifications() }
+                { this.renderFriends() }
 
 
 

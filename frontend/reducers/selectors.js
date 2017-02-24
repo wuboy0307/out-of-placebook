@@ -16,6 +16,14 @@ export const selectSearchResults = ({ search }) => {
     return [];
   }
 };
+export const selectFriendRequests = ({ friends }) => {
+  let incomingFriends = friends.incomingFriends;
+  if (incomingFriends) {
+    return Object.keys(incomingFriends).map(key => incomingFriends[key]);
+  } else {
+    return [];
+  }
+};
 
 // export const selectNewsfeedPosts = ({ newsfeed }) => {
 //   if (!newsfeed) return [];

@@ -7,6 +7,7 @@ else
   json.friends do
     friends.each do |friend|
       json.set! friend.id do
+        json.id friend.id
         json.fullName friend.full_name
         json.avatar friend.avatar.url(:xxs)
         json.friendIds friend.friends.map(&:id)
@@ -23,6 +24,7 @@ else
   json.incomingFriends do
     incoming_friends.each do |friend|
       json.set! friend.id do
+        json.id friend.id
         json.fullName friend.full_name
         json.avatar friend.avatar.url(:xxs)
         json.friendIds friend.friends.map(&:id)
@@ -39,6 +41,7 @@ else
   json.outgoingFriends do
     outgoing_friends.each do |friend|
       json.set! friend.id do
+        json.id friend.id
         json.fullName friend.full_name
         json.avatar friend.avatar.url(:xxs)
         json.friendIds friend.friends.map(&:id)

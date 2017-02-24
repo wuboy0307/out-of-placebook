@@ -121,12 +121,12 @@ end
 # ---- DONALD TRUMP
 mark = User.first
 # mark = User.create!(fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
-donald = User.create!(fname: "Donald", lname: "Trump", email: "donald@whitehouse.gov", password: "tinyhands", intro: "Nobody knows how to run a country better than me. Believe me. I know the best people. We're going to MAKE AMERICA GREAT AGAIN.")
-sean = User.create!(fname: "Sean", lname: "Spicer", email: "sean@whitehouse.gov", password: "password", intro: "Speaking for a nation.")
-hillary = User.create!(fname: "Hillary", lname: "Clinton", email: "hillary@privateemailserver.gov", password: "password", intro: "Hillary Clinton is an American politician who was the 67th United States Secretary of State.")
-matthew = User.create!(fname: "Matthew", lname: "McConaughey", email: "matthew@gmail.com", password: "password", intro: "Oscar winner.")
-jennifer = User.create!(fname: "Jennifer", lname: "Lawrence", email: "jennny@gmail.com", password: "password", intro: "Actress.")
-taylor = User.create!(fname: "Taylor", lname: "Swift", email: "tswift@gmail.com", password: "password", intro: "Singer.")
+donald = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Donald", lname: "Trump", email: "donald@whitehouse.gov", password: "tinyhands", intro: "Nobody knows how to run a country better than me. Believe me. I know the best people. We're going to MAKE AMERICA GREAT AGAIN.")
+sean = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Sean", lname: "Spicer", email: "sean@whitehouse.gov", password: "password", intro: "Speaking for a nation.")
+hillary = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Hillary", lname: "Clinton", email: "hillary@privateemailserver.gov", password: "password", intro: "Hillary Clinton is an American politician who was the 67th United States Secretary of State.")
+matthew = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Matthew", lname: "McConaughey", email: "matthew@gmail.com", password: "password", intro: "Oscar winner.")
+jennifer = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Jennifer", lname: "Lawrence", email: "jennny@gmail.com", password: "password", intro: "Actress.")
+taylor = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Taylor", lname: "Swift", email: "tswift@gmail.com", password: "password", intro: "Singer.")
 
 
 

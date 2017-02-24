@@ -12,6 +12,7 @@ class Api::PhotosController < ApplicationController
       user.cover = params[:profile][:cover]
     end
     if user.save
+      Pusher.trigger("wall-notifications-#{user.id}", 'profile-update', {sender: user.id})
       render json: ['Profile picture successfully updated!']
     else
       render json: user.errors.full_messages

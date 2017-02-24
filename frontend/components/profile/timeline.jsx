@@ -17,7 +17,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchWallUpdate: (postId) => dispatch(fetchWallUpdate(postId)),
-  deletePostUpdateSuccess: (postId) => dispatch(deletePostUpdateSuccess(postId))
+  deletePostUpdateSuccess: (postId) => dispatch(deletePostUpdateSuccess(postId)),
+  fetchSingleProfileRequest: (postId) => dispatch(fetchSingleProfileRequest(postId))
 });
 
 
@@ -39,6 +40,11 @@ class Timeline extends React.Component {
       console.log('NOT SENT FROM CURRENT USER');
       this.props.deletePostUpdateSuccess(id.id);
     });
+    this.channel.bind('profile-update', (id) => {
+      if (id.sender === this.props.currentUserId) return null
+      console.log('NOT SENT FROM CURRENT USER');
+      this.props.fetchSingleProfileRequest(this.props.params.profileId);
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -58,6 +64,11 @@ class Timeline extends React.Component {
       if (id.sender === this.props.currentUserId) return null
       console.log('NOT SENT FROM CURRENT USER');
       this.props.deletePostUpdateSuccess(id.id);
+    });
+    this.channel.bind('profile-update', (id) => {
+      if (id.sender === this.props.currentUserId) return null
+      console.log('NOT SENT FROM CURRENT USER');
+      this.props.fetchSingleProfileRequest(this.props.params.profileId);
     });
   }
 

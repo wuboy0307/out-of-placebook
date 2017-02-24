@@ -31,13 +31,9 @@ const postsReducer = ( oldState = _initialState, action) => {
 
     case FETCH_WALL_UPDATE_SUCCESS:
       let posts = action.posts.posts;
-      let key = parseInt(Object.keys(posts));
+      let key = parseInt(Object.keys(posts)[0]);
       let post = posts[key];
-      if (newState[key]) {
-        newState[key] = post;
-      } else {
-        newState.key = post;
-      }
+      newState[key] = post;
       return newState;
 
     case FETCH_NEWSFEED_SUCCESS:

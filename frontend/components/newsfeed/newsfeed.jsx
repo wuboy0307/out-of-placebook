@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../post/post_item';
 import { selectPosts, selectFriends } from '../../reducers/selectors';
-import { fetchNewsfeedRequest, fetchNewsfeedUpdateRequest } from '../../actions/newsfeed_actions';
+import { fetchNewsfeedRequest, fetchNewsfeedUpdateRequest, deletePostUpdateSuccess } from '../../actions/newsfeed_actions';
 
 const mapStateToProps = (state) => ({
   posts: selectPosts(state),
@@ -11,7 +11,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchNewsfeedRequest: () => dispatch(fetchNewsfeedRequest()),
-  fetchNewsfeedUpdateRequest: (postId) => dispatch(fetchNewsfeedUpdateRequest(postId))
+  fetchNewsfeedUpdateRequest: (postId) => dispatch(fetchNewsfeedUpdateRequest(postId)),
+  deletePostUpdateSuccess: (postId) => dispatch(deletePostUpdateSuccess(postId))
 });
 
 class NewsFeed extends React.Component {
@@ -33,6 +34,12 @@ class NewsFeed extends React.Component {
       if (!this.props.friends.includes(info.wall_id)) return null
       console.log('NOT SENT FROM CURRENT USER');
       this.props.fetchNewsfeedUpdateRequest(info.post_id);
+    });
+
+    this.channel.bind('newsfeed-delete-activity', (info) => {
+      if (!this.props.friends.includes(info.wall_id)) return null
+      console.log('NOT SENT FROM CURRENT USER');
+      this.props.deletePostUpdateSuccess(info.post_id);
     });
   }
 

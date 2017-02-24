@@ -39,6 +39,7 @@ class Api::PostsController < ApplicationController
     if user.posts.include?(@post)
       if @post.destroy
         Pusher.trigger("wall-notifications-#{@post.wall_id}", 'delete-post', {id: @post.id, sender: user.id})
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @post.id, wall_id: @post.wall_id})
         render json: {postId: @post.id}
       else
         render @post.errors.full_messages, status: 422
@@ -55,7 +56,7 @@ class Api::PostsController < ApplicationController
       @post.body = params[:post][:body]
       if @post.save
         Pusher.trigger("wall-notifications-#{@post.wall_id}", 'activity', {id: @post.id, sender: user.id})
-
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @post.id, wall_id: @post.wall_id})
         render :update
       else
         render json: @post.errors.full_messages, status: 422

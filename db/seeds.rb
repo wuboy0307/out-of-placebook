@@ -60,7 +60,7 @@
 #   l.save
 # end
 #
-users = User.all
+# users = User.all
 
 # 1000.times do
 #   current_user = users.sample
@@ -99,3 +99,43 @@ users = User.all
 #   next if c.nil?
 #   Message.create!(sender_id: u.id, channel_id: c.id, body: Faker::Hacker.say_something_smart)
 # end
+
+def own_posts(user, text_array)
+  text_array.reverse.each do |post|
+    Post.create!(wall_id: user.id, author_id: user.id, body: post)
+  end
+end
+
+
+# ---- DONALD TRUMP
+donald = User.find_by(fname: "Donald", lname: "Trump", email: "donald@whitehouse.gov")#, password: tinyhands, intro: "Nobody knows how to run a country better than me. Believe me. I know the best people. We're going to MAKE AMERICA GREAT AGAIN.")
+# User.create!(fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
+
+
+donald_own_posts = ["MAKE AMERICA GREAT AGAIN",
+  "The FBI is totally unable to stop the national security 'leakers' that have permeated our government for a long time.
+They can't even find the leakers within the FBI itself. Classified information is being given to media that could have a devastating effect on U.S. FIND NOW",
+"BUILD THAT WALL http://www.breitbart.com/big-government/2017/02/23/report-religious-leaders-creating-underground-railroad-to-hide-illegal-aliens/",
+"Heading to Joint Base Andrews on #MarineOne with Prime Minister Shinzō earlier today.",
+"Seven people shot and killed yesterday in Chicago. What is going on there - totally out of control. Chicago needs help!",
+"CONFIDENTIAL NUCLEAR FOOTBALL CODE: 3AASJKS8234278942ACS",
+"MAKE AMERICA GREAT AGAIN",
+"ON THIS DAY...
+Raising the Flag on Iwo Jima is a photograph taken on February 23, 1945, by Joe Rosenthal. It depicts six United States Marines raising a U.S. flag atop Mount Suribachi, during the Battle of Iwo Jima in World War II....https://en.m.wikipedia.org/wiki/Raising_the_Flag_on_Iwo_Jima",
+"#Repost Ivanka Trump via Instagram:
+・・・
+Arabella and I visited the Supreme Court this morning and attended a hearing. I'm grateful for the opportunity to teach her about the judicial system in our country firsthand. #SCOTUS #SupremeCourt #ImportantLessons #MotherDaughter",
+"No more wasted money! We must do a lot more with less, and look for every last dollar of savings. Unfortunately, the budget that we’re essentially inheriting, is a mess. The finances of our country are a mess - with the national debt at $20 TRILLION (doubling over the last eight years.)
+Washington cannot ignore this - we need to address it immediatley, and that's exactly what we are going to do!",
+"The so-called angry crowds in home districts of some Republicans are actually, in numerous cases, planned out by liberal activists. Sad!",
+"MAKE AMERICA GREAT AGAIN."]
+# own_posts(donald, donald_own_posts)
+
+
+sean_own_posts = ["You nailed it. Period! https://twitter.com/TheOnion/status/825546280034201600",
+"Inauguration Day: @realDonaldTrump to become America's 45th president
+@AP
+http://bigstory.ap.org/article/c0a8b0d6a3244d7cbcb6dd294232fb56/inauguration-day-trump-become-americas-45th-president … #Inauguration #DonaldTrumpInauguration",
+"password12",
+]
+own_posts(donald, sean_own_posts)

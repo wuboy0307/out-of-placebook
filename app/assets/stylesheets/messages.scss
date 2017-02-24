@@ -34,14 +34,14 @@ font-size: 12px;
 }
 
 .message-list-item-seen {
-  background-color: #edf2fa;
+  background-color: white;
   display: flex;
   flex-direction: row;
   padding: 6px 30px 5px 12px;
 }
 
 .message-list-item {
-  background-color: white;
+  background-color: #edf2fa;
   display: flex;
   flex-direction: row;
   padding: 6px 30px 5px 12px;
@@ -145,7 +145,7 @@ border-top-right-radius: 12px;
     background-color: white;
     right:0;
     bottom:0;
-    position: absolute;
+    // position: absolute;
     width:244px
 
 

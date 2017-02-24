@@ -28,7 +28,8 @@ class ProfileNavBar extends React.Component {
     this.messageAction = this.messageAction.bind(this);
     this.renderFriendButton = this.renderFriendButton.bind(this);
     this.updateFile = this.updateFile.bind(this);
-    this.disableUnlessOwnProfile = this.disableUnlessOwnProfile.bind(this);
+    this.disableUnlessOwnProfilePic = this.disableUnlessOwnProfilePic.bind(this);
+    this.disableUnlessOwnProfileCover = this.disableUnlessOwnProfileCover.bind(this);
   }
 
   friendAction(e) {
@@ -96,40 +97,52 @@ class ProfileNavBar extends React.Component {
     );
   }
 
-  updateFile(e) {
-    let fileReader = new FileReader();
-    let file = e.currentTarget.files[0];
-    fileReader.onloadend = () => {
-      this.setState({ image_file: file, image_preview_url: fileReader.result });
-    };
+  updateFile(type) {
+    return (e) => {
+      let fileReader = new FileReader();
+      let file = e.currentTarget.files[0];
+      fileReader.onloadend = () => {
+        this.setState({ image_file: file, image_preview_url: fileReader.result });
+      };
 
-    if (file) {
-      fileReader.readAsDataURL(file);
-      let formData = new FormData();
-      formData.id = this.props.currentUser.id;
-      formData.append("profile[image]", file);
-      this.props.profilePicUploadRequest(formData);
-    }
+      if (file) {
+        fileReader.readAsDataURL(file);
+        let formData = new FormData();
+        formData.id = this.props.currentUser.id;
+        formData.append(`profile[${type}]`, file);
+        this.props.profilePicUploadRequest(formData);
+      }
+     }
    }
 
-   disableUnlessOwnProfile() {
+   disableUnlessOwnProfilePic() {
      if (this.props.profile.id !== this.props.currentUser.id) return null;
-     this.pictureInput.click();
+     this.profilePictureInput.click();
+   }
+   disableUnlessOwnProfileCover() {
+     if (this.props.profile.id !== this.props.currentUser.id) return null;
+     this.coverPictureInput.click();
    }
 
   render() {
     return(
       <div className="profile-nav-bar">
-        <CoverPhoto photoUrl={this.props.profile.coverUrl}/>
+        <CoverPhoto photoUrl={this.props.profile.coverUrl} callback={this.disableUnlessOwnProfileCover}/>
+          <form>
+            <input type="file"
+                id="file-input"
+                onChange={this.updateFile('cover')} ref={(target) => this.coverPictureInput = target}/>
+          </form>
         <ProfileLinkBar />
-        <div className="profile-picture" onClick={this.disableUnlessOwnProfile}>
+        <div className="profile-picture" onClick={this.disableUnlessOwnProfilePic}>
           <div className="profile-picture-change">Update Profile Picture</div>
           <img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/>
           <form>
             <input type="file"
                 id="file-input"
-                onChange={this.updateFile} ref={(input) => this.pictureInput = input}/>
+                onChange={this.updateFile('image')} ref={(input) => this.profilePictureInput = input}/>
           </form>
+
           </div>
         <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
         { this.renderMessageButton() }

@@ -17,12 +17,16 @@ export const FETCH_SINGLE_POST_SUCCESS = "FETCH_SINGLE_POST_SUCCESS";
 export const FETCH_SINGLE_SHARED_POST_FAILURE = "FETCH_SINGLE_SHARED_POST_FAILURE";
 export const FETCH_SINGLE_SHARED_POST_SUCCESS = "FETCH_SINGLE_SHARED_POST_SUCCESS";
 export const FETCH_WALL_UPDATE_SUCCESS = "FETCH_WALL_UPDATE_SUCCESS";
-
+export const DELETE_POST_UPDATE_SUCCESS = "DELETE_POST_UPDATE_SUCCESS";
 
 
 export const fetchWallUpdateSucess = posts => ({
   type: FETCH_WALL_UPDATE_SUCCESS,
   posts
+});
+export const deletePostUpdateSuccess = postId => ({
+  type: DELETE_POST_UPDATE_SUCCESS,
+  postId
 });
 
 export const createSingleCommentSuccess = comment => ({

@@ -32,9 +32,11 @@ class Api::PostsController < ApplicationController
   end
 
   def destroy
+    user = current_user
     @post = Post.find_by(id: params[:id])
-    if current_user.posts.include?(@post)
+    if user.posts.include?(@post)
       if @post.destroy
+        Pusher.trigger("wall-notifications-#{@post.wall_id}", 'delete-post', {id: @post.id, sender: user.id})
         render json: {postId: @post.id}
       else
         render @post.errors.full_messages, status: 422
@@ -45,10 +47,13 @@ class Api::PostsController < ApplicationController
   end
 
   def update
+    user = current_user
     @post = Post.find_by(id: params[:id])
-    if current_user.posts.include?(@post)
+    if user.posts.include?(@post)
       @post.body = params[:post][:body]
       if @post.save
+        Pusher.trigger("wall-notifications-#{@post.wall_id}", 'activity', {id: @post.id, sender: user.id})
+
         render :update
       else
         render json: @post.errors.full_messages, status: 422

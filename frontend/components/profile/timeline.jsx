@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { selectPosts } from '../../reducers/selectors';
 import { fetchSingleProfileRequest } from '../../actions/profile_actions';
-import { fetchWallUpdate } from '../../actions/post_actions';
+import { fetchWallUpdate, deletePostUpdateSuccess } from '../../actions/post_actions';
 
 
 const mapStateToProps = (state) => ({
@@ -16,7 +16,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchWallUpdate: (postId) => dispatch(fetchWallUpdate(postId))
+  fetchWallUpdate: (postId) => dispatch(fetchWallUpdate(postId)),
+  deletePostUpdateSuccess: (postId) => dispatch(deletePostUpdateSuccess(postId))
 });
 
 
@@ -31,8 +32,12 @@ class Timeline extends React.Component {
     this.channel.bind('activity', (id) => {
       if (id.sender === this.props.currentUserId) return null
       console.log('NOT SENT FROM CURRENT USER');
-
       this.props.fetchWallUpdate(id.id);
+    });
+    this.channel.bind('delete-post', (id) => {
+      if (id.sender === this.props.currentUserId) return null
+      console.log('NOT SENT FROM CURRENT USER');
+      this.props.deletePostUpdateSuccess(id.id);
     });
   }
 
@@ -48,6 +53,11 @@ class Timeline extends React.Component {
       if (id.sender === this.props.currentUserId) return null
       console.log('NOT SENT FROM CURRENT USER');
       this.props.fetchWallUpdate(id.id);
+    });
+    this.channel.bind('delete-post', (id) => {
+      if (id.sender === this.props.currentUserId) return null
+      console.log('NOT SENT FROM CURRENT USER');
+      this.props.deletePostUpdateSuccess(id.id);
     });
   }
 

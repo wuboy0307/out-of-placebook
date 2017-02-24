@@ -24,6 +24,14 @@ export const selectFriendRequests = ({ friends }) => {
     return [];
   }
 };
+export const selectFriends = ({ friends }) => {
+  let currentFriends = friends.friends;
+  if (currentFriends) {
+    return Object.keys(currentFriends).map(key => parseInt(key));
+  } else {
+    return [];
+  }
+};
 
 // export const selectNewsfeedPosts = ({ newsfeed }) => {
 //   if (!newsfeed) return [];

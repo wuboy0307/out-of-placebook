@@ -9,7 +9,7 @@ import { CREATE_SINGLE_COMMENT_SUCCESS,
         FETCH_SINGLE_SHARED_POST_SUCCESS,
         FETCH_WALL_UPDATE_SUCCESS,
         DELETE_POST_UPDATE_SUCCESS } from '../actions/post_actions';
-import { FETCH_NEWSFEED_SUCCESS } from '../actions/newsfeed_actions';
+import { FETCH_NEWSFEED_SUCCESS, FETCH_NEWSFEED_UPDATE_SUCCESS } from '../actions/newsfeed_actions';
 import merge from 'lodash/merge';
 
 const _initialState = { sharedPosts: {} };
@@ -26,9 +26,10 @@ const postsReducer = ( oldState = _initialState, action) => {
       return merge({}, _initialState, action.post.posts);
 
     case DELETE_POST_UPDATE_SUCCESS:
-      delete newState[action.postId]
+      delete newState[action.postId];
       return newState;
 
+    case FETCH_NEWSFEED_UPDATE_SUCCESS:
     case FETCH_WALL_UPDATE_SUCCESS:
       let posts = action.posts.posts;
       let key = parseInt(Object.keys(posts)[0]);

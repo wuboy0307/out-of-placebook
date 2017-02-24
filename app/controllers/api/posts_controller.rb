@@ -16,6 +16,8 @@ class Api::PostsController < ApplicationController
       Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {sender: user.id})
       Pusher.trigger("wall-notifications-#{@post.wall_id}", 'activity', {id: @post.id, sender: user.id})
 
+      Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @post.id, wall_id: @post.wall_id})
+
       render :create
     else
       render json: @post.errors.full_messages, status: 422

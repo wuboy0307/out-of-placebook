@@ -4,7 +4,7 @@ class CoverPhoto extends React.Component {
   render () {
     return(
         <img className="cover-photo"
-          src={ this.props.photoUrl || `/assets/coverphoto.jpg`} onClick={this.props.callback}/>
+          src={ this.props.photoUrl} onClick={this.props.callback}/>
     );
   }
 }

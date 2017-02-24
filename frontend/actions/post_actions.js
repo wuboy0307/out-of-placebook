@@ -16,6 +16,14 @@ export const FETCH_SINGLE_POST_FAILURE = "FETCH_SINGLE_POST_FAILURE";
 export const FETCH_SINGLE_POST_SUCCESS = "FETCH_SINGLE_POST_SUCCESS";
 export const FETCH_SINGLE_SHARED_POST_FAILURE = "FETCH_SINGLE_SHARED_POST_FAILURE";
 export const FETCH_SINGLE_SHARED_POST_SUCCESS = "FETCH_SINGLE_SHARED_POST_SUCCESS";
+export const FETCH_WALL_UPDATE_SUCCESS = "FETCH_WALL_UPDATE_SUCCESS";
+
+
+
+export const fetchWallUpdateSucess = posts => ({
+  type: FETCH_WALL_UPDATE_SUCCESS,
+  posts
+});
 
 export const createSingleCommentSuccess = comment => ({
   type: CREATE_SINGLE_COMMENT_SUCCESS,
@@ -133,6 +141,11 @@ export const createSingleCommentRequest = comment => dispatch => (
 export const fetchSinglePostRequest = postId => dispatch => (
   APIUtil.getPost(postId)
     .then(data => dispatch(fetchSinglePostSuccess(data)),
+      err => dispatch(fetchSinglePostFailure(err.responseJSON)))
+);
+export const fetchWallUpdate = postId => dispatch => (
+  APIUtil.getPost(postId)
+    .then(data => dispatch(fetchWallUpdateSucess(data)),
       err => dispatch(fetchSinglePostFailure(err.responseJSON)))
 );
 

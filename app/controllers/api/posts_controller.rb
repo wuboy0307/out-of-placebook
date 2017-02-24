@@ -13,7 +13,8 @@ class Api::PostsController < ApplicationController
     end
     if @post.save
       @user = User.find(params[:post][:wall_id])
-      Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {})
+      Pusher.trigger("notifications-#{@post.wall_id}", 'new-notification', {sender: user.id})
+      Pusher.trigger("wall-notifications-#{@post.wall_id}", 'activity', {id: @post.id, sender: user.id})
 
       render :create
     else

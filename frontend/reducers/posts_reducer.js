@@ -6,7 +6,8 @@ import { CREATE_SINGLE_COMMENT_SUCCESS,
         DESTROY_SINGLE_POST_SUCCESS,
         EDIT_SINGLE_POST_SUCCESS,
         FETCH_SINGLE_POST_SUCCESS,
-        FETCH_SINGLE_SHARED_POST_SUCCESS } from '../actions/post_actions';
+        FETCH_SINGLE_SHARED_POST_SUCCESS,
+        FETCH_WALL_UPDATE_SUCCESS } from '../actions/post_actions';
 import { FETCH_NEWSFEED_SUCCESS } from '../actions/newsfeed_actions';
 import merge from 'lodash/merge';
 
@@ -22,6 +23,17 @@ const postsReducer = ( oldState = _initialState, action) => {
 
     case FETCH_SINGLE_POST_SUCCESS:
       return merge({}, _initialState, action.post.posts);
+
+    case FETCH_WALL_UPDATE_SUCCESS:
+      let posts = action.posts.posts;
+      let key = parseInt(Object.keys(posts));
+      let post = posts[key];
+      if (newState[key]) {
+        newState[key] = post;
+      } else {
+        newState.key = post;
+      }
+      return newState;
 
     case FETCH_NEWSFEED_SUCCESS:
       return merge({}, _initialState, action.posts.posts);
@@ -99,6 +111,7 @@ const postsReducer = ( oldState = _initialState, action) => {
 
     case EDIT_SINGLE_POST_SUCCESS:
       const post_id = Object.keys(action.post);
+
       newState[post_id] = action.post[post_id];
       return newState;
 

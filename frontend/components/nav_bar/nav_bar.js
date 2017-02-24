@@ -130,10 +130,10 @@ class NavBar extends React.Component {
        {this.props.messages.chats.map((el, idx) => {
         return(
           <div onClick={this.fetchChat(el.channelId)} key={idx}>
-          <li className={el.numUnseenMessages > 0 ? 'message-list-item-seen' : 'message-list-item'}>
+          <li className={el.numUnseenMessages > 0 ? 'message-list-item' : 'message-list-item-seen'}>
             <img className="user-pic-flyout" src={el.lastMessageAvatar}/>
             <div className="flyout-item-body">
-              <div className="flyout-item-text">{el.channelText} {el.numUnseenMessages ? `(${el.numUnseenMessages})` : null}</div>
+              <div className="flyout-item-text">{el.channelText} {el.numUnseenMessages > 0 ? `(${el.numUnseenMessages})` : null}</div>
               <div className="flyout-item-text">{el.lastMessage}</div>
               <div className="flyout-item-timestamp">{el.lastMessageTime}</div>
             </div>

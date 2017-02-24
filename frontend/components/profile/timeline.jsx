@@ -4,7 +4,7 @@ import CreatePost from '../post/create_post';
 import PostItem from '../post/post_item';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { selectPosts } from '../../reducers/selectors';
+import { selectPosts, selectFriends } from '../../reducers/selectors';
 import { fetchSingleProfileRequest } from '../../actions/profile_actions';
 import { fetchWallUpdate, deletePostUpdateSuccess } from '../../actions/post_actions';
 
@@ -12,7 +12,8 @@ import { fetchWallUpdate, deletePostUpdateSuccess } from '../../actions/post_act
 const mapStateToProps = (state) => ({
   posts: selectPosts(state),
   sharedPosts: state.posts.sharedPosts,
-  currentUserId: state.auth.currentUser.id
+  currentUserId: state.auth.currentUser.id,
+  friends: selectFriends(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -23,6 +24,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 class Timeline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderTimelineMain = this.renderTimelineMain.bind(this);
+  }
 
   componentDidMount(){
     this.pusher = new Pusher('40464ec5305ef59a7c32', {
@@ -72,16 +77,25 @@ class Timeline extends React.Component {
     });
   }
 
+  renderTimelineMain() {
+    if (!this.props.friends) return null
+    // debugger
+    if (this.props.currentUserId != parseInt(this.props.params.profileId) && !this.props.friends.includes(parseInt(this.props.params.profileId))) return null
+    return(
+      <div className="timeline-main">
+        <CreatePost profileId={this.props.params.profileId}/>
+        { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
+      </div>
+    );
+  }
+
 
   render () {
 
     return(
       <div className="timeline">
           <TimelineSideBar />
-          <div className="timeline-main">
-            <CreatePost profileId={this.props.params.profileId}/>
-            { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
-          </div>
+          { this.renderTimelineMain() }
       </div>
     );
   }

@@ -101,7 +101,7 @@ class User < ApplicationRecord
 
 	has_many :messages, class_name: 'Message', foreign_key: :sender_id
 
-	has_many :channel_subs, class_name: 'ChannelSub', foreign_key: :participant_id
+	has_many :channel_subs, class_name: 'ChannelSub', foreign_key: :participant_id, dependent: :destroy
 	has_many :channels, through: :channel_subs, source: :channel
 
   has_many :likes, class_name: 'Like', foreign_key: :liker_id, dependent: :destroy

@@ -195,7 +195,7 @@ OKAY ITS HAPPENING
 EVERYBODY STAY CALM"]
 
 [donald, sean, hillary, matthew, jennifer, taylor].each do |u|
-  # add_profile_pics(u)
+  add_profile_pics(u)
   own_posts(u, eval("#{u.fname.downcase}_own_posts"))
 end
 

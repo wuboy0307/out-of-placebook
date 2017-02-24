@@ -7,9 +7,10 @@ const friendReducer = (oldState = { notificationCount: 0 }, action) => {
   Object.freeze(action);
   let newState = merge({}, oldState);
   switch(action.type) {
-    
+
     case FETCH_FRIENDS_SUCCESS:
-      newState = merge({}, newState, action.friends);
+      newState = action.friends;
+      newState.notificationCount = oldState.notificationCount;
       return newState;
 
     case FETCH_FRIEND_COUNT_SUCCESS:

@@ -25,6 +25,7 @@ class Api::FriendsController < ApplicationController
     if @friendship.save
       # DO NOT USE BELOW LINE (DELETE WHEN DONE)
       # Friendship.create!(user_id: target_user.id, friend_id: user.id)
+      Pusher.trigger("notifications-#{target_user.id}", 'new-friend-notification', {})
       render :index
     else
       render json: @friendship.errors.full_messages, status: 422
@@ -49,6 +50,8 @@ class Api::FriendsController < ApplicationController
       f = Friendship.find_or_create_by(user_id: user.id, friend_id: params[:friend][:target_id])
       f.completed = true
       f.save!
+      Pusher.trigger("notifications-#{user.id}", 'new-friend-notification', {})
+      Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
     when 'reject'
       @friendship.destroy
     else
@@ -81,7 +84,14 @@ class Api::FriendsController < ApplicationController
   end
 
   def count
-    render json: {count: User.first.friend_notification_count}
+    user = current_user
+    count = user.friend_notification_count
+    user.last_friend_fetch = Time.now
+    if user.save
+      render json: {count: count}
+    else
+      render json: user.errors.full_messages
+    end
   end
 
 end

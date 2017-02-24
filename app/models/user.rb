@@ -378,7 +378,7 @@ class User < ApplicationRecord
 	end
 
 	def friend_notification_count
-		incoming_friends.where('friendships.created_at > ?', self.last_friend_fetch).length
+		incoming_friends.where('friendships.updated_at > ?', self.last_friend_fetch).length
 	end
 
 	private

@@ -6,7 +6,7 @@ import { toggleFlyout } from '../../actions/flyout_actions';
 import { fetchNotificationsRequest, fetchNotificationCountRequest,
         fetchMessageNotificationCountRequest, fetchMessagesRequest,
       fetchChatRequest } from '../../actions/notification_actions';
-import { fetchFriendCountRequest, fetchFriendsRequest } from '../../actions/friend_actions';
+import { fetchFriendCountRequest, fetchFriendsRequest, respondToFriendRequest } from '../../actions/friend_actions';
 import { logout} from '../../actions/session_actions';
 import { selectFriendRequests } from '../../reducers/selectors.js';
 
@@ -28,7 +28,8 @@ const mapDispatchToProps = (dispatch) => ({
   toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType)),
   logout: () => dispatch(logout()),
   fetchFriendCountRequest: () => dispatch(fetchFriendCountRequest()),
-  fetchFriendsRequest: () => dispatch(fetchFriendsRequest())
+  fetchFriendsRequest: () => dispatch(fetchFriendsRequest()),
+  respondToFriendRequest: (action) => dispatch(respondToFriendRequest(action))
 });
 
 
@@ -68,7 +69,9 @@ class NavBar extends React.Component {
       this.props.fetchMessageNotificationCountRequest();
     });
     channel.bind('new-friend-notification', () => {
+      console.log('received')
       this.props.fetchFriendCountRequest();
+      this.props.fetchFriendsRequest();
     });
   }
 
@@ -142,6 +145,8 @@ class NavBar extends React.Component {
   </div>
   );
   }
+
+
   renderFriends() {
     if (this.props.flyout !== 'friends') {
       return null;
@@ -159,8 +164,8 @@ class NavBar extends React.Component {
             <div className="flyout-friend-body">
               <div className="flyout-friend-name">{el.fullName}</div>
               <div className="flyout-item-buttons">
-                <div className="flyout-confirm">Confirm</div>
-                <div className="flyout-delete">Delete Request</div>
+                <div className="flyout-confirm" onClick={() => this.props.respondToFriendRequest({type:'accept', target_id: el.id})}>Confirm</div>
+                <div className="flyout-delete" onClick={() => this.props.respondToFriendRequest({type:'reject', target_id: el.id})}>Delete Request</div>
               </div>
             </div>
           </li>

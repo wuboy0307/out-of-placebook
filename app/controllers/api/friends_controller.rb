@@ -51,20 +51,18 @@ class Api::FriendsController < ApplicationController
       f = Friendship.find_or_create_by(user_id: user.id, friend_id: params[:friend][:target_id])
       f.completed = true
       f.save!
-      Pusher.trigger("notifications-#{user.id}", 'new-friend-notification', {})
-      Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
     when 'reject'
       @friendship = Friendship.find_by(user_id: params[:friend][:target_id], friend_id: user.id)
       @friendship.destroy
     when 'cancel'
       @friendship = Friendship.find_by(friend_id: params[:friend][:target_id], user_id: user.id)
       @friendship.destroy
-      Pusher.trigger("notifications-#{user.id}", 'new-friend-notification', {})
-      Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
     else
       render json: ['Invalid request type!'], status: 422
       return
     end
+    Pusher.trigger("notifications-#{user.id}", 'new-friend-notification', {})
+    Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
 
     render :index
   end

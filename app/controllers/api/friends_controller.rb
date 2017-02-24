@@ -37,14 +37,15 @@ class Api::FriendsController < ApplicationController
   # THAT user is in the user_id col.
   def update
     user = current_user
-    @friendship = Friendship.find_by(user_id: params[:friend][:target_id], friend_id: user.id)
-    unless user.incoming_friendships.include?(@friendship)
-      render json: ["You don't have any pending requests with that id!"]
-      return
-    end
+
+    # unless user.incoming_friendships.include?(@friendship)
+    #   render json: ["You don't have any pending requests with that id!"]
+    #   return
+    # end
 
     case params[:friend][:type]
     when 'accept'
+      @friendship = Friendship.find_by(user_id: params[:friend][:target_id], friend_id: user.id)
       @friendship.completed = true
       @friendship.save!
       f = Friendship.find_or_create_by(user_id: user.id, friend_id: params[:friend][:target_id])
@@ -53,7 +54,13 @@ class Api::FriendsController < ApplicationController
       Pusher.trigger("notifications-#{user.id}", 'new-friend-notification', {})
       Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
     when 'reject'
+      @friendship = Friendship.find_by(user_id: params[:friend][:target_id], friend_id: user.id)
       @friendship.destroy
+    when 'cancel'
+      @friendship = Friendship.find_by(friend_id: params[:friend][:target_id], user_id: user.id)
+      @friendship.destroy
+      Pusher.trigger("notifications-#{user.id}", 'new-friend-notification', {})
+      Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
     else
       render json: ['Invalid request type!'], status: 422
       return
@@ -72,6 +79,7 @@ class Api::FriendsController < ApplicationController
 
     @friendship = Friendship.find_by(friend_id: user.id, user_id: params[:friend][:target_id])
     if @friendship.destroy
+      Pusher.trigger("notifications-#{params[:friend][:target_id]}", 'new-friend-notification', {})
       render :index
     else
       render @friendship.errors.full_messages, status: 422

@@ -42,7 +42,8 @@ class ProfileNavBar extends React.Component {
       friendObj = {target_id: profileId};
       this.props.removeFriendRequest(friendObj);
     } else if (friends.outgoingFriends[profileId]) {
-      return(<button className="profile-friend-button">Cancel Request</button>);
+      friendObj = {target_id: profileId, type: 'cancel'};
+      this.props.respondToFriendRequest(friendObj);
     } else if (friends.incomingFriends[profileId])  {
       friendObj = {target_id: profileId, type: 'accept'};
       this.props.respondToFriendRequest(friendObj);

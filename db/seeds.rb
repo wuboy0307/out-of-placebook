@@ -186,6 +186,8 @@ PS Donald Trump, you're a bad dancer",
 "Louisville has lost a great legend, a great athlete and a great human. Thank you Muhammed Ali for sharing your talent and heart with the world.
 --Jen"]
 
+mark_own_posts = []
+
 taylor_own_posts = ["Thanks Houston 💋
 
 And Versace for making this outfit situation 💕💕💕 Getty Images Entertainment",

@@ -230,10 +230,10 @@ class NavBar extends React.Component {
             <div className="nav-link-home"><Link to="/newsfeed">Home</Link></div>
             <div className="notifications-bar">
               <div><i className="fa fa-users notification" aria-hidden="true" onClick={this.clickFriendNotificationButton}>
-                <div className="small-notification-count">{this.props.friends.notificationCount}</div>
+                {this.props.friends.notificationCount > 0 ? <div className="small-notification-count">{this.props.friends.notificationCount}</div> : null}
               </i></div>
               <div><i className="fa fa-comments notification" aria-hidden="true" onClick={this.clickMessageNotificationButton}>
-                <div className="small-notification-count">{this.props.messages.numUnseenChats}</div>
+                {this.props.messages.numUnseenChats > 0 ? <div className="small-notification-count">{this.props.messages.numUnseenChats}</div> : null}
               </i></div>
 
 
@@ -247,7 +247,7 @@ class NavBar extends React.Component {
 
 
               <div><i className="fa fa-globe notification" aria-hidden="true" onClick={this.clickNotificationButton}>
-                  <div className="small-notification-count">{this.props.notifications.count}</div>
+                  {this.props.notifications.count > 0 ? <div className="small-notification-count">{this.props.notifications.count}</div> : null}
                   </i></div>
 
                 <div className="logout"><i className="fa fa-sign-out" aria-hidden="true" onClick={this.logout}></i></div>

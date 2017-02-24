@@ -184,7 +184,7 @@ class User < ApplicationRecord
       .where(activity_source_type: ['Comment','Like'])
       .where(activity_parent_type: ['Comment'])
       .order(created_at: :desc)
-
+		return [] if first.empty? && second.empty?
     first.or(second).order(created_at: :desc).limit(n).last.created_at
   end
 

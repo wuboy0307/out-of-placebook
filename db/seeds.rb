@@ -100,6 +100,8 @@
 #   Message.create!(sender_id: u.id, channel_id: c.id, body: Faker::Hacker.say_something_smart)
 # end
 
+User.destroy_all
+
 def own_posts(user, text_array)
   text_array.reverse.each do |post|
     Post.create!(wall_id: user.id, author_id: user.id, body: post)
@@ -119,8 +121,8 @@ def create_friendship(user_one, user_two)
 end
 
 # ---- DONALD TRUMP
-mark = User.first
-# mark = User.create!(fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
+# mark = User.first
+mark = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
 donald = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Donald", lname: "Trump", email: "donald@whitehouse.gov", password: "tinyhands", intro: "Nobody knows how to run a country better than me. Believe me. I know the best people. We're going to MAKE AMERICA GREAT AGAIN.")
 sean = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Sean", lname: "Spicer", email: "sean@whitehouse.gov", password: "password", intro: "Speaking for a nation.")
 hillary = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Hillary", lname: "Clinton", email: "hillary@privateemailserver.gov", password: "password", intro: "Hillary Clinton is an American politician who was the 67th United States Secretary of State.")
@@ -192,15 +194,17 @@ And Versace for making this outfit situation 💕💕💕 Getty Images Entertain
 OKAY ITS HAPPENING
 EVERYBODY STAY CALM"]
 
-# [donald, sean, hillary, matthew, jennifer, taylor].each do |u|
-#   add_profile_pics(u)
-#   own_posts(u, eval("#{u.fname.downcase}_own_posts"))
-# end
+[donald, sean, hillary, matthew, jennifer, taylor].each do |u|
+  # add_profile_pics(u)
+  own_posts(u, eval("#{u.fname.downcase}_own_posts"))
+end
 
-create_friendship(mark,donald)
+# create_friendship(mark,donald)
 create_friendship(mark,sean)
 create_friendship(mark,jennifer)
 create_friendship(mark,taylor)
+create_friendship(mark,matthew)
+create_friendship(mark,hillary)
 create_friendship(donald,sean)
 create_friendship(hillary,matthew)
 create_friendship(hillary,jennifer)
@@ -208,3 +212,53 @@ create_friendship(hillary,taylor)
 create_friendship(matthew,jennifer)
 create_friendship(matthew,taylor)
 create_friendship(jennifer,taylor)
+
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/donald/ivanka_insta.jpg", user_id: donald.id)
+post = Post.find_by('body ILIKE ?', '%ivanka%')
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/donald/abe.jpg", user_id: donald.id)
+post = Post.find_by('body ILIKE ?', '%andrews%')
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/jennifer/photo.jpg", user_id: jennifer.id)
+post = Post.find_by('body ILIKE ?', '%budapest%')
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/matthew/photo1.jpg", user_id: matthew.id)
+post = Post.find_by('body ILIKE ?', '%olympics%')
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/taylor/photo.png", user_id: taylor.id)
+post = taylor.posts.last
+post.content = photo
+post.save!
+
+Post.create!(wall_id: mark.id, author_id: taylor.id, body: 'Love your site!')
+Post.create!(wall_id: mark.id, author_id: matthew.id, body: 'How do I log out?')
+Comment.create!(author_id: jennifer.id, post_id: Post.last.id, body: 'Click the logout button... duhhh...')
+Comment.create!(author_id: matthew.id, post_id: Post.last.id, parent_id: Comment.last.id, body: "It doesn't work")
+Like.create!(liker_id: taylor.id, likeable: Post.last)
+Like.create!(liker_id: matthew.id, likeable: Post.last)
+Like.create!(liker_id: donald.id, likeable: Post.last)
+Like.create!(liker_id: taylor.id, likeable: Comment.first)
+Like.create!(liker_id: matthew.id, likeable: Comment.last)
+Like.create!(liker_id: donald.id, likeable: Comment.first)
+
+channel = Channel.create!
+ChannelSub.create!(participant_id: taylor.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: mark.id, channel_id: channel.id)
+Message.create!(sender_id: taylor.id, channel_id: channel.id, body: "Hey whats up?")
+Message.create!(sender_id: taylor.id, channel_id: channel.id, body: "Are you there??")
+
+channel = Channel.create!
+ChannelSub.create!(participant_id: taylor.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: mark.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: jennifer.id, channel_id: channel.id)
+Message.create!(sender_id: taylor.id, channel_id: channel.id, body: "Hey guys wanna come to my concert next week?")
+Message.create!(sender_id: jennifer.id, channel_id: channel.id, body: "SURE!")

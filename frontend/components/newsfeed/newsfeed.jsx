@@ -6,7 +6,8 @@ import { fetchNewsfeedRequest, fetchNewsfeedUpdateRequest, deletePostUpdateSucce
 
 const mapStateToProps = (state) => ({
   posts: selectPosts(state),
-  friends: selectFriends(state)
+  friends: selectFriends(state),
+  currentUserId: state.auth.currentUser.id
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -31,7 +32,7 @@ class NewsFeed extends React.Component {
     this.channel = this.pusher.subscribe(`newsfeed`);
     this.channel.bind('newsfeed-activity', (info) => {
 
-      if (!this.props.friends.includes(info.wall_id)) return null
+      if (!this.props.friends.includes(info.wall_id) && info.wall_id != this.props.currentUserId) return null
       console.log('NOT SENT FROM CURRENT USER');
       this.props.fetchNewsfeedUpdateRequest(info.post_id);
     });

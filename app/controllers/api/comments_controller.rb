@@ -12,6 +12,8 @@ class Api::CommentsController < ApplicationController
 
       Pusher.trigger("wall-notifications-#{@comment.post.wall_id}", 'activity', {id: @comment.post_id, sender: @user.id})
 
+
+      Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @comment.post_id, wall_id: @comment.post.wall_id})
       unless @comment.parent_id.nil?
         Pusher.trigger("notifications-#{@comment.parent.author_id}", 'new-notification', {sender: @user.id})
       end

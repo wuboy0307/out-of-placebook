@@ -23,11 +23,14 @@ class Api::LikesController < ApplicationController
         Pusher.trigger("notifications-#{@target.author_id}", 'new-notification', {sender: user.id})
 
         Pusher.trigger("wall-notifications-#{@target.wall_id}", 'activity', {id: @target.id, sender: user.id})
+
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @target.id, wall_id: @target.wall_id})
         render json: { type: 'post', postId: @target.id}
       elsif params[:like][:type] == "comment"
         Pusher.trigger("notifications-#{@target.author_id}", 'new-notification', {sender: user.id})
 
         Pusher.trigger("wall-notifications-#{@target.post.wall_id}", 'activity', {id: @target.post_id, sender: user.id})
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @target.post_id, wall_id: @target.post.wall_id})
         render json: { type: 'comment', commentId: @target.id,
           parentId: @target.parent_id, postId: @target.post_id}
       end
@@ -55,12 +58,12 @@ class Api::LikesController < ApplicationController
     if @like.destroy
       if params[:like][:type] == "post"
         Pusher.trigger("wall-notifications-#{@target.wall_id}", 'activity', {id: @target.id, sender: user.id})
-
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @target.id, wall_id: @target.wall_id})
         render json: { type: 'post', postId: @target.id}
 
       elsif params[:like][:type] == "comment"
         Pusher.trigger("wall-notifications-#{@target.post.wall_id}", 'activity', {id: @target.post_id, sender: user.id})
-
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @target.post.post_id, wall_id: @target.post.wall_id})
         render json: { type: 'comment', commentId: @target.id,
           parentId: @target.parent_id, postId: @target.post_id}
       end

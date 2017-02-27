@@ -82,7 +82,7 @@ class NavBar extends React.Component {
 
   clickNotificationButton(e) {
     e.stopPropagation();
-    if (this.props.toggleFlyout !== 'notifications') {
+    if (this.props.flyout !== 'notifications') {
       this.props.fetchNotificationsRequest().then(() => {
         this.props.toggleFlyout('notifications');
       });
@@ -93,7 +93,7 @@ class NavBar extends React.Component {
 
   clickMessageNotificationButton(e) {
     e.stopPropagation();
-    if (this.props.toggleFlyout !== 'messages') {
+    if (this.props.flyout !== 'messages') {
       this.props.fetchMessagesRequest().then(() => {
         this.props.toggleFlyout('messages');
       });
@@ -104,7 +104,7 @@ class NavBar extends React.Component {
 
   clickFriendNotificationButton(e) {
     e.stopPropagation();
-    if (this.props.toggleFlyout !== 'friends') {
+    if (this.props.flyout !== 'friends') {
       this.props.fetchFriendsRequest().then(() => {
         this.props.toggleFlyout('friends');
       });
@@ -151,12 +151,25 @@ class NavBar extends React.Component {
     if (this.props.flyout !== 'friends') {
       return null;
     }
+    if (this.props.friendRequests.length < 1) {
+      return(<div className="friends-flyout">
+        <div className="flyout-header">
+          Friend Requests
+        </div>
+        <li className='flyout-list-item'>
+          <div className="flyout-friend-body">
+            No friend requests.
+          </div>
+        </li>
+      </div>);
+    }
 
     return (<div className="friends-flyout">
       <div className="flyout-header">
         Friend Requests
       </div>
       <div className="flyout-list">
+
        {this.props.friendRequests.map((el) => {
         return(
           <li className='flyout-list-item' key={el.id}>

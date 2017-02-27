@@ -20,20 +20,23 @@ class Home extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (this.props.params.profileId !== newProps.params.profileId) {
-      this.props.fetchSingleProfileRequest(newProps.params.profileId)
+      this.props.fetchSingleProfileRequest(newProps.params.profileId);
     }
   }
 
   componentDidMount() {
-    this.props.fetchSingleProfileRequest(this.props.params.profileId)
+    this.props.fetchSingleProfileRequest(this.props.params.profileId);
 
   }
 
   render() {
-    if (!this.props.profile.id) {
+    const profile = this.props.profile;
+    if (!profile.id) {
       return null;
     }
-    const profile = this.props.profile;
+    if (profile.id != this.props.params.profileId) {
+      return null;
+    }
     return(
       <div className="home">
         <ProfileNavBar profile={profile}/>

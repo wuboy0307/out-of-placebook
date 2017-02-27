@@ -7,6 +7,10 @@ import Modal from './modal/modal';
 import ClickListener from './flyout/click_listener';
 import { fetchFriendsRequest } from '../actions/friend_actions';
 
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser
+});
+
 const mapDispatchToProps = (dispatch) => ({
   fetchFriendsRequest: () => dispatch(fetchFriendsRequest())
 });
@@ -18,6 +22,10 @@ class App extends React.Component {
 
 
   render() {
+    if (!this.props.currentUser) {
+      return null;
+    }
+
     return(
       <div>
         <Modal />
@@ -36,6 +44,6 @@ class App extends React.Component {
 
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);

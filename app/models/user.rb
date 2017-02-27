@@ -294,7 +294,7 @@ class User < ApplicationRecord
       .where(user_id: self.friends)
       .where.not('activities.activity_source_type = ? AND activities.activity_parent_type = ?', 'Like', 'Comment')
       .where.not(activity_source_type: 'Friendship')
-      .limit(10)
+      .limit(20)
       .order(created_at: :desc)
   end
 
@@ -393,9 +393,9 @@ class User < ApplicationRecord
         FROM activities
         WHERE activities.user_id != #{self.id}
         GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedact
-    ON activities.activity_source_type = groupedact.activity_source_type
+		ON activities.activity_parent_id = groupedact.activity_parent_id
+    AND activities.activity_source_type = groupedact.activity_source_type
     AND activities.activity_parent_type = groupedact.activity_parent_type
-    AND activities.activity_parent_id = groupedact.activity_parent_id
     AND activities.created_at = groupedact.maxcreated"
     sql
   end
@@ -405,8 +405,8 @@ class User < ApplicationRecord
         (SELECT activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
         FROM activities
         GROUP BY activity_parent_type, activity_parent_id) groupedact
-    ON activities.activity_parent_type = groupedact.activity_parent_type
-    AND activities.activity_parent_id = groupedact.activity_parent_id
+		ON activities.activity_parent_id = groupedact.activity_parent_id
+    AND activities.activity_parent_type = groupedact.activity_parent_type
     AND activities.created_at = groupedact.maxcreated"
     sql
   end

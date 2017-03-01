@@ -1,8 +1,17 @@
 ```js
 {
+
   auth: {
-    loggedIn: false,
-    currentUserId: null,
+    currentUser: {
+      id: 1,
+      fname: "Mark",
+      lname: "Jones",
+      email: "mark@gmail.com",
+      avatarHeader: "image.jpg",
+      avatarXS: "image.jpg",
+      avatarXXS: "image.jpg",
+      avatarXXXS: "image.jpg"
+    },
     errors: {
       signUpFormErrors: {
         username: [],
@@ -15,119 +24,142 @@
     }
   },
 
-  profiles: {
-    currentProfileId: 1,
-
-    profileList: {
-      1: {
-        id: 1,
-        username: 'naz',
-        fname: 'Naz',
-        lname: 'Ahmed',
-        intro: 'Learning how to code',
-        email: 'test@email.com',
-        home: 'New York, NY',
-        work: 'App Academy',
-        description: 'Student in NYC learning how to code at AA.',
-        friendIds: [2, 43, 12],
-      },
-      2: { ... }
-    },
-  },
-
-  posts: [
-    {
-      id: 1,
-      wallId: 1,
-      authorId: 1,
-      authorFullName: 'Mark Zuckerberg',
-      createdAt: #{Date in UTC Format},
-      body "Check out this website",
-      parentId: null,
-      content: {
-        id: 5
-        type: url,
-        title: 'Welcome to Google'.
-        description: 'Superfast search engine',
-        image: 'http://google.com/image.png'
-      },
-      comments: [
-        {
-          id: 6,
-          authorId: 1,
-          postId: 1,
-          authorFullName: 'Bill Gates',
-          body: 'My least favourite site!',
-          comments: [
-            {
-              id: 12,
-              authorId: 2,
-              postId: 1,
-              authorFullName: 'Steve Jobs',
-              body: 'So bad...',
-            }
-          ]
-        }
-      ]
+  profile: {
+    id: 17,
+    avatarHeader: "image.jpg",
+    avatarXS: "image.jpg",
+    avatarXXS: "image.jpg",
+    avatarXXXS: "image.jpg",
+    description: null,
+    fname: "Todd",
+    lname: "Portman",
+    home: "New York",
+    intro: "Software dev living in NYC",
+    photos: [
+      id: 4,
+      imageUrlOriginal: "photoFullSize.jpg",
+      thumbUrl: "imageThumb.jpg"
+    ],
+    friendIds: [2,44,72],
+    friends : {
+      id: 2
+      fullName: "Jane Doe",
+      avatarUrlOriginal: "avatarFullSize.jpg",
+      thumbUrl: "avatarSmall.jpg",
     },
     { ... }
-  ],
-
-  comments: {
-    1: {
-      author_id: 1,
-      post_id: 23,
-      body: "love this post!",
-      parent_id: null
-    },
-    2: { ... }
   },
 
-  likes: {
-    1: {
-      content_id: 4,
-      content_type: 'post',
-      author_id: 1
+  posts: {
+    27: {
+      id: 27,
+      wallId: 4,
+      authorId: 2,
+      authorFullName: "Jane Doe",
+      authorAvatarUrl: "avatar.jpg",
+      createdAt: "10 minutes",
+      body: "Congratulations!"
+      wallIdFullName: "Mark Johnson",
+      contentType: null,
+      content: null,
+      numLikes: 2,
+      userLikesPost: true,
+      likeText: "You and Jane Doe like this."
+      comments: {
+        52: {
+          id: 52,
+          authorId: 3
+          postId: 27
+          authorFullName: "David Lu",
+          authorAvatarUrl: "avatar.jpg",
+          userLikesComment: false,
+          body: "Well done!"
+          createdAt: "2 minutes"
+          numLikes: 1
+          childComments: { ... }
+        }
+      }
     },
-    2: {
-      content_id: 4,
-      content_type: 'comment',
-      author_id: 1
+    32: { ... }
+  },
+
+  friends: {
+    incomingFriends: {
+      2: {
+        id: 2,
+        fullName: "Jane Doe",
+        avatar: "avatar.jpg",
+        friendIds: [4,7,11,23]
+      },
+      6: {
+        id: 6,
+        fullName: "Bill Johnson",
+        avatar: "avatar.jpg",
+        friendIds: [9,44,54]
+      }
     },
-  }
+    outgoingFriends: {
+      7: { ... }
+    },
+    friends: {
+      9: { ... },
+      11: { ... },
+      12: { ... },
+    },
+    notificationCount: 2
+  },
+
+  messages: {
+    chats: [
+      {
+        channelId: 4,
+        channelText: "Tim Jones",
+        lastMessage: "Where are you?",
+        lastMessageAvatar: "avatar.jpg",
+        lastMessageFullName: "Mark Jones",
+        lastMessageTime: "2 days",
+        numUnseenMessages: 0
+      },
+      { ... }
+    ],
+    currentChat: {
+      channelId: 2,
+      channelText: 'Group Chat with 2 Others',
+      numUnseenChats: 0,
+      messages: [
+        {
+          senderFirstName: "Taylor",
+          body: "Hey",
+          authorId: 7,
+          authorAvatar: "avatar.jpg",
+          timestamp: "2017-02-27T19:38:37.785Z"
+        },
+        { ... }
+      ]
+    }
+  },
 
   notifications: {
-    1: {
-      authorId: 5,
-      type: text,
-      text: "Sarah liked John's recent post",
-      authorImgSrc: '/sarah.jpg',
-      triggerURL: '/john',
-      seen: true
-    },
-    2: {
-      authorId: 7,
-      type: friendRequest,
-      authorImgSrc: '/john.jpg',
-      triggerURL: '/friendrequests',
-      seen: false
-    }
+    count: 12,
+    list: [
+      ... ,
+      ...
+    ]
   },
 
-  friendRequests: {
-    requestsSent: [54,33,29],
+  search: {
+    2: {
+      id: 2,
+      avatarUrl: "avatar.jpg",
+      fullName: "Jane Doe",
+      mutualFriends: 2
+    },
+    3: { ... }
+  },
 
-    incomingRequests: {
-      1 : {
-        friend_id: 5,
-        pending: true
-      }
-    }
+  flyout: {
+    flyout: 'notifications',
+    data: null
   }
-
-  ui: {
-    popupActive: false
-  }
-
-
+  
 }

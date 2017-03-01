@@ -32,7 +32,14 @@ Users receive messages on these channels which then trigger appropriate actions 
 
 I use a join table which is polymorphic on both sides to track users' activities. This allows for the tracking of different types of source events (such as comments/likes) on different types of parents (such as posts/comments). This means a `Post` on a `Wall` can be tracked in the same table as a `Like` on a `Comment`. To facilitate fast lookup, this `Activites` table is indexed on both `[user_id, created_at]` which allows for fast collation of newsfeed-related items, and `[parent_id, parent_type, source_type, created_at]` which allows for fast collation of notification-related items.
 
+Generating notifications for a user presented two main challenges:
+1. Only the most recent activity should show up for each parent. For example, if five users `liked` the same post, only one notification should be generated (for the most recent like).
+
+2. 
+
 * Real-time messaging between users.
+Messaging is implemented via `messages` which belong to `channels`. Users are subscribed to `channels` via the `channel_subs` join table.
+
 * Photo upload with automatic image resizing.
 * Automatic parsing of links in posts and appropriate thumbnail display.
 * Sharing of posts.

@@ -35,10 +35,36 @@ I use a join table which is polymorphic on both sides to track users' activities
 Generating notifications for a user presented two main challenges:
 1. Only the most recent activity should show up for each parent. For example, if five users `liked` the same post, only one notification should be generated (for the most recent like).
 
-2. 
+2.
 
 * Real-time messaging between users.
-Messaging is implemented via `messages` which belong to `channels`. Users are subscribed to `channels` via the `channel_subs` join table.
+Messaging is implemented via `messages` which belong to `channels`. Users are subscribed to `channels` via the `channel_subs` join table. When the 'Message' button is clicked on a user's profile, the server first looks to see if there is a channel with two participants where one is the current user and the other is the user they are trying to message. If there is, it will fetch all the chat messages from this channel, otherwise it will create a new channel and subscribe both users to it. This is achieved via a self-join on the channels table:
+
+```sql
+SELECT DISTINCT *
+FROM channels
+INNER JOIN
+  (SELECT COUNT(users.id), channels.id
+  FROM channels
+  INNER JOIN channel_subs
+    ON channels.id = channel_subs.channel_id
+  INNER JOIN users
+    ON channel_subs.participant_id = users.id
+  GROUP BY channels.id
+  HAVING COUNT(users) = 2) direct_channels
+ON channels.id = direct_channels.id
+INNER JOIN channel_subs csone
+  ON direct_channels.id = csone.channel_id
+INNER JOIN users uone
+  ON csone.participant_id = uone.id
+INNER JOIN channel_subs cstwo
+  ON direct_channels.id = cstwo.channel_id
+INNER JOIN users utwo
+  ON cstwo.participant_id = utwo.id
+WHERE
+  (uone.id = user_one and utwo.id = user_two) OR (uone.id = user_two and utwo.id = user_one)
+LIMIT 1
+```
 
 * Photo upload with automatic image resizing.
 * Automatic parsing of links in posts and appropriate thumbnail display.

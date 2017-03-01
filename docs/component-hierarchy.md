@@ -1,59 +1,45 @@
-
 ## Component Hierarchy
 
 **App**
+  - Modal
   - NavBar
-  - Home
   - Newsfeed
-  - ClickCapture
+  - Home
+  - SinglePost
+    - PostItem
+  - Chatbox
+  - ClickListener
+
+**SignUpForm**
+  - SignupHeader
+  - SignupForm
 
 **Home**
   - ProfileNavBar
-  - Profile
-  - About
-  - Friends
-  - Photos
-  - LikeOverlay
+  - Timeline
 
 **ProfileNavBar**
-  - CoverImage
-  - ProfileImage
-  - Link to username
+  - CoverPhoto
   - ProfileLinkBar
-    - LinkItem (timeline)
-    - LinkItem (about)
-    - LinkItem (friends)
-    - LinkItem (photos)
-    - LinkItem (edit profile)
+    - Link (timeline)
+    - Link (about)
+    - Link (friends)
+    - Link (photos)
+    - Link (edit profile)
 
-**Profile**
-  - Timeline
-    - Sidebar
-      - IntroBox
-      - FriendsBox
-        - CardItem
-      - PhotosBox
-        - CardItem
+**Timeline**
+  - TimelineSideBar
+  - TimelineMain
     - CreatePost
-    - Posts
-      - PostHeader
-      - PostContent
-      - CommentBox
-        - CommentItem
+    - PostItem
+      - PostItem2
 
 **Newsfeed**
   - Sidebar
   - Posts
 
 **NavBar**
-  - SearchForm
-    - FriendItem
-  - NavLink (to current user profile)
-  - NavLink (to home)
-  - NotificationsBar
-    - Notifications (friends)
-    - Notifications (messages)
-    - Notifications (notifications)
+  - Search
 
 **Friends**
   - FriendItem

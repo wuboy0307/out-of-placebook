@@ -9,7 +9,7 @@ import App from './app';
 import Home from './home/home';
 import SinglePost from './post/single_post';
 import NewsFeed from './newsfeed/newsfeed';
-import SignUpForm from './signup_form/signup_form';
+import SignupForm from './signup_form/signup_form';
 
 const Root = ({ store }) => {
 
@@ -39,7 +39,7 @@ const Root = ({ store }) => {
           <Route path="/newsfeed" component={NewsFeed} />
         </Route>
 
-        <Route path="/signup" component={SignUpForm}
+        <Route path="/signup" component={SignupForm}
           onEnter={_redirectIfLoggedIn} />
 
       </Router>

@@ -23,14 +23,12 @@ class SinglePost extends React.Component {
   componentWillReceiveProps(newProps) {
     if (this.props.params.postId !== newProps.params.postId) {
       this.props.fetchSinglePostRequest(newProps.params.postId)
-        // .then(() => this.props.fetchNotificationsRequest());
     }
   }
 
 
   componentDidMount() {
     this.props.fetchSinglePostRequest(this.props.params.postId);
-      // .then(() => this.props.fetchNotificationsRequest());
   }
 
   render(){

@@ -78,7 +78,7 @@ Uploaded images are automatically cropped using the `Paperclip` gem and stored o
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using the Open Graph protocol.
 A thumbnail and description of the URL is then displayed in the `Post` next to what was originally typed.
 
-<!--- gif showing link posting --->
+![alt-text](http://i.giphy.com/l4FGpKsqKFwyK6RWM.gif "Including links in a post")
 
 ###Sharing of posts.
 Users can share each other's posts, including links and images. When sharing a post which is itself sharing another post, the original post is shared. This functionality allows for viral posts to be shared effortlessly between users as they only need to click 'Share' on any one of the posts which share the original post, or the original post itself.

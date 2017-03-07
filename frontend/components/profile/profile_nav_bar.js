@@ -16,6 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   friends: state.friends,
+  profile: state.profile,
   currentUser: state.auth.currentUser
 });
 

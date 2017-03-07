@@ -11,7 +11,7 @@ json.profile do
   json.description @user.description
   json.friendIds @user.friend_ids
   json.avatarUrl @user.avatar.url(:profile)
-  json.coverUrl @user.cover_url
+  json.coverUrl @user.cover.url(:cover)
   json.avatarHeader @user.avatar.url(:header)
   json.avatarXS @user.avatar.url(:xs)
   json.avatarXXS @user.avatar.url(:xxs)

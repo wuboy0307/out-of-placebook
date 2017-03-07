@@ -39,7 +39,7 @@ class Home extends React.Component {
     }
     return(
       <div className="home">
-        <ProfileNavBar profile={profile}/>
+        <ProfileNavBar />
         <Timeline profile={profile} />
       </div>
     );

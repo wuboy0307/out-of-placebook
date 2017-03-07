@@ -95,7 +95,7 @@ WHERE
 LIMIT 1
 ```
 
-![alt-text]("http://i.giphy.com/l1BgRXOwgjaMM9116.gif Real-time messaging between users")
+![alt-text](http://i.giphy.com/l1BgRXOwgjaMM9116.gif "Real-time messaging between users")
 
 ###Photo upload with automatic image resizing.
 Uploaded images are automatically cropped using the `Paperclip` gem and stored on AWS in a variety of different sizes. This allows for pages to always display images of the correct size and aspect ratio.

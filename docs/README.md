@@ -17,21 +17,22 @@ Out of Placebook is a single page app built using React and Redux on the fronten
 
 ##Features
 
+
 ###Authentication
   * Session authentication is handled on the backend and enforced with session tokens.
   * Automatic redirection to the login/signup page occurs when not logged in.
 
+
 ###Real-Time Fetching of Activities
 * Use of WebSockets via Pusher to enable real-time updates of new posts and updates, without having to refresh the page.
 
-![alt-text]( "Real-time post updates")
+![alt-text](http://i.giphy.com/xUPGcLqc6hGkZOGLS0.gif "Real-time post updates")
 
-Here you can see a friend's wall updating in real-time for all users when a post is created.
+Here you can see a friend's wall and notifications updating in real-time for users when a post is created.
 
 Whenever posts, comments or likes are created/edited/deleted, the relevant controller sends out WebSocket messages
 to the corresponding `wall` and `newsfeed` channels. Users subscribe to these channels when they visit another user's wall or their own newsfeed.
 Messages received on these channels then trigger AJAX actions to fetch only the post that was created or updated. This allows for users to see the most up-to-date activities in real-time without having to re-fetch everything on the page.
-
 
 
 ###Real-Time Notifications
@@ -63,8 +64,8 @@ def base_notification_query(last_search_time, source_type, parent_type, parent_i
     .where('created_at >= ?', last_search_time)
     .order(created_at: :desc).includes(:activity_parent, :activity_source)
 end
-
 ```
+
 
 ###Real-time messaging between users.
 Messaging is implemented via `messages` which belong to `channels`. Users are subscribed to `channels` via the `channel_subs` join table. When the 'Message' button is clicked on a user's profile, the server first looks to see if there is a channel with two participants where one is the current user and the other is the user they are trying to message. If there is, it will fetch all the chat messages from this channel, otherwise it will create a new channel and subscribe both users to it. This is achieved via a self-join on the channels table:
@@ -97,10 +98,12 @@ LIMIT 1
 
 ![alt-text](http://i.giphy.com/l1BgRXOwgjaMM9116.gif "Real-time messaging between users")
 
+
 ###Photo upload with automatic image resizing.
 Uploaded images are automatically cropped using the `Paperclip` gem and stored on AWS in a variety of different sizes. This allows for pages to always display images of the correct size and aspect ratio.
 
 ![alt-text](http://i.giphy.com/xUPGcISdwuu0C5kewo.gif "Image processing and real-time updating")
+
 
 ###Automatic parsing of URLs in posts.
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using the Open Graph protocol.
@@ -108,16 +111,16 @@ A thumbnail and description of the URL is then displayed in the `Post` next to w
 
 ![alt-text](http://i.giphy.com/l4FGpKsqKFwyK6RWM.gif "Including links in a post")
 
-###Sharing of posts.
-Users can share each other's posts, including links and images. When sharing a post which is itself sharing another post, the original post is shared. This functionality allows for viral posts to be shared effortlessly between users as they only need to click 'Share' on any one of the posts which share the original post, or the original post itself.
 
 ###User search box.
 I use `pgSearch` and Postgres's `trigram` module to allow for fuzzy searching. Since some names can be difficult to spell this implementation allows users to find each other even if they misspelled 'Matthew' as 'Mathew' or 'Mark' as 'Mork'.
 
 To prevent multiple hits to the server, a search is only performed once the user has stopped typing for 300ms. This is achieved by setting a timeout every time the user presses a key (and clearing any old ones that may exist), where the callback is the appropriate AJAX search request.
 
+
 ###Newsfeed showing activity of all friends.
 Users have a newsfeed which displays recent activities by all of their friends.
+
 
 ###Posts
 Posts have a polymorphic `content` column which allows for other content to be displayed in addition to the post body.
@@ -127,3 +130,7 @@ This allows for posts to display an attached picture, a preview of a URL, or ano
 ![alt-text](http://i.imgur.com/GLrnDDY.png "Image in post")
 ![alt-text](http://i.imgur.com/quPgSWr.png "Sharing of another post")
 ![alt-text](http://i.imgur.com/yeeMTf6.png "Link in posted")
+
+
+###Sharing of posts.
+Users can share each other's posts, including links and images. When sharing a post which is itself sharing another post, the original post is shared. This functionality allows for viral posts to be shared effortlessly between users as they only need to click 'Share' on any one of the posts which share the original post, or the original post itself.

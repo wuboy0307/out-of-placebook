@@ -203,74 +203,74 @@ class User < ApplicationRecord
     unparsed_notifications.each do |note, message|
       case message
       when "post_on_your_wall"
-        parsed << ["#{note.author.full_name} posted on your wall.", note.age, note.author.avatar_url, note.id]
+        parsed << ["#{note.author.full_name} posted on your wall.", note.age, note.author.avatar.url(:xs), note.id]
       when "like_on_your_post"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self
         when 1
-          parsed << ["#{note.activity_source.liker.full_name} likes your post.", note.age, note.activity_source.liker.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.liker.full_name} likes your post.", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.id]
         when 2
-          parsed << ["#{note.activity_source.liker.full_name} and 1 other like your post.", note.age, note.activity_source.liker.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.liker.full_name} and 1 other like your post.", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.id]
         else
-          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your post.", note.age, note.activity_source.liker.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your post.", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.id]
         end
 
       when "comment_on_your_post"
         num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
         case num_comments_minus_self
         when 1
-          parsed << ["#{note.activity_source.author.full_name} commented on your post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} commented on your post.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         when 2
-          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on your post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on your post.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         else
-          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others commented on your post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others commented on your post.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         end
 
       when "like_on_your_wall_post"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self
         when 1
-          parsed << ["#{note.activity_source.liker.full_name} likes a post on your wall.", note.age, note.activity_source.liker.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.liker.full_name} likes a post on your wall.", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.id]
         when 2
-          parsed << ["#{note.activity_source.liker.full_name} and 1 other like a post on your wall.", note.age, note.activity_source.liker.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.liker.full_name} and 1 other like a post on your wall.", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.id]
         else
-          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like a post on your wall.", note.age, note.activity_source.liker.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like a post on your wall.", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.id]
         end
 
       when "comment_on_your_wall_post"
         num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
         case num_comments_minus_self
         when 1
-          parsed << ["#{note.activity_source.author.full_name} commented on a post on your wall.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} commented on a post on your wall.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         when 2
-          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on a post on your wall.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on a post on your wall.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         else
-          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others commented on a post on your wall.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others commented on a post on your wall.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         end
 
       when "like_on_your_comment"
         num_likes_minus_self = note.activity_parent.likes.where.not(liker_id: self.id).length
         case num_likes_minus_self
         when 1
-          parsed << ["#{note.activity_source.liker.full_name} likes your comment", note.age, note.activity_source.liker.avatar_url, note.activity_parent.post_id]
+          parsed << ["#{note.activity_source.liker.full_name} likes your comment", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.post_id]
         when 2
-          parsed << ["#{note.activity_source.liker.full_name} and 1 other like your comment", note.age, note.activity_source.liker.avatar_url, note.activity_parent.post_id]
+          parsed << ["#{note.activity_source.liker.full_name} and 1 other like your comment", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.post_id]
         else
-          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your comment", note.age, note.activity_source.liker.avatar_url, note.activity_parent.post_id]
+          parsed << ["#{note.activity_source.liker.full_name} and #{num_likes_minus_self - 1} others like your comment", note.age, note.activity_source.liker.avatar.url(:xs), note.activity_parent.post_id]
         end
 
       when "comment_on_your_comment"
-        parsed << ["#{note.activity_source.author.full_name} replied to your comment.", note.age, note.activity_source.author.avatar_url, note.activity_parent.post_id]
+        parsed << ["#{note.activity_source.author.full_name} replied to your comment.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.post_id]
 
       when "comment_on_your_commented_post"
         num_comments_minus_self = note.activity_parent.comments.where.not(author_id: self.id).length
         case num_comments_minus_self
         when 1
-          parsed << ["#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         when 2
-          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} and 1 other also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         else
-          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar_url, note.activity_parent.id]
+          parsed << ["#{note.activity_source.author.full_name} and #{num_comments_minus_self - 1} others also commented on #{note.activity_parent.author.full_name}'s post.", note.age, note.activity_source.author.avatar.url(:xs), note.activity_parent.id]
         end
 
       end

@@ -122,6 +122,6 @@ Posts have a polymorphic `content` column which allows for other content to be d
 This allows for posts to display an attached picture, a preview of a URL, or another post inside of them.
 
 
-![Imgur](http://i.imgur.com/GLrnDDY.png)
-![Imgur](http://i.imgur.com/quPgSWr.png)
-<!-- Three separate images of post showing picture, url and shared post -->
+![alt-text](http://i.imgur.com/GLrnDDY.png "Image in post")
+![alt-text](http://i.imgur.com/quPgSWr.png "Sharing of another post")
+![alt-text](http://i.imgur.com/yeeMTf6.png "Link in posted")

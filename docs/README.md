@@ -22,7 +22,7 @@ Out of Placebook is a single page app built using React and Redux on the fronten
   * Automatic redirection to the login/signup page occurs when not logged in.
 
 ###Real-Time Fetching of Activities
-* Use of WebSockets via Pusher to enable real-time updates of new posts and editing/deletion of posts, without having to refresh the page.
+* Use of WebSockets via Pusher to enable real-time updates of new posts and updates, without having to refresh the page.
 
 ![alt-text]( "Real-time post updates")
 
@@ -100,7 +100,7 @@ Uploaded images are automatically cropped using the `Paperclip` gem and stored o
 
 ![alt-text](http://i.giphy.com/xUPGcISdwuu0C5kewo.gif "Image processing and real-time updating")
 
-###Automatic parsing of links in posts and appropriate thumbnail display.
+###Automatic parsing of URLs in posts.
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using the Open Graph protocol.
 A thumbnail and description of the URL is then displayed in the `Post` next to what was originally typed.
 
@@ -121,4 +121,7 @@ Users have a newsfeed which displays recent activities by all of their friends.
 Posts have a polymorphic `content` column which allows for other content to be displayed in addition to the post body.
 This allows for posts to display an attached picture, a preview of a URL, or another post inside of them.
 
+
+[Imgur](http://i.imgur.com/GLrnDDY.png)
+[Imgur](http://i.imgur.com/quPgSWr.png)
 <!-- Three separate images of post showing picture, url and shared post -->

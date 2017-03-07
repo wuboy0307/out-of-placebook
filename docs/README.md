@@ -22,23 +22,47 @@ Out of Placebook is a single page app built using React and Redux on the fronten
   * Automatic redirection to the login/signup page occurs when not logged in.
 
 ###Real-Time Fetching of Activities
-* Real-time updates of new posts and editing/deletion of posts, without having to refresh the page.
+* Use of WebSockets via Pusher to enable real-time updates of new posts and editing/deletion of posts, without having to refresh the page.
 
-Whenever posts, comments or likes are created/edited/deleted, the relevant controller sends out messages
+![alt-text]( "Real-time post updates")
+
+Here you can see a friend's wall updating in real-time for all users when a post is created.
+
+Whenever posts, comments or likes are created/edited/deleted, the relevant controller sends out WebSocket messages
 to the corresponding `wall` and `newsfeed` channels. Users subscribe to these channels when they visit another user's wall or their own newsfeed.
-Users receive messages on these channels which then trigger appropriate actions (such as requesting an updated version of a post via AJAX). This allows for users to see the most up-to-date activities in real-time.
+Messages received on these channels then trigger AJAX actions to fetch only the post that was created or updated. This allows for users to see the most up-to-date activities in real-time without having to re-fetch everything on the page.
 
-<!-- Add in gif showing real time post updates -->
+
 
 ###Real-Time Notifications
 
-I use a join table which is polymorphic on both sides to track users' activities. This allows for the tracking of different types of source events (such as comments/likes) on different types of parents (such as posts/comments). This means a `Post` on a `Wall` can be tracked in the same table as a `Like` on a `Comment`. To facilitate fast lookup, this `Activites` table is indexed on both `[user_id, created_at]` which allows for fast collation of newsfeed-related items, and `[parent_id, parent_type, source_type, created_at]` which allows for fast collation of notification-related items.
+Notifications are achieved via a join-table table which is polymorphic on both sides to track users' activities. This allows for the tracking of different types of source events (such as comments/likes) on different types of parents (such as posts/comments). This means a `Post` on a `Wall` can be tracked in the same table as a `Like` on a `Comment`. To facilitate fast lookup, this `Activites` table is indexed on both `[user_id, created_at]` which allows for fast collation of newsfeed-related items, and `[parent_id, parent_type, source_type, created_at]` which allows for fast collation of notification-related items.
 
-Generating notifications for a user presented two main challenges:
+I use a combination of self-joins and a re-usable template query to DRY up code and ensure that:
 
-1. Only the most recent activity should show up for each parent. For example, if five users `liked` the same post, only one notification should be generated (for the most recent like).
+1. Only the most recent activity is shown for each parent activity. For example, if five users `liked` the same post, only one notification should be generated (for the most recent like).
 
-2. Identifying the reason for the notification. e.g. `Someone commented on your post` or `Someone posted on your wall`.
+2. The reason for the notification is identified. e.g. `Someone commented on your post` or `Someone posted on your wall`.
+
+```ruby
+def base_notification_query(last_search_time, source_type, parent_type, parent_id)
+  Activity.joins("INNER JOIN
+          (SELECT activity_source_type, activity_parent_type, activity_parent_id, MAX(created_at) as maxcreated
+          FROM activities
+          WHERE activities.user_id != #{self.id}
+          GROUP BY activity_source_type, activity_parent_type, activity_parent_id) groupedact
+      ON activities.activity_parent_id = groupedact.activity_parent_id
+      AND activities.activity_source_type = groupedact.activity_source_type
+      AND activities.activity_parent_type = groupedact.activity_parent_type
+      AND activities.created_at = groupedact.maxcreated")
+    .where(activity_parent_id: parent_id)
+    .where(activity_source_type: source_type)
+    .where(activity_parent_type: parent_type)
+    .where('created_at >= ?', last_search_time)
+    .order(created_at: :desc).includes(:activity_parent, :activity_source)
+end
+
+```
 
 ###Real-time messaging between users.
 Messaging is implemented via `messages` which belong to `channels`. Users are subscribed to `channels` via the `channel_subs` join table. When the 'Message' button is clicked on a user's profile, the server first looks to see if there is a channel with two participants where one is the current user and the other is the user they are trying to message. If there is, it will fetch all the chat messages from this channel, otherwise it will create a new channel and subscribe both users to it. This is achieved via a self-join on the channels table:

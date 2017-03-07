@@ -33,7 +33,7 @@ class Timeline extends React.Component {
     this.pusher = new Pusher('40464ec5305ef59a7c32', {
       encrypted: true
     });
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
     this.channel = this.pusher.subscribe(`wall-notifications-${this.props.params.profileId}`);
     this.channel.bind('activity', (id) => {
       if (id.sender === this.props.currentUserId) return null

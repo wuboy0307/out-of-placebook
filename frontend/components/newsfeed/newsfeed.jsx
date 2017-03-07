@@ -22,7 +22,6 @@ class NewsFeed extends React.Component {
   }
 
   componentDidMount() {
-    // debugger
     this.props.fetchNewsfeedRequest(this.props.params.profileId);
 
     this.pusher = new Pusher('40464ec5305ef59a7c32', {
@@ -42,10 +41,6 @@ class NewsFeed extends React.Component {
       console.log('NOT SENT FROM CURRENT USER');
       this.props.deletePostUpdateSuccess(info.post_id);
     });
-  }
-
-  componentDidUpdate(prevProps) {
-    // debugger
   }
 
   render(){

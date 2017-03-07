@@ -79,7 +79,6 @@ class Timeline extends React.Component {
 
   renderTimelineMain() {
     if (!this.props.friends) return null
-    // debugger
     if (this.props.currentUserId != parseInt(this.props.params.profileId) && !this.props.friends.includes(parseInt(this.props.params.profileId))) return null
     return(
       <div className="timeline-main">

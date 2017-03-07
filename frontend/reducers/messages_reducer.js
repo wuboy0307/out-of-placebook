@@ -14,7 +14,6 @@ const messagesReducer = (oldState = _initialState, action) => {
   let newState = merge({}, oldState);
   switch(action.type){
     case FETCH_MESSAGE_NOTIFICATION_COUNT_SUCCESS:
-      // debugger
       newState.numUnseenChats = action.count.count;
       return newState;
 

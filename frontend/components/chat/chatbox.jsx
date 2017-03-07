@@ -56,7 +56,6 @@ class Chatbox extends React.Component {
   }
 
   renderMessages() {
-    // debugger
     return this.props.messages.map((msg, idx) => {
       if (msg.authorId == this.props.currentUser.id) {
         return(

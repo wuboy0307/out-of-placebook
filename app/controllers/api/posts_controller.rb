@@ -2,9 +2,7 @@ class Api::PostsController < ApplicationController
   # ENSURE CURRENT USER AND TARGET USER ARE FRIENDS.
   def create
     user = current_user
-    # debugger
     @post = Post.new(author_id: user.id, wall_id: params[:post][:wall_id], body: params[:post][:body])
-    # debugger
     if params[:post][:content_id].to_i > 0
       @post.content = Post.find(params[:post][:content_id].to_i)
     elsif params[:post][:image] != "null"

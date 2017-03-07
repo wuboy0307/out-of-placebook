@@ -1,7 +1,6 @@
 json.numUnseenChats 0
 
 json.chats @channels.each do |channel|
-  # debugger
   json.channelId channel.id
   if channel.participants.length > 2
     json.channelText channel.channel_description

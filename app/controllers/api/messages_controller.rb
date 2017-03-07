@@ -23,7 +23,6 @@ class Api::MessagesController < ApplicationController
       ChannelSub.create!(participant_id: params[:channel][:user_id], channel_id: @channel.id)
     end
     raise 'error' if @channel.participants.length != 2
-    # debugger
     @messages = @channel.messages
     @channel_text = @channel.participants.where.not(id: current_user).first.full_name
 
@@ -50,7 +49,6 @@ class Api::MessagesController < ApplicationController
 
     if @messages
       user_sub = current_user.channel_subs.find_by(channel_id: params[:id])
-      # debugger
       user_sub.last_fetch_time = Time.now
       if user_sub.save
         render :show

@@ -7,8 +7,7 @@ const _initialState = {
 const flyoutReducer = (oldState = _initialState, action) => {
   switch (action.type) {
     case TOGGLE_FLYOUT:
-    // debugger
-      // If we clicked the same button that opened the flyout, it should close.
+      // Clicking the same button that opened the flyout should close it
       const newFlyoutValue =  action.flyout !== oldState.flyout ? action.flyout : null;
       const newState = {
         flyout: newFlyoutValue,

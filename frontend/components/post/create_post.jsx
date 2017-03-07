@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSinglePostRequest } from '../../actions/post_actions';
-import PostItem2 from '../post/post_item2';
+import PostInPostItem from '../post/post_in_post_item';
 import { fetchSingleSharedPostRequest } from '../../actions/post_actions';
 import { toggleFlyout } from '../../actions/flyout_actions';
 import { withRouter } from 'react-router';
@@ -111,7 +111,7 @@ class CreatePost extends React.Component {
     if (!this.props.sharedPost){
       return null;
     } else {
-      return(<PostItem2 post={this.props.sharedPost}/>);
+      return(<PostInPostItem post={this.props.sharedPost}/>);
     }
   }
 

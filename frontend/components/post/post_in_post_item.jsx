@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   toggleFlyout: (flyoutType, data) => dispatch(toggleFlyout(flyoutType, data))
 });
 
-class PostItem extends React.Component {
+class PostInPostItem extends React.Component {
   constructor(props) {
     super(props);
     this.renderPostUser = this.renderPostUser.bind(this);
@@ -259,4 +259,4 @@ class PostItem extends React.Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostItem);
+)(PostInPostItem);

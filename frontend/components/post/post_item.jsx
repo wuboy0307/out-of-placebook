@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { selectComments } from '../../reducers/selectors';
 import { connect } from 'react-redux';
 import { createSingleLikeRequest, destroySingleLikeRequest, destroySinglePostRequest, editSinglePostRequest, fetchSingleSharedPostRequest } from '../../actions/post_actions';
-import PostItem2 from './post_item2';
+import PostInPostItem from './post_in_post_item';
 import { toggleFlyout } from '../../actions/flyout_actions';
 
 const mapStateToProps = (state) => ({
@@ -77,9 +77,9 @@ class PostItem extends React.Component {
     }
     if (post.contentType === 'post') {
       if (post.content.id) {
-        return(<PostItem2 post={post.content} />);
+        return(<PostInPostItem post={post.content} />);
       } else {
-      return(<PostItem2 post={this.props.sharedPosts[post.content.id]} />);
+      return(<PostInPostItem post={this.props.sharedPosts[post.content.id]} />);
       }
     }
       // return this.renderSharedPost();
@@ -88,7 +88,7 @@ class PostItem extends React.Component {
 
   renderSharedPost() {
     return(
-      <PostItem2 post={this.props.sharedPosts[this.props.post.content.id]} />
+      <PostInPostItem post={this.props.sharedPosts[this.props.post.content.id]} />
     );
   }
 

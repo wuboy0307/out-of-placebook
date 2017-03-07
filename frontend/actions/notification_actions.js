@@ -95,5 +95,3 @@ export const fetchNotificationsRequest = (type = { fetch: true }) => dispatch =>
     .then(data => dispatch(fetchNotificationsSuccess(data)),
       err => dispatch(fetchNotificationsFailure(err.responseJSON)))
 );
-
-window.fetchNotificationsRequest = fetchNotificationsRequest;

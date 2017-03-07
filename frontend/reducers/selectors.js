@@ -50,5 +50,3 @@ export const selectComments = (comments) => {
    return [];
  }
 };
-
-window.selectPosts = selectPosts;

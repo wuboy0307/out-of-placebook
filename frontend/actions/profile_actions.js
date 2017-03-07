@@ -32,5 +32,3 @@ export const profilePicUploadRequest = pic => dispatch => (
     .then(data => dispatch(fetchSingleProfileRequest(pic.id)),
           err => dispatch(fetchSingleProfileFailure(err.responseJSON)))
 );
-
-window.fetchSingleProfileRequest = fetchSingleProfileRequest;

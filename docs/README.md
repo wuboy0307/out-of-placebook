@@ -72,6 +72,8 @@ LIMIT 1
 ###Photo upload with automatic image resizing.
 Uploaded images are automatically cropped using the `Paperclip` gem and stored on AWS in a variety of different sizes. This allows for pages to always display images of the correct size and aspect ratio.
 
+![alt-text](http://i.giphy.com/xUPGcISdwuu0C5kewo.gif "Image processing and real-time updating")
+
 ###Automatic parsing of links in posts and appropriate thumbnail display.
 When users include URLs in their post the link is automatically parsed and meta-data is fetched using the Open Graph protocol.
 A thumbnail and description of the URL is then displayed in the `Post` next to what was originally typed.

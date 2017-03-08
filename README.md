@@ -126,7 +126,7 @@ A thumbnail and description of the URL is then displayed in the `Post` next to w
 
 
 ###User search box
-OOPBook uses [pg-search][pg-search] and Postgres's `trigram` module to allow for fuzzy searching. Since some names can be difficult to spell this implementation allows users to find each other even if they misspelled 'Matthew' as 'Mathew' or 'Mark' as 'Mork'.
+OOPBook uses [pg_search][pg_search] and Postgres's `trigram` module to allow for fuzzy searching. Since some names can be difficult to spell this implementation allows users to find each other even if they misspelled 'Matthew' as 'Mathew' or 'Mark' as 'Mork'.
 
 To prevent multiple hits to the server, a search is only performed once the user has stopped typing for 300ms. This is achieved by setting a timeout every time the user presses a key (and clearing any old ones that may exist), where the callback is the appropriate AJAX search request.
 

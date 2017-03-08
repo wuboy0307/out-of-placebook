@@ -1,3 +1,5 @@
+![alt-text](http://i.imgur.com/XbAc5if.jpg "A user's timeline")
+
 ##Summary
 
 Out of Placebook is a social-networking site inspired by [Facebook][facebook]
@@ -14,6 +16,17 @@ Out of Placebook is built using Ruby on Rails with a PostgreSQL database. Data r
 
 ###Front End
 Out of Placebook is a single page app built using React and Redux on the frontend. It utilises WebSockets via Pusher to implement real-time updates.
+
+### Libraries
+
+OOPBook uses:
+- [React.js][React]
+- [React-Redux](https://github.com/reactjs/react-redux)
+- [pg_search][pg_search] to search users
+- [BCrypt](https://github.com/codahale/bcrypt-ruby) for authorization
+- [Paperclip](https://github.com/thoughtbot/paperclip) to store uploaded images using Amazon Web Services
+- [figaro](https://github.com/laserlemon/figaro) to securely store keys and other important data.
+- [Pusher](https://pusher.com/) to implement WebSockets for real-time updates.
 
 ##Features
 
@@ -41,7 +54,7 @@ Notifications are achieved via a join-table table which is polymorphic on both s
 
 To facilitate fast lookup, this `Activites` table is indexed on both `[user_id, created_at]` which allows for fast collation of newsfeed-related items, and `[parent_id, parent_type, source_type, created_at]` which allows for fast collation of notification-related items.
 
-I use a combination of self-joins and a re-usable template query to DRY up code and ensure that:
+OOPBook uses a combination of self-joins and a re-usable template query to DRY up code and ensure that:
 
 1. Only the most recent activity is shown for each parent activity. For example, if five users `liked` the same post, only one notification should be generated (for the most recent like).
 
@@ -113,7 +126,7 @@ A thumbnail and description of the URL is then displayed in the `Post` next to w
 
 
 ###User search box
-I use `pgSearch` and Postgres's `trigram` module to allow for fuzzy searching. Since some names can be difficult to spell this implementation allows users to find each other even if they misspelled 'Matthew' as 'Mathew' or 'Mark' as 'Mork'.
+OOPBook uses [pg-search][pg-search] and Postgres's `trigram` module to allow for fuzzy searching. Since some names can be difficult to spell this implementation allows users to find each other even if they misspelled 'Matthew' as 'Mathew' or 'Mark' as 'Mork'.
 
 To prevent multiple hits to the server, a search is only performed once the user has stopped typing for 300ms. This is achieved by setting a timeout every time the user presses a key (and clearing any old ones that may exist), where the callback is the appropriate AJAX search request.
 
@@ -134,3 +147,5 @@ This allows for posts to display an attached picture, a preview of a URL, or ano
 
 ###Sharing of posts
 Users can share each other's posts, including links and images. When sharing a post which is itself sharing another post, the original post is shared. This functionality allows for viral posts to be shared effortlessly between users as they only need to click 'Share' on any one of the posts which share the original post, or the original post itself.
+
+[pg_search]:https://github.com/Casecommons/pg_search

@@ -149,3 +149,4 @@ This allows for posts to display an attached picture, a preview of a URL, or ano
 Users can share each other's posts, including links and images. When sharing a post which is itself sharing another post, the original post is shared. This functionality allows for viral posts to be shared effortlessly between users as they only need to click 'Share' on any one of the posts which share the original post, or the original post itself.
 
 [pg_search]:https://github.com/Casecommons/pg_search
+[React]:https://facebook.github.io/react/

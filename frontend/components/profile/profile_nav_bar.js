@@ -31,6 +31,7 @@ class ProfileNavBar extends React.Component {
     this.renderMutualFriendCount = this.renderMutualFriendCount.bind(this);
     this.messageAction = this.messageAction.bind(this);
     this.renderFriendButton = this.renderFriendButton.bind(this);
+    this.profilePicRollover = this.profilePicRollover.bind(this);
     this.updateFile = this.updateFile.bind(this);
     this.disableUnlessOwnProfilePic =
       this.disableUnlessOwnProfilePic.bind(this);
@@ -108,7 +109,8 @@ class ProfileNavBar extends React.Component {
       let fileReader = new FileReader();
       let file = e.currentTarget.files[0];
       fileReader.onloadend = () => {
-        this.setState({ image_file: file, image_preview_url: fileReader.result });
+        this.setState({ image_file: file,
+          image_preview_url: fileReader.result });
       };
 
       if (file) {
@@ -130,6 +132,14 @@ class ProfileNavBar extends React.Component {
      this.coverPictureInput.click();
    }
 
+   profilePicRollover() {
+     if (this.props.profile.id === this.props.currentUser.id) {
+       return (<div className="profile-picture-change">Update Profile Picture</div>);
+     } else {
+       return null;
+     }
+   }
+
   render() {
     return(
       <div className="profile-nav-bar">
@@ -137,16 +147,19 @@ class ProfileNavBar extends React.Component {
           <form>
             <input type="file"
                 id="file-input"
-                onChange={this.updateFile('cover')} ref={(target) => this.coverPictureInput = target}/>
+                onChange={this.updateFile('cover')}
+                ref={(target) => this.coverPictureInput = target}/>
           </form>
         <ProfileLinkBar />
-        <div className="profile-picture" onClick={this.disableUnlessOwnProfilePic}>
-          <div className="profile-picture-change">Update Profile Picture</div>
+        <div className="profile-picture"
+          onClick={this.disableUnlessOwnProfilePic}>
+          { this.profilePicRollover() }
           <img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/>
           <form>
             <input type="file"
                 id="file-input"
-                onChange={this.updateFile('image')} ref={(input) => this.profilePictureInput = input}/>
+                onChange={this.updateFile('image')}
+                ref={(input) => this.profilePictureInput = input}/>
           </form>
 
           </div>

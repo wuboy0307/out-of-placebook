@@ -617,9 +617,9 @@ color: black;
   font-size: 12px;
     font-weight: bold;
     line-height: 14px;
-    color: #4b4f56;
     padding: 5px 20px;
     border-right: 1px solid grey;
+    color: #365899;
     cursor: pointer;
     > .fa {
       margin-right: 10px;
@@ -627,4 +627,8 @@ color: black;
 }
 .create-post-header-item:last-child {
   border-right: 0;
+}
+
+.bold {
+  font-weight: bold;
 }

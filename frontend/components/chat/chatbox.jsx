@@ -24,9 +24,12 @@ class Chatbox extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderMessages = this.renderMessages.bind(this);
     this.renderSmall = this.renderSmall.bind(this);
+    this.renderSearch = this.renderSearch.bind(this);
+    this.toggleSearch = this.toggleSearch.bind(this);
     this.state = {
       messageInput: '',
-      hidden: false
+      hidden: false,
+      searchBox: false
     };
   }
 
@@ -107,6 +110,19 @@ class Chatbox extends React.Component {
     );
   }
 
+  renderSearch() {
+    if (this.state.searchBox) {
+      return(<Search pos='chatbox'/>);
+    } else {
+      return null;
+    }
+  }
+
+  toggleSearch(e) {
+    e.stopPropagation();
+    this.setState({searchBox: !this.state.searchBox});
+  }
+
   render() {
     if (!this.props.messages) return null;
     if (!this.props.channelText) return null;
@@ -121,13 +137,14 @@ class Chatbox extends React.Component {
             onClick={() => this.setState({hidden: !this.state.hidden})}>
             {this.props.channelText}
             <div className="chat-menu">
-              <i className="fa fa-plus fa-lg chat-exit-btn"></i>
+              <i className="fa fa-plus fa-lg chat-exit-btn"
+                onClick={this.toggleSearch}></i>
               <i className="fa fa-times fa-lg chat-exit-btn"
                   onClick={() => this.props.clearCurrentChat()}></i>
             </div>
           </div>
 
-          <Search pos='chatbox'/>
+          {this.renderSearch()}
 
           <div className="chat-body">
 

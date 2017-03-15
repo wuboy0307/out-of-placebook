@@ -141,7 +141,7 @@ class NavBar extends React.Component {
           <li className={el.numUnseenMessages > 0 ? 'message-list-item' : 'message-list-item-seen'}>
             <img className="user-pic-flyout" src={el.lastMessageAvatar}/>
             <div className="flyout-item-body">
-              <div className="flyout-item-text">{el.channelText} {el.numUnseenMessages > 0 ? `(${el.numUnseenMessages})` : null}</div>
+              <div className="flyout-item-text bold">{el.channelText} {el.numUnseenMessages > 0 ? `(${el.numUnseenMessages})` : null}</div>
               <div className="flyout-item-text">{el.lastMessage}</div>
               <div className="flyout-item-timestamp">{el.lastMessageTime}</div>
             </div>

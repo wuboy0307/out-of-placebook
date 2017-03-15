@@ -60,6 +60,9 @@ class Chatbox extends React.Component {
         this.lastMessage.scrollIntoView();
       }
     }
+    if (!this.state.hidden && this.props.messages) {
+      this.lastMessage.scrollIntoView();
+    }
   }
 
   renderMessages() {

@@ -115,15 +115,17 @@ class Search extends React.Component {
     this.props.addUserRequest({
       channel_id: this.props.channelId,
       user_id: userId
+    }).then(() => {
+      this.setState({search: ''});
     });
-    console.log('sent request to server');
+
   }
 
   chatboxResults() {
     return(
     <div className='search-dropdown chatbox-search'>
       {this.props.chatSearch.map((user) => (
-          <div key={user.id} className='search-result' onClick={() => this.addUserToChat(user.id)}>
+          <div key={user.id} className='search-result pointer' onClick={() => this.addUserToChat(user.id)}>
             <div className="search-result-pic">
               <img className="user-pic-xxxs" src={user.avatarUrl} />
             </div>

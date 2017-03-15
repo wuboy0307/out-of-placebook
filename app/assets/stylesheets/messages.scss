@@ -63,6 +63,17 @@ flex-direction: column;
 background-color: white;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.chat-exit-btn {
+  padding: 6px 6px 6px 3px;
+  z-index: 2;
+}
+
 .chat-container-hidden {
   height: 26px;
   width: 260px;
@@ -92,6 +103,7 @@ font-family: Helvetica-Bold, 'Arial Bold', 'Apple Color Emoji', sans-serif;
     padding: 1px 0 0 10px;
     line-height: 26px;
     cursor: pointer;
+
 }
 
 .chat-body {

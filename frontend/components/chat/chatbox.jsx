@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { sendMessageRequest } from '../../actions/message_actions';
+import { sendMessageRequest,
+        clearCurrentChat } from '../../actions/message_actions';
 import { fetchChatRequest } from '../../actions/notification_actions';
+import Search from '../search/search';
 
 const mapStateToProps = (state) => ({
   messages: state.messages.currentChat.messages,
@@ -12,7 +14,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   sendMessageRequest: (message) => dispatch(sendMessageRequest(message)),
-  fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId))
+  fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId)),
+  clearCurrentChat: () => dispatch(clearCurrentChat())
 });
 
 class Chatbox extends React.Component {
@@ -20,6 +23,7 @@ class Chatbox extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderMessages = this.renderMessages.bind(this);
+    this.renderSmall = this.renderSmall.bind(this);
     this.state = {
       messageInput: '',
       hidden: false
@@ -31,7 +35,8 @@ class Chatbox extends React.Component {
       encrypted: true
     });
     // Pusher.logToConsole = true;
-    this.channel = this.pusher.subscribe(`notifications-${this.props.currentUser.id}`);
+    this.channel =
+      this.pusher.subscribe(`notifications-${this.props.currentUser.id}`);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,7 +56,9 @@ class Chatbox extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.channelText !== this.props.channelText) {
       this.setState({hidden: false});
-      this.lastMessage.scrollIntoView();
+      if (this.props.messages) {
+        this.lastMessage.scrollIntoView();
+      }
     }
   }
 
@@ -85,13 +92,39 @@ class Chatbox extends React.Component {
               });
   }
 
+  renderSmall() {
+    return(
+      <div className='chat-container-hidden'>
+          <div className="chat-header row"
+            onClick={() => this.setState({hidden: !this.state.hidden})}>
+            {this.props.channelText}
+            <i className="fa fa-times fa-lg chat-exit-btn" onClick={() => this.props.clearCurrentChat()}></i>
+          </div>
+      </div>
+    );
+  }
+
   render() {
     if (!this.props.messages) return null;
     if (!this.props.channelText) return null;
+    if (this.state.hidden) {
+      return this.renderSmall();
+    }
 
     return(
-        <div className={this.state.hidden ? 'chat-container-hidden' : 'chat-container'}>
-          <div className="chat-header" onClick={() => this.setState({hidden: !this.state.hidden})}>{this.props.channelText}</div>
+
+        <div className='chat-container'>
+          <div className="chat-header row"
+            onClick={() => this.setState({hidden: !this.state.hidden})}>
+            {this.props.channelText}
+            <div className="chat-menu">
+              <i className="fa fa-plus fa-lg chat-exit-btn"></i>
+              <i className="fa fa-times fa-lg chat-exit-btn"
+                  onClick={() => this.props.clearCurrentChat()}></i>
+            </div>
+          </div>
+
+          <Search pos='chatbox'/>
 
           <div className="chat-body">
 
@@ -104,8 +137,9 @@ class Chatbox extends React.Component {
           <div className="chat-input">
             <form className="chat-input-form" onSubmit={this.handleSubmit}>
               <input autoFocus type="text" className="chat-input-input"
-                placeholder="Type a message..." value={this.state.messageInput}
-                onChange={(e) => this.setState({messageInput: e.target.value})}></input>
+                placeholder="Type a message..."
+                value={this.state.messageInput}
+                onChange={(e) => this.setState({messageInput: e.target.value})} />
             </form>
           </div>
 

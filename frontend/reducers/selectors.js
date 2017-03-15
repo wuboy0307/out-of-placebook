@@ -9,13 +9,24 @@ export const selectPosts = ({ posts }) => {
     return [];
   }
 };
+
 export const selectSearchResults = ({ search }) => {
+  search = search.navbarSearch;
   if (search) {
     return Object.keys(search).map(key => search[key]);
   } else {
     return [];
   }
 };
+export const selectChatSearchResults = ({ search }) => {
+  search = search.chatbarSearch;
+  if (search) {
+    return Object.keys(search).map(key => search[key]);
+  } else {
+    return [];
+  }
+};
+
 export const selectFriendRequests = ({ friends }) => {
   let incomingFriends = friends.incomingFriends;
   if (incomingFriends) {
@@ -24,6 +35,7 @@ export const selectFriendRequests = ({ friends }) => {
     return [];
   }
 };
+
 export const selectFriends = ({ friends }) => {
   let currentFriends = friends.friends;
   if (currentFriends) {

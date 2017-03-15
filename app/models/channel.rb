@@ -24,7 +24,24 @@ class Channel < ApplicationRecord
       .where('(uone.id = ? and utwo.id = ?) OR (uone.id = ? and utwo.id = ?)',
         user_one, user_two, user_two, user_one)
       .distinct
-      .first
+      .last
+  end
+
+  def join_times
+    self.channel_subs.order(created_at: :asc)
+  end
+
+  def parse_messages
+    self.messages.order(created_at: :desc)#.includes(:sender)
+  end
+
+  def sql
+    sql = "inner join
+      channel_subs on channels.id = channel_subs.channel_id
+    inner join
+      users on channel_subs.participant_id = users.id"
+
+
   end
 
   private

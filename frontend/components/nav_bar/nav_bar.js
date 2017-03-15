@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router';
 import Search from '../search/search';
 import { toggleFlyout } from '../../actions/flyout_actions';
-import { fetchNotificationsRequest, fetchNotificationCountRequest,
-        fetchMessageNotificationCountRequest, fetchMessagesRequest,
-      fetchChatRequest } from '../../actions/notification_actions';
-import { fetchFriendCountRequest, fetchFriendsRequest, respondToFriendRequest } from '../../actions/friend_actions';
+import {fetchNotificationsRequest,
+        fetchNotificationCountRequest,
+        fetchMessageNotificationCountRequest,
+        fetchMessagesRequest,
+        fetchChatRequest } from '../../actions/notification_actions';
+import { fetchFriendCountRequest,
+          fetchFriendsRequest,
+          respondToFriendRequest } from '../../actions/friend_actions';
 import { logout} from '../../actions/session_actions';
 import { selectFriendRequests } from '../../reducers/selectors.js';
 
@@ -21,8 +25,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchNotificationsRequest: () => dispatch(fetchNotificationsRequest()),
-  fetchNotificationCountRequest: () => dispatch(fetchNotificationCountRequest()),
-  fetchMessageNotificationCountRequest: () => dispatch(fetchMessageNotificationCountRequest()),
+  fetchNotificationCountRequest: () =>
+    dispatch(fetchNotificationCountRequest()),
+  fetchMessageNotificationCountRequest: () =>
+    dispatch(fetchMessageNotificationCountRequest()),
   fetchMessagesRequest: () => dispatch(fetchMessagesRequest()),
   fetchChatRequest: (channelId) => dispatch(fetchChatRequest(channelId)),
   toggleFlyout: (flyoutType) => dispatch(toggleFlyout(flyoutType)),
@@ -36,14 +42,16 @@ const mapDispatchToProps = (dispatch) => ({
 class NavBar extends React.Component {
   constructor(props){
     super(props);
-    this.renderNotifications = this.renderNotifications.bind(this);
-    this.renderMessages = this.renderMessages.bind(this);
-    this.clickNotificationButton = this.clickNotificationButton.bind(this);
-    this.clickMessageNotificationButton = this.clickMessageNotificationButton.bind(this);
-    this.clickFriendNotificationButton = this.clickFriendNotificationButton.bind(this);
-    this.renderFriends = this.renderFriends.bind(this);
-    this.fetchChat = this.fetchChat.bind(this);
     this.logout = this.logout.bind(this);
+    this.fetchChat = this.fetchChat.bind(this);
+    this.renderMessages = this.renderMessages.bind(this);
+    this.clickMessageNotificationButton =
+      this.clickMessageNotificationButton.bind(this);
+    this.clickFriendNotificationButton =
+      this.clickFriendNotificationButton.bind(this);
+    this.renderFriends = this.renderFriends.bind(this);
+    this.renderNotifications = this.renderNotifications.bind(this);
+    this.clickNotificationButton = this.clickNotificationButton.bind(this);
     this.state = {
       notificationFlyout: false,
       messageFlyout: false
@@ -234,7 +242,7 @@ class NavBar extends React.Component {
               <div className="small-logo">O</div>
             </Link>
 
-            <Search />
+            <Search pos='navbar'/>
 
           </div>
           <div className="nav-right-side">

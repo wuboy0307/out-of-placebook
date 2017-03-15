@@ -2,16 +2,19 @@ import React from 'react';
 import CoverPhoto from './cover_photo';
 import { connect } from 'react-redux';
 import ProfileLinkBar from './profile_link_bar';
-import { addFriendRequest, removeFriendRequest, respondToFriendRequest } from '../../actions/friend_actions';
-import {createOrFetchChatRequest } from '../../actions/notification_actions';
-import {profilePicUploadRequest } from '../../actions/profile_actions';
+import { addFriendRequest,
+        removeFriendRequest,
+        respondToFriendRequest } from '../../actions/friend_actions';
+import { profilePicUploadRequest } from '../../actions/profile_actions';
+import { createOrFetchChatRequest } from '../../actions/notification_actions';
 
 const mapDispatchToProps = (dispatch) => ({
   addFriendRequest: (friend) => dispatch(addFriendRequest(friend)),
   removeFriendRequest: (friend) => dispatch(removeFriendRequest(friend)),
   respondToFriendRequest: (friend) => dispatch(respondToFriendRequest(friend)),
   createOrFetchChatRequest: (user) => dispatch(createOrFetchChatRequest(user)),
-  profilePicUploadRequest: (formData) => dispatch(profilePicUploadRequest(formData))
+  profilePicUploadRequest: (formData) =>
+    dispatch(profilePicUploadRequest(formData))
 });
 
 const mapStateToProps = (state) => ({
@@ -29,8 +32,10 @@ class ProfileNavBar extends React.Component {
     this.messageAction = this.messageAction.bind(this);
     this.renderFriendButton = this.renderFriendButton.bind(this);
     this.updateFile = this.updateFile.bind(this);
-    this.disableUnlessOwnProfilePic = this.disableUnlessOwnProfilePic.bind(this);
-    this.disableUnlessOwnProfileCover = this.disableUnlessOwnProfileCover.bind(this);
+    this.disableUnlessOwnProfilePic =
+      this.disableUnlessOwnProfilePic.bind(this);
+    this.disableUnlessOwnProfileCover =
+      this.disableUnlessOwnProfileCover.bind(this);
   }
 
   friendAction(e) {
@@ -145,7 +150,9 @@ class ProfileNavBar extends React.Component {
           </form>
 
           </div>
-        <div className="profile-name">{this.props.profile.fname} {this.props.profile.lname}</div>
+        <div className="profile-name">
+          {this.props.profile.fname} {this.props.profile.lname}
+        </div>
         { this.renderMessageButton() }
         { this.renderFriendButton() }
         { this.renderMutualFriendCount() }

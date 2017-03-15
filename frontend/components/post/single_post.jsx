@@ -2,14 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../post/post_item';
 import { fetchSinglePostRequest } from '../../actions/post_actions';
-import { fetchNotificationCountRequest } from '../../actions/notification_actions';
+import { fetchNotificationCountRequest }
+  from '../../actions/notification_actions';
+import { selectPosts } from '../../reducers/selectors';
 
 const mapStateToProps = (state) => ({
   posts: selectPosts(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNotificationCountRequest: () => dispatch(fetchNotificationCountRequest()),
+  fetchNotificationCountRequest: () =>
+    dispatch(fetchNotificationCountRequest()),
   fetchSinglePostRequest: (postId) => dispatch(fetchSinglePostRequest(postId))
 });
 

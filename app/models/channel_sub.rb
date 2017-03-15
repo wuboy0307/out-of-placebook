@@ -14,6 +14,7 @@ class ChannelSub < ApplicationRecord
 
   belongs_to :participant, class_name: 'User', foreign_key: :participant_id
   belongs_to :channel, class_name: 'Channel', foreign_key: :channel_id
+  validates :participant_id, uniqueness: { scope: :channel_id, message: 'User already belongs to channel!'}
 
   after_create :create_join_message
   after_destroy :create_leave_message

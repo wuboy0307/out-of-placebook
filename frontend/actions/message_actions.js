@@ -22,3 +22,9 @@ export const sendMessageRequest = (message) => dispatch => (
     .then(data => dispatch(sendMessageSuccess(data)),
       err => dispatch(sendMessageFailure(err.responseJSON)))
 );
+
+export const addUserRequest = (channel) => dispatch => (
+  APIUtil.addUser(channel)
+    .then(data => console.log('sent'),
+      err => dispatch(sendMessageFailure(err.responseJSON)))
+);

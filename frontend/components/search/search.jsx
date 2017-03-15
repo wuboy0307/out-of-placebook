@@ -1,17 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router';
+import { addUserRequest } from '../../actions/message_actions';
 import {selectSearchResults, selectChatSearchResults} from '../../reducers/selectors';
 import { fetchSearchResultsRequest, fetchChatSearchResultsRequest } from '../../actions/search_actions';
 
 const mapStateToProps = (state) => ({
   search: selectSearchResults(state),
-  chatSearch: selectChatSearchResults(state)
+  chatSearch: selectChatSearchResults(state),
+  channelId: state.messages.currentChat.channelId
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchSearchResultsRequest: (query) => dispatch(fetchSearchResultsRequest(query)),
-  fetchChatSearchResultsRequest: (query) => dispatch(fetchChatSearchResultsRequest(query))
+  fetchChatSearchResultsRequest: (query) => dispatch(fetchChatSearchResultsRequest(query)),
+  addUserRequest: (data) => dispatch(addUserRequest(data))
 });
 
 class Search extends React.Component {
@@ -20,6 +23,7 @@ class Search extends React.Component {
     this.performSearch = this.performSearch.bind(this);
     this.renderResults = this.renderResults.bind(this);
     this.chatboxResults = this.chatboxResults.bind(this);
+    this.addUserToChat = this.addUserToChat.bind(this);
 
     this.state = {
       search: ''
@@ -41,7 +45,7 @@ class Search extends React.Component {
         if (this.props.pos === 'navbar') {
           this.props.fetchSearchResultsRequest({query: this.state.search});
         } else if (this.props.pos === 'chatbox') {
-          this.props.fetchChatSearchResultsRequest({query: this.state.search});
+          this.props.fetchChatSearchResultsRequest({query: this.state.search, channel_id: this.props.channelId});
         }
       }
     }, 300);
@@ -107,11 +111,19 @@ class Search extends React.Component {
     );
   }
 
+  addUserToChat(userId) {
+    this.props.addUserRequest({
+      channel_id: this.props.channelId,
+      user_id: userId
+    });
+    console.log('sent request to server');
+  }
+
   chatboxResults() {
     return(
     <div className='search-dropdown chatbox-search'>
       {this.props.chatSearch.map((user) => (
-          <div key={user.id} className='search-result'>
+          <div key={user.id} className='search-result' onClick={() => this.addUserToChat(user.id)}>
             <div className="search-result-pic">
               <img className="user-pic-xxxs" src={user.avatarUrl} />
             </div>

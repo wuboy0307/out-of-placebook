@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
     get 'messages/count' => 'messages#count'
     post 'messages' => 'messages#create_or_find'
+    post 'messages/add_user' => 'messages#add_user'
     resources :messages, only: [:index, :show, :update]
 
     resources :photos, only: [:create]

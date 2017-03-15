@@ -36,6 +36,31 @@ class Api::MessagesController < ApplicationController
     end
   end
 
+  def add_user
+    @channel = Channel.find(params[:channel][:channel_id].to_i)
+    user_to_add = User.find(params[:channel][:user_id].to_i)
+    if @channel.nil? || user_to_add.nil?
+      render json: ["Could not finder user or channel"], status: 422
+      return
+    end
+
+    if @channel.participants.include?(user_to_add)
+      render json: ["User is already in the channel"], status: 422
+      return
+    end
+
+    @channel_sub = ChannelSub.new(participant_id: user_to_add.id,
+      channel_id: @channel.id)
+    if @channel_sub.save
+      @channel.participants.map(&:id).each do |id|
+        Pusher.trigger("notifications-#{id}", 'new-message-notification', {})
+        Pusher.trigger("notifications-#{id}", "new-message-#{@channel.id}", {})
+      end
+    else
+      render json: ['Error creating channel sub'], status: 422
+    end
+  end
+
   def show
     @channel = Channel.find_by(id: params[:id])
     @messages = @channel.parse_messages
@@ -45,7 +70,6 @@ class Api::MessagesController < ApplicationController
       @channel_text = @channel.participants.where.not(id: current_user).first.full_name
     end
 
-    @joins = @channel.join_times
 
     if @messages
       user_sub = current_user.channel_subs.find_by(channel_id: params[:id])

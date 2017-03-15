@@ -43,13 +43,13 @@ class Chatbox extends React.Component {
     if (nextProps.channelId === this.props.channelId) return null;
 
 
-
-
     if (!this.pusher) return null;
     this.channel.unbind(`new-message-${this.props.channelId}`);
     this.channel.bind(`new-message-${nextProps.channelId}`, () => {
       this.props.fetchChatRequest(nextProps.channelId)
-        .then(() => this.lastMessage.scrollIntoView());
+        .then(() => {
+          if (!this.state.hidden) this.lastMessage.scrollIntoView();
+        });
     });
   }
 

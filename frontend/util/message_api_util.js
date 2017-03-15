@@ -5,3 +5,11 @@ export const sendMessage = (message) => {
     data: {message}
   });
 };
+
+export const addUser = (channel) => {
+  return $.ajax({
+    method: 'POST',
+    url: `/api/messages/add_user`,
+    data: {channel}
+  });
+};

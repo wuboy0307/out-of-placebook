@@ -41,7 +41,7 @@ class Api::LikesController < ApplicationController
 
   def destroy
     user = current_user
-
+    # debugger
     if params[:like][:type] == "post"
       @target = Post.find_by(id: params[:like][:content_id])
     elsif params[:like][:type] == "comment"
@@ -65,7 +65,7 @@ class Api::LikesController < ApplicationController
 
       elsif params[:like][:type] == "comment"
         Pusher.trigger("wall-notifications-#{@target.post.wall_id}", 'activity', {id: @target.post_id, sender: user.id})
-        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @target.post.post_id, wall_id: @target.post.wall_id})
+        Pusher.trigger("newsfeed", 'newsfeed-activity', {post_id: @target.post_id, wall_id: @target.post.wall_id})
         Pusher.trigger("notifications-#{@target.author_id}", 'new-notification', {sender: user.id})
         render json: { type: 'comment', commentId: @target.id,
           parentId: @target.parent_id, postId: @target.post_id}

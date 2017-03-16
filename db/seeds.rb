@@ -1,8 +1,21 @@
-User.destroy_all
+def get_friends_to_like(item, random_num)
+  if item.class.name == "Post"
+    user = item.wall
+  elsif item.class.name == "Comment"
+    user = item.post.wall
+  end
+  friends = user.friends.shuffle
+  num_friends = friends.length
+  (random_num * num_friends).ceil.times do |i|
+    friend = friends.shift
+    Like.create!(liker_id: friend.id, likeable: item)
+  end
+end
 
 def own_posts(user, text_array)
   text_array.reverse.each do |post|
-    Post.create!(wall_id: user.id, author_id: user.id, body: post)
+    post = Post.create!(wall_id: user.id, author_id: user.id, body: post)
+    get_friends_to_like(post, rand(0.5..1))
   end
 end
 
@@ -28,8 +41,9 @@ def add_photos(user, num)
   end
 end
 
-# ---- DONALD TRUMP
-# mark = User.first
+
+User.destroy_all
+
 mark = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
 donald = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Donald", lname: "Trump", email: "donald@whitehouse.gov", password: "tinyhands", intro: "Nobody knows how to run a country better than me. Believe me. I know the best people. We're going to MAKE AMERICA GREAT AGAIN.")
 sean = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Sean", lname: "Spicer", email: "sean@whitehouse.gov", password: "password", intro: "Speaking for a nation.")
@@ -41,9 +55,70 @@ taylor = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago
 
 bill = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Bill", lname: "Gates", email: "bill@gmail.com", password: "password", intro: "William Henry 'Bill' Gates III is an American business magnate, investor, author, and philanthropist. In 1975, Gates and Paul Allen co-founded Microsoft, which became the world's largest PC software company.")
 
+john = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "John", lname: "Digweed", email: "john@gmail.com", password: "password", intro: "John Digweed is an English DJ, record producer and actor. DJ Magazine voted him World No 1 DJ in 2001.")
+
+nina = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Nina", lname: "Kraviz", email: "nina@gmail.com", password: "password", intro: "Nina Kraviz is a Russian DJ, producer, and singer.")
+
+sasha = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Sasha", lname: "DJ", email: "sasha@gmail.com", password: "password", intro: "Sasha is a Welsh DJ, record producer and Grammy Award nominee.")
+
+armin = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Armin", lname: "van Buuren", email: "armin@gmail.com", password: "password", intro: "Armin Van Buuren is an international trance DJ.")
+
+paul = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Paul", lname: "Van Dyk", email: "paul@gmail.com", password: "password", intro: "Matthias Paul better known by his stage name Paul van Dyk is a German Grammy Award-winning DJ, record producer and musician.")
+
 
 add_photos(bill, 8)
 add_photos(mark, 6)
+add_photos(john, 6)
+add_photos(nina, 7)
+add_photos(sasha, 5)
+add_photos(armin, 9)
+add_photos(paul, 7)
+
+mark = User.find_by(fname: "mark".capitalize)
+donald = User.find_by(fname: "donald".capitalize)
+sean = User.find_by(fname: "sean".capitalize)
+hillary = User.find_by(fname: "hillary".capitalize)
+jennifer = User.find_by(fname: "jennifer".capitalize)
+matthew = User.find_by(fname: "matthew".capitalize)
+taylor = User.find_by(fname: "taylor".capitalize)
+bill = User.find_by(fname: "bill".capitalize)
+john = User.find_by(fname: "john".capitalize)
+nina = User.find_by(fname: "nina".capitalize)
+sasha = User.find_by(fname: "sasha".capitalize)
+armin = User.find_by(fname: "armin".capitalize)
+paul = User.find_by(fname: "paul".capitalize)
+
+paul_own_posts = [
+  "Recently released this great remix with Sue Mclaren https://soundcloud.com/paulvandykofficial/sets/lightsremixes",
+  "Check out my latest release 'Touched By Heaven' https://soundcloud.com/paulvandykofficial/touched-by-heaven",
+  "Join me on my US tour, powered by Dreamstate !"
+]
+
+armin_own_posts = [
+  "Happy people in Miami 😊 Who will be here next week?",
+    "Check out my new collaboration with Vini Vici https://soundcloud.com/arminvanbuuren/armin-van-buuren-vini-vici-feat-hilight-tribe-great-spirit-a-state-of-trance-793-totw",
+  "My two biggest fans: my parents!"
+]
+
+sasha_own_posts = [
+  "Resident Advisor have uploaded my mix from when I played Sub Club as part of their In Residence series. Listen below https://soundcloud.com/resident-advisor/ra-live-20161809-sasha-sub-club-in-residence-glasgow",
+  "Had a wicked time playing here last night 🎶🎉 Great vibe in that club! Hope to be back soon ⚡️#watergate #berlin #vibes"
+]
+
+nina_own_posts = [
+  "Irish Life festival this year :) I am curating a stage",
+  "So check this out. This is Matzo&Pauli EP on Viewlexx that I found in the Clone store and it happens to be one of the first records in my collection. I was lucky to get it from I-F himself who was playing in Moscow some million years ago and brought a few promos with him. And now its here in front of me, bringing all the memories.. come to daddy!!!😜
+I must say I am very happy to come back to Holland. Yesterday had a dope show in Maastricht with Deniro -thank you for such a warm welcome!!! Tonight-Rotterdam with Deniro and Abstract Division and tomorrow -Amsterdam where I am playing at De School with Thomas Martojo. P.S. I used to come to Rotterdam pretty often back in the days. I was obsessed with dutch electro, disco and their whole culture that was a big influence..so yeah.. Nice to be back! :) #triplovin @clonerecordsreco",
+  "Perth! Approaching! #Australiantour#roundtheworldtour. P.S. Sydney ❤️
+"
+]
+
+
+john_own_posts = [
+  "Well that was fun! Sasha Electric Daisy Carnival - EDC Mexico.",
+  "If you want to grab one of the limited edition numbered and signed copies of the new 'Live in Brooklyn' cd you better be quick as we had sold 90% of them already. People seem really excited about this release recorded at Output on New Years Eve. The new merchandise is available in the store as well. www.bedrockmusic.bigcartel.com",
+  "The Output crowd was well and truly up for the 8hr session to celebrate the new year. Hear what went down in my new 5xCD Live in Brooklyn album."
+]
 
 bill_own_posts = [
   "People ask us all the time how they can help in the fight against child mortality–and we are always proud to recommend making a donation to UNICEF, an organization that is successful at serving families and children worldwide. We hope your gift will help inspire others to get involved as well. https://www.unicef.org/gatesletter/?utm_source=social&utm_campaign=gates_letter&utm_medium=social_gates",
@@ -103,7 +178,8 @@ PS Donald Trump, you're a bad dancer",
 "Louisville has lost a great legend, a great athlete and a great human. Thank you Muhammed Ali for sharing your talent and heart with the world.
 --Jen"]
 
-mark_own_posts = ["Thanks to NASCAR, Hendrick Motorsports, Dale Earnhardt Jr. for hosting me at the Charlotte Motor Speedway in North Carolina.
+mark_own_posts = ["I learned a lot at lunch with military spouses.",
+  "Thanks to NASCAR, Hendrick Motorsports, Dale Earnhardt Jr. for hosting me at the Charlotte Motor Speedway in North Carolina.
 I learned a lot about the engineering that goes into these cars. Each engine is designed to run at 9,000 RPMs for 700 miles in a single race, and then it's done. It gets up to 140 degrees in the cockpit of the cars, and drivers are in there for up to five hours in a race. They drive an average close to 200mph during these races. That's a bit faster than I go in my GTI."]
 
 taylor_own_posts = ["Thanks Houston 💋
@@ -114,19 +190,16 @@ And Versace for making this outfit situation 💕💕💕 Getty Images Entertain
 OKAY ITS HAPPENING
 EVERYBODY STAY CALM"]
 
-[donald, sean, hillary, matthew, jennifer, taylor, mark, bill].each do |u|
-  add_profile_pics(u)
-  own_posts(u, eval("#{u.fname.downcase}_own_posts"))
-end
-
-# create_friendship(mark,donald)
+create_friendship(mark,donald)
 create_friendship(mark,sean)
 create_friendship(mark,jennifer)
 create_friendship(mark,taylor)
 create_friendship(mark,matthew)
 create_friendship(mark,hillary)
 create_friendship(mark,bill)
-
+create_friendship(mark,john)
+create_friendship(mark,nina)
+create_friendship(mark,sasha)
 
 create_friendship(donald,sean)
 create_friendship(hillary,matthew)
@@ -135,6 +208,37 @@ create_friendship(hillary,taylor)
 create_friendship(matthew,jennifer)
 create_friendship(matthew,taylor)
 create_friendship(jennifer,taylor)
+
+create_friendship(nina,john)
+create_friendship(nina,bill)
+create_friendship(nina,sasha)
+
+create_friendship(bill,john)
+create_friendship(bill,sasha)
+
+create_friendship(john,sasha)
+
+create_friendship(armin,sasha)
+create_friendship(armin,john)
+create_friendship(armin,mark)
+create_friendship(armin,nina)
+create_friendship(armin,taylor)
+create_friendship(armin,jennifer)
+create_friendship(armin,bill)
+
+create_friendship(paul,mark)
+create_friendship(paul,armin)
+create_friendship(paul,nina)
+create_friendship(paul,bill)
+create_friendship(paul,taylor)
+create_friendship(paul,sean)
+create_friendship(paul,john)
+create_friendship(paul,sasha)
+
+[donald, sean, hillary, matthew, jennifer, taylor, mark, bill, john, nina, sasha, armin, paul].each do |u|
+  add_profile_pics(u)
+  own_posts(u, eval("#{u.fname.downcase}_own_posts"))
+end
 
 
 photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/donald/ivanka_insta.jpg", user_id: donald.id)
@@ -163,11 +267,54 @@ post.content = photo
 post.save!
 
 photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/mark/nascar.jpg", user_id: mark.id)
-post = mark.posts.last
+post = mark.posts[-1]
 post.content = photo
 post.save!
 
-Post.create!(wall_id: mark.id, author_id: taylor.id, body: 'Love your site!')
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/mark/military.jpg", user_id: mark.id)
+post = mark.posts[-2]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/john/edc.jpg", user_id: john.id)
+post = john.posts[0]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/nina/irishfest.png", user_id: nina.id)
+post = nina.posts[0]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/nina/record.jpg", user_id: nina.id)
+post = nina.posts[1]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/nina/australia.jpg", user_id: nina.id)
+post = nina.posts[2]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/armin/parents.jpg", user_id: armin.id)
+post = armin.posts[-1]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/armin/miami.jpg", user_id: armin.id)
+post = armin.posts[0]
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/paul/dreamstate.jpg", user_id: paul.id)
+post = paul.posts[-1]
+post.content = photo
+post.save!
+
+post = Post.create!(wall_id: mark.id, author_id: taylor.id, body: 'Love your site!')
+
+
+
 Post.create!(wall_id: mark.id, author_id: matthew.id, body: 'How do I log out?')
 Comment.create!(author_id: jennifer.id, post_id: Post.last.id, body: 'Click the logout button... duhhh...')
 Comment.create!(author_id: matthew.id, post_id: Post.last.id, parent_id: Comment.last.id, body: "It doesn't work")
@@ -179,10 +326,10 @@ Like.create!(liker_id: matthew.id, likeable: Comment.last)
 Like.create!(liker_id: donald.id, likeable: Comment.first)
 
 channel = Channel.create!
-ChannelSub.create!(participant_id: taylor.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: donald.id, channel_id: channel.id)
 ChannelSub.create!(participant_id: mark.id, channel_id: channel.id)
-Message.create!(sender_id: taylor.id, channel_id: channel.id, body: "Hey whats up?")
-Message.create!(sender_id: taylor.id, channel_id: channel.id, body: "Are you there??")
+Message.create!(sender_id: donald.id, channel_id: channel.id, body: "Hey Mark I have some really big important business I want to talk to you about. The best business.")
+Message.create!(sender_id: donald.id, channel_id: channel.id, body: "I've been told you're good with the cyber and I want to bring you onboard to our team. Believe me, it's a great team. You're gunna wanna join.")
 
 channel = Channel.create!
 ChannelSub.create!(participant_id: taylor.id, channel_id: channel.id)
@@ -190,3 +337,14 @@ ChannelSub.create!(participant_id: mark.id, channel_id: channel.id)
 ChannelSub.create!(participant_id: jennifer.id, channel_id: channel.id)
 Message.create!(sender_id: taylor.id, channel_id: channel.id, body: "Hey guys wanna come to my concert next week?")
 Message.create!(sender_id: jennifer.id, channel_id: channel.id, body: "SURE!")
+
+channel = Channel.create!
+ChannelSub.create!(participant_id: nina.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: sasha.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: mark.id, channel_id: channel.id)
+Message.create!(sender_id: nina.id, channel_id: channel.id, body: "Hey Mark wanna come to our festival next week? We're having a HUGE party!")
+Message.create!(sender_id: sasha.id, channel_id: channel.id, body: "Let's get Digweed and Armin involved.")
+ChannelSub.create!(participant_id: john.id, channel_id: channel.id)
+ChannelSub.create!(participant_id: armin.id, channel_id: channel.id)
+Message.create!(sender_id: john.id, channel_id: channel.id, body: "We're headling a festival, next week, you guys should come.")
+Message.create!(sender_id: armin.id, channel_id: channel.id, body: "SURE!")

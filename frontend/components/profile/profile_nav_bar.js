@@ -150,7 +150,7 @@ class ProfileNavBar extends React.Component {
                 onChange={this.updateFile('cover')}
                 ref={(target) => this.coverPictureInput = target}/>
           </form>
-        <ProfileLinkBar selectPage={this.props.selectPage}/>
+        <ProfileLinkBar selectPage={this.props.selectPage} currentPage={this.props.currentPage}/>
         <div className="profile-picture"
           onClick={this.disableUnlessOwnProfilePic}>
           { this.profilePicRollover() }

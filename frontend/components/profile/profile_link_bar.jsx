@@ -1,16 +1,22 @@
 import React from 'react';
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 class ProfileLinkBar extends React.Component {
   render () {
     return(
       <div className="profile-link-bar">
-        <div className="link-item"
-          onClick={() => this.props.selectPage('timeline')}>Timeline</div>
-        <div className="link-item">About</div>
-        <div className="link-item"
-          onClick={() => this.props.selectPage('friends')}>Friends</div>
-        <div className="link-item"
-          onClick={() => this.props.selectPage('photos')}>Photos</div>
+
+        { ['timeline', 'friends', 'photos'].map((page) => (
+          <div
+            className={this.props.currentPage === page ? 'current-page link-item' : 'link-item'}
+            key={page}
+            onClick={() => this.props.selectPage(page)}>
+            {page.capitalize()}
+          </div>
+        )) }
       </div>
     );
   }

@@ -66,7 +66,8 @@ class Home extends React.Component {
     }
     return(
       <div className="home">
-        <ProfileNavBar selectPage={this.setChildPage}/>
+        <ProfileNavBar selectPage={this.setChildPage}
+          currentPage={this.state.displaying}/>
         { this.renderChildPage() }
       </div>
     );

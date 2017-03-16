@@ -27,7 +27,8 @@ class Home extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (this.props.params.profileId !== newProps.params.profileId) {
-      this.props.fetchSingleProfileRequest(newProps.params.profileId);
+      this.props.fetchSingleProfileRequest(newProps.params.profileId)
+        .then(() => this.setState({displaying: 'timeline'}));
     }
   }
 

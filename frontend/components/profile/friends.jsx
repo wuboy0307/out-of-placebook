@@ -4,7 +4,10 @@ import { selectFriendDetails } from '../../reducers/selectors';
 import { Link, withRouter } from 'react-router';
 
 const mapStateToProps = state => ({
-  friends: state.profile.friends
+  myFriends: state.friends.friends,
+  friends: state.profile.friends,
+  profile: state.profile,
+  currentUserId: state.auth.currentUser.id
 });
 
 class Friends extends React.Component {
@@ -20,13 +23,33 @@ class Friends extends React.Component {
         <h1>Friends</h1>
         <ul className="friend-list">
           {this.props.friends.map((friend) => {
+            const profileId = this.props.profile.id;
+            let myFriends = Object.keys(this.props.myFriends).map((n) => parseInt(n));
+            let theirFriends = friend.friendIds;
+            let mutualFriends = myFriends.filter((n) => theirFriends.indexOf(n) !== -1).length;
+
+            let friendText;
+            if (mutualFriends > 1) {
+              friendText = `${mutualFriends} Mutual Friends`;
+            } else if (mutualFriends > 0){
+              friendText = `${mutualFriends} Mutual Friend`;
+            } else {
+              friendText = '';
+            }
+
+            if (friend.id === this.props.currentUserId) {
+              friendText = '';
+            }
+
             return(
               <li className="friend-list-item" key={friend.id}>
                 <img className="user-pic-friend" src={friend.thumbUrl}></img>
                 <div className="friend-list-body">
                     <div className="friend-list-name"
-                      onClick={() => this.linkToFriend(friend.id)}>{friend.fullName}</div>
-                  <div className="friend-list-mutual">1231</div>
+                      onClick={() => this.linkToFriend(friend.id)}>
+                      {friend.fullName}
+                    </div>
+                  <div className="friend-list-mutual">{friendText}</div>
                 </div>
               </li>
             );

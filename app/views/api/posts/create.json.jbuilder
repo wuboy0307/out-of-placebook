@@ -27,6 +27,7 @@ json.profile do
     json.thumbUrl friend.avatar.url(:friend)
     json.avatarUrlOriginal friend.avatar.url
     json.fullName friend.full_name
+    json.friendIds friend.friend_ids
   end
 end
 

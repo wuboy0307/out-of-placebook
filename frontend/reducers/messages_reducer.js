@@ -34,7 +34,6 @@ const messagesReducer = (oldState = _initialState, action) => {
       return newState;
 
     case CLEAR_CURRENT_CHAT:
-      console.log('hit reducer');
       return merge({}, newState, {currentChat: []});
 
     default:

@@ -59,9 +59,6 @@ class Chatbox extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.channelText !== this.props.channelText) {
       this.setState({hidden: false});
-      if (this.props.messages) {
-        this.lastMessage.scrollIntoView();
-      }
     }
     if (!this.state.hidden && this.props.messages) {
       this.lastMessage.scrollIntoView();

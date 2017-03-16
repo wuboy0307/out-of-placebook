@@ -318,7 +318,11 @@ class User < ApplicationRecord
       activity.each do |act|
         case [act.activity_source_type, act.activity_parent_type]
         when ["Post", "User"]
-          output << [act.activity_source, nil]
+          if act.activity_source.wall_id == act.activity_source.author_id
+            output << [act.activity_source, "#{act.activity_source.author.full_name} posted on their wall."]
+          else
+            output << [act.activity_source, "#{act.activity_source.author.full_name} posted on #{act.activity_source.wall.full_name}'s wall."]
+          end
         when ["Like", "Post"]
           output << [act.activity_parent, "#{act.activity_source.author.full_name} likes this."]
         when ["Comment", "Post"]

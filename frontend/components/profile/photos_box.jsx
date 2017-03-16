@@ -31,7 +31,7 @@ class PhotosBox extends React.Component {
           <i className="fa fa-camera fa-2x" aria-hidden="true"></i><span>Photos</span>
         </div>
         <div className="timeline-photos-container">
-          { this.props.photos.map((photo) => {
+          { this.props.photos.slice(0,9).map((photo) => {
             return(<img className="timeline-side-bar-photo" src={photo.thumbUrl} key={photo.id}
               onClick={this.renderModal('photo', photo.imageUrlOriginal)} />);
           })}

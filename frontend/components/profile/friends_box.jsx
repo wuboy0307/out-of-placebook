@@ -31,7 +31,7 @@ class FriendsBox extends React.Component {
           <i className="fa fa-users fa-2x" aria-hidden="true"></i><span>Friends {this.props.profile.friendIds.length}</span>
         </div>
         <div className="timeline-friends-container">
-          { this.props.friends.map((friend) => {
+          { this.props.friends.slice(0,9).map((friend) => {
             return(
               <div className="timeline-side-bar-friend" key={friend.id}>
                 <Link to={`/profile/${friend.id}`}  className="timeline-side-bar-friend-link">

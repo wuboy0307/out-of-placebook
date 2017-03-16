@@ -17,6 +17,17 @@ def create_friendship(user_one, user_two)
   Friendship.create!(friend_id: user_one.id, user_id: user_two.id, completed: true)
 end
 
+def add_photos(user, num)
+  (1..num).each do |i|
+    photo = Photo.create!(
+      image: "https://s3.amazonaws.com/oopbook/seeds/#{user.fname.downcase}/photos/#{i}.jpg",
+      user_id: user.id)
+    # post = Post.find_by('body ILIKE ?', '%ivanka%')
+    # post.content = photo
+    # post.save!
+  end
+end
+
 # ---- DONALD TRUMP
 # mark = User.first
 mark = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Mark", lname: "Zuckerberg", email: "mark@facebook.com", password: "password")
@@ -28,7 +39,16 @@ jennifer = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.a
 taylor = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Taylor", lname: "Swift", email: "tswift@gmail.com", password: "password", intro: "Singer.")
 
 
+bill = User.create!(last_fetch_time: 5.days.ago, last_friend_fetch: 5.days.ago, last_message_fetch: 5.days.ago, fname: "Bill", lname: "Gates", email: "bill@gmail.com", password: "password", intro: "William Henry 'Bill' Gates III is an American business magnate, investor, author, and philanthropist. In 1975, Gates and Paul Allen co-founded Microsoft, which became the world's largest PC software company.")
 
+
+add_photos(bill, 8)
+add_photos(mark, 6)
+
+bill_own_posts = [
+  "People ask us all the time how they can help in the fight against child mortality–and we are always proud to recommend making a donation to UNICEF, an organization that is successful at serving families and children worldwide. We hope your gift will help inspire others to get involved as well. https://www.unicef.org/gatesletter/?utm_source=social&utm_campaign=gates_letter&utm_medium=social_gates",
+  "I've always admired doctors. They have to make impossibly hard decisions, and so much of their work has life-and-death implications.
+This book, written by a young surgeon with terminal cancer, earned my admiration—and tears: http://b-gat.es/2myT4wr"]
 
 donald_own_posts = ["MAKE AMERICA GREAT AGAIN",
   "The FBI is totally unable to stop the national security 'leakers' that have permeated our government for a long time.
@@ -83,7 +103,8 @@ PS Donald Trump, you're a bad dancer",
 "Louisville has lost a great legend, a great athlete and a great human. Thank you Muhammed Ali for sharing your talent and heart with the world.
 --Jen"]
 
-mark_own_posts = []
+mark_own_posts = ["Thanks to NASCAR, Hendrick Motorsports, Dale Earnhardt Jr. for hosting me at the Charlotte Motor Speedway in North Carolina.
+I learned a lot about the engineering that goes into these cars. Each engine is designed to run at 9,000 RPMs for 700 miles in a single race, and then it's done. It gets up to 140 degrees in the cockpit of the cars, and drivers are in there for up to five hours in a race. They drive an average close to 200mph during these races. That's a bit faster than I go in my GTI."]
 
 taylor_own_posts = ["Thanks Houston 💋
 
@@ -93,7 +114,7 @@ And Versace for making this outfit situation 💕💕💕 Getty Images Entertain
 OKAY ITS HAPPENING
 EVERYBODY STAY CALM"]
 
-[donald, sean, hillary, matthew, jennifer, taylor, mark].each do |u|
+[donald, sean, hillary, matthew, jennifer, taylor, mark, bill].each do |u|
   add_profile_pics(u)
   own_posts(u, eval("#{u.fname.downcase}_own_posts"))
 end
@@ -104,6 +125,9 @@ create_friendship(mark,jennifer)
 create_friendship(mark,taylor)
 create_friendship(mark,matthew)
 create_friendship(mark,hillary)
+create_friendship(mark,bill)
+
+
 create_friendship(donald,sean)
 create_friendship(hillary,matthew)
 create_friendship(hillary,jennifer)
@@ -135,6 +159,11 @@ post.save!
 
 photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/taylor/photo.png", user_id: taylor.id)
 post = taylor.posts.last
+post.content = photo
+post.save!
+
+photo = Photo.create!(image: "https://s3.amazonaws.com/oopbook/seeds/mark/nascar.jpg", user_id: mark.id)
+post = mark.posts.last
 post.content = photo
 post.save!
 

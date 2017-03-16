@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../post/post_item';
 import { selectPosts, selectFriends } from '../../reducers/selectors';
-import { fetchNewsfeedRequest, fetchNewsfeedUpdateRequest, deletePostUpdateSuccess } from '../../actions/newsfeed_actions';
+import { fetchNewsfeedRequest, fetchNewsfeedUpdateRequest } from '../../actions/newsfeed_actions';
+import { deletePostUpdateSuccess } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
   posts: selectPosts(state),
@@ -12,7 +13,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchNewsfeedRequest: () => dispatch(fetchNewsfeedRequest()),
-  fetchNewsfeedUpdateRequest: (postId) => dispatch(fetchNewsfeedUpdateRequest(postId)),
+  fetchNewsfeedUpdateRequest: (postId) =>
+    dispatch(fetchNewsfeedUpdateRequest(postId)),
   deletePostUpdateSuccess: (postId) => dispatch(deletePostUpdateSuccess(postId))
 });
 

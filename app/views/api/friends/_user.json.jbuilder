@@ -10,6 +10,7 @@ else
         json.id friend.id
         json.fullName friend.full_name
         json.avatar friend.avatar.url(:xxs)
+        json.avatarFriend friend.avatar.url(:friend)
         json.friendIds friend.friends.map(&:id)
       end
     end

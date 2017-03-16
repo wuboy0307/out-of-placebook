@@ -19,6 +19,7 @@ json.profile do
   json.photos @user.photos.order(created_at: :desc).limit(9).each do |photo|
     json.id photo.id
     json.thumbUrl photo.image.url(:thumb)
+    json.photoUrl photo.image.url(:photo)
     json.imageUrlOriginal photo.image.url
   end
   json.friends @user.friends.order('friendships.updated_at desc').limit(9).each do |friend|

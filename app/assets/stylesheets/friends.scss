@@ -1,0 +1,76 @@
+.friends, .photos {
+  width: 850px;
+  margin: 0 auto;
+  padding: 16px 0;
+  // border: 1px solid blue;
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.34;
+
+  background-color: white;
+
+  // display: flex;
+  // flex-direction: row;
+  > h1 {
+    color: #4b4f56;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+.friend-list-item {
+  border: 1px solid #e9ebee;
+      display: inline-block;
+      margin: 0 0 13px 13px;
+      padding: 0 10px 0 0;
+      position: relative;
+      vertical-align: top;
+      width: 390px;
+}
+
+.friend-list-item, .photo-list-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-pic-friend {
+  width: 100px;
+  height: 100px;
+}
+
+.friend-list-body {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.friend-list-name {
+  color: #365899;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.3em;
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.friend-list-mutual {
+  color: #90949c;
+}
+
+.friend-list, .photo-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.user-pic-photo {
+  width: 200px;
+  height: 200px;
+  margin: 5px;
+}

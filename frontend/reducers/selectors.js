@@ -45,6 +45,15 @@ export const selectFriends = ({ friends }) => {
   }
 };
 
+export const selectFriendDetails = ({ friends }) => {
+  let currentFriends = friends.friends;
+  if (currentFriends) {
+    return Object.keys(currentFriends).map(key => currentFriends[key]);
+  } else {
+    return [];
+  }
+};
+
 // export const selectNewsfeedPosts = ({ newsfeed }) => {
 //   if (!newsfeed) return [];
 //   const posts = newsfeed.posts;

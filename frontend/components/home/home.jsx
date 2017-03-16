@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import ProfileNavBar from '../profile/profile_nav_bar';
 import Timeline from '../profile/timeline';
 import { fetchSingleProfileRequest } from '../../actions/profile_actions';
+import Friends from '../profile/friends';
+import Photos from '../profile/photos';
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
@@ -16,6 +18,11 @@ const mapDispatchToProps = (dispatch) => ({
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.setChildPage = this.setChildPage.bind(this);
+    this.renderChildPage = this.renderChildPage.bind(this);
+    this.state = {
+      displaying: 'timeline'
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -26,7 +33,27 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.props.fetchSingleProfileRequest(this.props.params.profileId);
+  }
 
+  setChildPage(child) {
+    this.setState({displaying: child});
+  }
+
+  renderChildPage() {
+    const profile = this.props.profile;
+    switch(this.state.displaying) {
+      case 'timeline':
+        return (<Timeline profile={profile} />);
+
+      case 'friends':
+        return (<Friends selectPage={this.setChildPage}/>);
+
+      case 'photos':
+        return (<Photos selectPage={this.setChildPage}/>);
+
+      default:
+        return null;
+    }
   }
 
   render() {
@@ -39,8 +66,8 @@ class Home extends React.Component {
     }
     return(
       <div className="home">
-        <ProfileNavBar />
-        <Timeline profile={profile} />
+        <ProfileNavBar selectPage={this.setChildPage}/>
+        { this.renderChildPage() }
       </div>
     );
   }

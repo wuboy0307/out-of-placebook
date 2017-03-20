@@ -23,6 +23,10 @@ class NewsFeed extends React.Component {
     super(props);
   }
 
+  componentWillUnmount() {
+    this.pusher.unsubscribe('newsfeed');
+  }
+
   componentDidMount() {
     this.props.fetchNewsfeedRequest(this.props.params.profileId);
 
@@ -33,7 +37,8 @@ class NewsFeed extends React.Component {
     this.channel = this.pusher.subscribe(`newsfeed`);
     this.channel.bind('newsfeed-activity', (info) => {
 
-      if (!this.props.friends.includes(info.wall_id) && info.wall_id != this.props.currentUserId) return null
+      if (!this.props.friends.includes(info.wall_id) &&
+        info.wall_id != this.props.currentUserId) return null
       console.log('NOT SENT FROM CURRENT USER');
       this.props.fetchNewsfeedUpdateRequest(info.post_id);
     });
@@ -53,7 +58,8 @@ class NewsFeed extends React.Component {
     return(
       <div className="home">
         <div className="newsfeed-container">
-          { this.props.posts.map(post => <PostItem key={post.id} post={post} />)}
+          { this.props.posts.map(post => <PostItem key={post.id}
+            post={post} />) }
         </div>
       </div>
     );

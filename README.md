@@ -2,8 +2,7 @@
 
 ## Summary
 
-Out of Placebook is a social-networking site inspired by [Facebook][facebook]
-[facebook]: https://www.facebook.com
+Out of Placebook is a social-networking site inspired by [Facebook](https://www.facebook.com)
 
 Out of Placebook allows users to:
   - Easily share posts, links and photos with their friends.

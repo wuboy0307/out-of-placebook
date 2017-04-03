@@ -121,9 +121,9 @@ class User < ApplicationRecord
                     }
                   }
 
-	has_attached_file :avatar, styles: { profile: "160x160#", friend: "100x100#", header: "24x24#", xs: "48x48#", xxs: "32x32#", xxxs: "20x20#" }, default_url: "avatar.jpg"
+	has_attached_file :avatar, styles: { profile: "160x160#", friend: "100x100#", header: "24x24#", xs: "48x48#", xxs: "32x32#", xxxs: "20x20#" }, default_url: "https://s3.amazonaws.com/oopbook/seeds/default/avatar.jpg"
 	validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
-	has_attached_file :cover, styles: { cover: "850x313#" }, default_url: "coverphoto.jpg"
+	has_attached_file :cover, styles: { cover: "850x313#" }, default_url: "https://s3.amazonaws.com/oopbook/seeds/covers/nyc.jpg"
 	validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
 
 

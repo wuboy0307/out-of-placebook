@@ -255,7 +255,7 @@ class PostItem extends React.Component {
   }
 
   render () {
-    if (this.props.post.contentType === 'post' && !this.props.post.content.id && !this.props.sharedPosts[this.props.post.content.id]) return null;
+    // if (this.props.post.contentType === 'post' && !this.props.post.content.id && !this.props.sharedPosts[this.props.post.content.id]) return null;
     return(
       <div className="post-item-container">
         <div className="post-item">

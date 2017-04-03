@@ -10,27 +10,16 @@ class CommentInCommentItem extends React.Component {
     this.renderLikes = this.renderLikes.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
     this.bindUserToListener = this.bindUserToListener.bind(this);
-
   }
 
   toggleLike(){
-    if (this.props.childComment.userLikesComment) {
-      const likeInfo = {
-        type: 'comment',
-        content_id: this.props.childComment.id
-      };
-
-      this.props.destroySingleLikeRequest(likeInfo);
-
-    } else {
-
-      const likeInfo = {
-        type: 'comment',
-        content_id: this.props.childComment.id
-      };
-
+    const likeInfo = {
+      type: 'comment',
+      content_id: this.props.childComment.id
+    };
+    this.props.childComment.userLikesComment ?
+      this.props.destroySingleLikeRequest(likeInfo) :
       this.props.createSingleLikeRequest(likeInfo);
-    }
   }
 
   bindUserToListener(username) {
@@ -41,13 +30,20 @@ class CommentInCommentItem extends React.Component {
     const numLikes = this.props.childComment.numLikes;
     if (numLikes > 0) {
       return(
-        <div className="comment-action" onClick={this.bindUserToListener(this.props.childComment.authorFullName)}>Reply
+        <div className="comment-action"
+            onClick={this.bindUserToListener(
+              this.props.childComment.authorFullName
+            )}>
+          Reply
           <i className="fa fa-thumbs-up" aria-hidden="true"></i> {numLikes}
         </div>
         );
     } else {
       return(
-        <div className="comment-action" onClick={this.bindUserToListener(this.props.childComment.authorFullName)}>Reply</div>
+        <div className="comment-action"
+          onClick={this.bindUserToListener(
+            this.props.childComment.authorFullName
+          )}>Reply</div>
       );
     }
   }
@@ -57,18 +53,30 @@ class CommentInCommentItem extends React.Component {
     return(
       <div className="comment-in-comment-item">
         <div className="comment-comment-container">
-          <img className="user-pic-xxxs" src={this.props.childComment.authorAvatarUrl || `/assets/avatar.jpg`} />
+          <img className="user-pic-xxxs"
+            src={this.props.childComment.authorAvatarUrl} />
           <div className="comment-body">
             <div className="comment-data">
               <Link to={`/profile/${this.props.childComment.authorId}`}>
-                <span className="comment-user-name">{this.props.childComment.authorFullName}</span>
+                <span className="comment-user-name">
+                  {this.props.childComment.authorFullName}
+                </span>
               </Link>
               {this.props.childComment.body}
             </div>
             <div className="comment-actions">
-              <div className="comment-action" onClick={this.toggleLike}>{this.props.childComment.userLikesComment ? 'Unlike' : 'Like'}</div>
+              <div className="comment-action"
+                onClick={this.toggleLike}>
+                {this.props.childComment.userLikesComment ? 'Unlike' :
+                  'Like'}
+              </div>
+
               { this.renderLikes() }
-              <div className="comment-timestamp">{this.props.childComment.createdAt}</div>
+
+              <div
+                className="comment-timestamp">
+                {this.props.childComment.createdAt}
+              </div>
             </div>
           </div>
         </div>

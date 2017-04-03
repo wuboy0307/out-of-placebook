@@ -140,10 +140,14 @@ class ProfileNavBar extends React.Component {
      }
    }
 
+
   render() {
     return(
       <div className="profile-nav-bar">
-        <CoverPhoto photoUrl={this.props.profile.coverUrl} callback={this.disableUnlessOwnProfileCover}/>
+        <CoverPhoto photoUrl={this.props.profile.coverUrl}
+          profile={this.props.profile}
+          currentUser={this.props.currentUser}
+          callback={this.disableUnlessOwnProfileCover}/>
           <form>
             <input type="file"
                 id="file-input"
@@ -154,6 +158,7 @@ class ProfileNavBar extends React.Component {
         <div className="profile-picture"
           onClick={this.disableUnlessOwnProfilePic}>
           { this.profilePicRollover() }
+
           <img src={ this.props.profile.avatarUrl || `/assets/avatar.jpg`}/>
           <form>
             <input type="file"

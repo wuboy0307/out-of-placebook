@@ -130,6 +130,19 @@ class NavBar extends React.Component {
       return null;
     }
 
+    if (this.props.messages.chats.length < 1) {
+      return(<div className="messages-flyout">
+        <div className="flyout-header">
+          Messages
+        </div>
+        <li className='message-list-item'>
+          <div className="flyout-item-body">
+            No messages.
+          </div>
+        </li>
+      </div>);
+    }
+
     return (<div className="messages-flyout">
       <div className="flyout-header">
         Messages

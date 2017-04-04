@@ -1,4 +1,4 @@
-![alt-text](/docs/screenshots/timeline.png "A user's timeline")
+![alt-text](/docs/screenshots/timeline.jpg "A user's timeline")
 
 ## Summary
 

@@ -38,7 +38,7 @@ OOPBook uses:
 ### Real-Time fetching of activities
 * Use of WebSockets via Pusher to enable real-time updates of new posts and updates, without having to refresh the page.
 
-![alt-text](http://i.giphy.com/xUPGcLqc6hGkZOGLS0.gif "Real-time post updates")
+![alt-text](/docs/screenshots/notifications.png "Real-time post updates")
 
 Here you can see a friend's wall and notifications updating in real-time for users when a post is created.
 

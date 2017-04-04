@@ -114,6 +114,11 @@ WHERE
 LIMIT 1
 ```
 
+![alt-text](/docs/gifs/group_chat.gif "Group Chat")
+
+Group chat is also possible by searching for users. Adding them to a channel creates an entry in `channel_subs` and messages the channel to notify everyone of the new member.
+
+
 ### Photo upload with automatic image resizing
 Uploaded images are automatically cropped using the `Paperclip` gem and stored on AWS in a variety of different sizes. This allows for pages to always display images of the correct size and aspect ratio.
 

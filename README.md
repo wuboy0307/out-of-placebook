@@ -82,6 +82,9 @@ end
 
 
 ### Real-time messaging between users
+
+![alt-text](/docs/gifs/chat.gif "Real-time messaging between users")
+
 Messaging is implemented via `messages` which belong to `channels`. Users are subscribed to `channels` via the `channel_subs` join table. When the 'Message' button is clicked on a user's profile, the server first looks to see if there is a channel with two participants where one is the current user and the other is the user they are trying to message. If there is, it will fetch all the chat messages from this channel, otherwise it will create a new channel and subscribe both users to it. This is achieved via a self-join on the channels table:
 
 ```sql
@@ -109,9 +112,6 @@ WHERE
   (uone.id = user_one and utwo.id = user_two) OR (uone.id = user_two and utwo.id = user_one)
 LIMIT 1
 ```
-
-![alt-text](/docs/gifs/chat.gif "Real-time messaging between users")
-
 
 ### Photo upload with automatic image resizing
 Uploaded images are automatically cropped using the `Paperclip` gem and stored on AWS in a variety of different sizes. This allows for pages to always display images of the correct size and aspect ratio.

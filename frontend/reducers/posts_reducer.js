@@ -61,7 +61,6 @@ const postsReducer = ( oldState = _initialState, action) => {
       return newState;
 
     case CREATE_SINGLE_POST_SUCCESS:
-      if (!newState[action.post.post.id]) return newState;
       newState[action.post.post.id] = action.post.post;
       return newState;
 

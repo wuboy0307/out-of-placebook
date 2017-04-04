@@ -17,7 +17,7 @@ class TimelineSideBar extends React.Component {
   }
 
   componentDidMount() {
-    $('.timeline-side-bar-sticky').stick_in_parent();
+    // $('.timeline-side-bar-sticky').stick_in_parent();
     // $('.header-nav').stick_in_parent(); // Bugs out show post bar
   }
 

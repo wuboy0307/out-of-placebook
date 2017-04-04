@@ -44,7 +44,8 @@ class NewsFeed extends React.Component {
     });
 
     this.channel.bind('newsfeed-delete-activity', (info) => {
-      if (!this.props.friends.includes(info.wall_id)) return null
+      if (!this.props.friends.includes(info.wall_id) &&
+        info.wall_id !== this.props.currentUserId) return null
       console.log('NOT SENT FROM CURRENT USER');
       this.props.deletePostUpdateSuccess(info.post_id);
     });

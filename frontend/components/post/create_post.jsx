@@ -7,7 +7,8 @@ import { toggleFlyout } from '../../actions/flyout_actions';
 import { withRouter } from 'react-router';
 
 const mapDispatchToProps = dispatch => ({
-  createSinglePostRequest: (formData) => dispatch(createSinglePostRequest(formData)),
+  createSinglePostRequest: (formData) =>
+    dispatch(createSinglePostRequest(formData)),
   toggleFlyout: (flyoutInfo) => dispatch(toggleFlyout(flyoutInfo))
 });
 
@@ -107,7 +108,6 @@ class CreatePost extends React.Component {
   }
 
   renderSharedPost() {
-
     if (!this.props.sharedPost){
       return null;
     } else {

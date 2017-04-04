@@ -1,7 +1,7 @@
 import { FETCH_NEWSFEED_SUCCESS,
-        FETCH_NEWSFEED_UPDATE_SUCCESS,
-        DELETE_POST_UPDATE_SUCCESS } from '../actions/newsfeed_actions';
-import { EDIT_SINGLE_POST_SUCCESS } from '../actions/post_actions';
+        FETCH_NEWSFEED_UPDATE_SUCCESS } from '../actions/newsfeed_actions';
+import { EDIT_SINGLE_POST_SUCCESS,
+        DELETE_POST_UPDATE_SUCCESS } from '../actions/post_actions';
 
 import merge from 'lodash/merge';
 

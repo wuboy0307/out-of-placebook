@@ -1,4 +1,4 @@
-![alt-text](http://i.imgur.com/XbAc5if.jpg "A user's timeline")
+![alt-text](/docs/timeline.png "A user's timeline")
 
 ## Summary
 

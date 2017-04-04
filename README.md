@@ -116,7 +116,7 @@ LIMIT 1
 ### Photo upload with automatic image resizing
 Uploaded images are automatically cropped using the `Paperclip` gem and stored on AWS in a variety of different sizes. This allows for pages to always display images of the correct size and aspect ratio.
 
-![alt-text](http://i.giphy.com/xUPGcISdwuu0C5kewo.gif "Image processing and real-time updating")
+![alt-text](/docs/gifs/chat.gif "Image processing and real-time updating")
 
 
 ### Automatic parsing of URLs in posts

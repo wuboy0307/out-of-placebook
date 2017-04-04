@@ -26,10 +26,11 @@ const postsReducer = ( oldState = _initialState, action) => {
       return merge({}, _initialState, action.post.posts);
 
     case DELETE_POST_UPDATE_SUCCESS:
+      if (!newState[action.postId]) return newState;
       delete newState[action.postId];
       return newState;
 
-    case FETCH_NEWSFEED_UPDATE_SUCCESS:
+    // case FETCH_NEWSFEED_UPDATE_SUCCESS:
     case FETCH_WALL_UPDATE_SUCCESS:
       let posts = action.posts.posts;
       let key = parseInt(Object.keys(posts)[0]);
@@ -37,16 +38,16 @@ const postsReducer = ( oldState = _initialState, action) => {
       newState[key] = post;
       return newState;
 
-    case FETCH_NEWSFEED_SUCCESS:
-      return merge({}, _initialState, action.posts.posts);
+    // case FETCH_NEWSFEED_SUCCESS:
+    //   return merge({}, _initialState, action.posts.posts);
 
     case FETCH_SINGLE_SHARED_POST_SUCCESS:
       newState.sharedPosts = merge({}, newState.sharedPosts, action.post.posts);
       return newState;
 
     case CREATE_SINGLE_COMMENT_SUCCESS:
-
       let newComment = action.comment;
+      if (!newState[newComment.postId]) return newState;
       let oldComments = newState[newComment.postId].comments;
       if (!newComment.parentId) {
         newState[newComment.postId].comments = merge({}, oldComments);
@@ -60,11 +61,13 @@ const postsReducer = ( oldState = _initialState, action) => {
       return newState;
 
     case CREATE_SINGLE_POST_SUCCESS:
+      if (!newState[action.post.post.id]) return newState;
       newState[action.post.post.id] = action.post.post;
       return newState;
 
     case CREATE_SINGLE_LIKE_SUCCESS:
       likeInfo = action.likeInfo;
+      if (!newState[likeInfo.postId]) return newState;
       switch(likeInfo.type) {
         case "post":
           newState[likeInfo.postId].userLikesPost = true;
@@ -86,6 +89,7 @@ const postsReducer = ( oldState = _initialState, action) => {
 
     case DESTROY_SINGLE_LIKE_SUCCESS:
       likeInfo = action.likeInfo;
+      if (!newState[likeInfo.postId]) return newState;
       switch(likeInfo.type) {
         case "post":
           newState[likeInfo.postId].userLikesPost = false;
@@ -106,11 +110,13 @@ const postsReducer = ( oldState = _initialState, action) => {
       return newState;
 
     case DESTROY_SINGLE_POST_SUCCESS:
+      if (!newState[action.post.postId]) return newState;
       delete newState[action.post.postId];
       return newState;
 
     case EDIT_SINGLE_POST_SUCCESS:
       const post_id = Object.keys(action.post);
+      if (!newState[post_id]) return newState;
 
       newState[post_id] = action.post[post_id];
       return newState;

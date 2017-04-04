@@ -10,6 +10,16 @@ export const selectPosts = ({ posts }) => {
   }
 };
 
+export const selectNewsfeed = ({ newsfeed }) => {
+  let newPosts = merge({}, newsfeed);
+  if (newPosts['sharedPosts']) delete newPosts['sharedPosts'];
+  if (newPosts) {
+    return Object.keys(newPosts).map(post => newPosts[post]).reverse();
+  } else {
+    return [];
+  }
+};
+
 export const selectSearchResults = ({ search }) => {
   search = search.navbarSearch;
   if (search) {

@@ -3,7 +3,15 @@ import React from 'react';
 class CoverPhoto extends React.Component {
    coverPicRollover() {
      if (this.props.profile.id === this.props.currentUser.id) {
-       return (<div className="cover-picture-change">Update Cover Photo</div>);
+       return (
+         <div className="cover-picture-container">
+           <i className="fa fa-camera" aria-hidden="true"></i>
+           <div className="cover-picture-change">
+             <span className="cover-change-text">
+               Update Cover Photo
+             </span>
+           </div>
+         </div>);
      } else {
        return null;
      }

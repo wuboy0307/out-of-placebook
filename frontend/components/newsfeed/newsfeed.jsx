@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PostItem from '../post/post_item';
-import { selectPosts, selectFriends } from '../../reducers/selectors';
+import { selectNewsfeed, selectFriends } from '../../reducers/selectors';
 import { fetchNewsfeedRequest, fetchNewsfeedUpdateRequest } from '../../actions/newsfeed_actions';
 import { deletePostUpdateSuccess } from '../../actions/post_actions';
 
 const mapStateToProps = (state) => ({
-  posts: selectPosts(state),
+  posts: selectNewsfeed(state),
   friends: selectFriends(state),
   currentUserId: state.auth.currentUser.id
 });

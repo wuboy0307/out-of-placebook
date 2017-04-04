@@ -9,6 +9,7 @@ import friends from './friends_reducer';
 import search from './search_reducer';
 import messages from './messages_reducer';
 import flyout from './flyout_reducer';
+import newsfeed from './newsfeed_reducer';
 // import newsfeed from './newsfeed_reducer';
 // newsfeed not used, merged in to posts reducer
 
@@ -21,7 +22,8 @@ const RootReducer = combineReducers({
   friends,
   search,
   messages,
-  flyout
+  flyout,
+  newsfeed
 });
 
 

@@ -38,7 +38,7 @@ OOPBook uses:
 ### Real-Time fetching of activities
 * Use of WebSockets via Pusher to enable real-time updates of new posts and updates, without having to refresh the page.
 
-![alt-text](/docs/screenshots/notifications.png "Real-time post updates")
+![alt-text](http://i.giphy.com/xUPGcLqc6hGkZOGLS0.gif "Real-time post updates")
 
 Here you can see a friend's wall and notifications updating in real-time for users when a post is created.
 
@@ -49,7 +49,7 @@ Messages received on these channels then trigger AJAX actions to fetch only the 
 
 ### Real-Time notifications
 
-![alt-text](http://i.imgur.com/hBUA3Vp.jpg "Notifications")
+![alt-text](/docs/screenshots/notifications.png "Notifications")
 
 Notifications are achieved via a join-table table which is polymorphic on both sides to track users' activities. This allows for the tracking of different types of source events (such as comments/likes) on different types of parents (such as posts/comments). This means a `Post` on a `Wall` can be tracked in the same table as a `Like` on a `Comment`.
 

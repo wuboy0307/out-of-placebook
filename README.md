@@ -8,7 +8,7 @@ Out of Placebook is a social-networking site inspired by [Facebook](https://www.
 Out of Placebook allows users to:
   - Easily share posts, links and photos with their friends.
   - Keep in touch via real-time chat.
-  - See their friends' recent activity all in one place on their newsfeed.
+  - See their friends' recent activity all in one place on their newsfeed. In real-time.
 
 ## Structure
 ### Back End
@@ -32,14 +32,14 @@ OOPBook uses:
 
 
 ### Authentication
-  * Session authentication is handled on the backend and enforced with session tokens.
+  * Session authentication is handled on the backend using BCrypt and enforced with session tokens.
   * Automatic redirection to the login/signup page occurs when not logged in.
 
 
 ### Real-Time fetching of activities
 * Use of WebSockets via Pusher to enable real-time updates of new posts and updates, without having to refresh the page.
 
-![alt-text](http://i.giphy.com/xUPGcLqc6hGkZOGLS0.gif "Real-time post updates")
+![alt-text](/docs/gifs/post_small.gif "Real-time post updates")
 
 Here you can see a friend's wall and notifications updating in real-time for users when a post is created.
 
